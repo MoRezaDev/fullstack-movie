@@ -1,0 +1,9 @@
+#backend
+backend/node_modules
+backend/generated
+backend/dist
+
+#front
+front/node_modules
+front/next
+front/build
