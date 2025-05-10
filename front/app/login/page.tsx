@@ -1,17 +1,26 @@
-import React from "react";
+"use client";
+import SendOtpForm from "@/_components/login/SendOtpForm";
+import VerifyOtpForm from "@/_components/login/VerifyOtpForm";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { useState } from "react";
 
 export default function LoginPage() {
+  const [showVerifyOtpPage, setShowVerifyOtpPage] = useState(false);
+  const [data, setData] = useState(null);
   return (
-    <div className="">
-      <form className="max-w-[500px] mx-auto mt-10 border p-4 flex flex-col">
-        <label>Enter your Mobile</label>
-        <input
-          name="mobile"
-          className="border border-gray-400 rounded-md outline-none p-1"
-          type="text"
-        />
-        <button className="bg-sky-500 w-fit px-2 py-1 rounded-md">Go</button>
-      </form>
-    </div>
+    <QueryClientProvider client={new QueryClient()}>
+      <div className="mt-10">
+        {showVerifyOtpPage ? (
+          <VerifyOtpForm data={data} />
+        ) : (
+          <SendOtpForm
+            onSuccess={(data: any) => {
+              setShowVerifyOtpPage(true);
+              setData(data);
+            }}
+          />
+        )}
+      </div>
+    </QueryClientProvider>
   );
 }

@@ -2,8 +2,11 @@
 backend/node_modules
 backend/generated
 backend/dist
+backend/.env
+backend/prisma/migrations
+
 
 #front
 front/node_modules
-front/next
+front/.next
 front/build
