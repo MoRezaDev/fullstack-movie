@@ -15,7 +15,6 @@ export default function ResendButton({
 
   const resendMutation = useMutation({
     mutationFn: sendOtp,
-    mutationKey: ["sendOtp"],
     onSuccess: (data) => {
       toast.success("OTP sent successfully!");
       onResendSuccess(data);

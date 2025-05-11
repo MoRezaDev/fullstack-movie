@@ -1,4 +1,11 @@
+"use client";
+
 import React, { Suspense } from "react";
+import ProfileNav from "./ProfileNav";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ThemeToggle from "@/theme/theme-toggle";
+
+const client = new QueryClient();
 
 async function w8() {
   return new Promise((resolve) => setTimeout(resolve, 3000));
@@ -6,16 +13,12 @@ async function w8() {
 
 export default function Navbar() {
   return (
-    <nav className="w-full p-4 bg-black text-white flex justify-between">
+    <nav className="w-full p-4 dark:bg-black text-white flex justify-between">
       <h1 className="text-2xl">Navbar</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProfileBtn />
-      </Suspense>
+      <QueryClientProvider client={client}>
+        <ProfileNav />
+        <ThemeToggle />
+      </QueryClientProvider>
     </nav>
   );
-}
-
-async function ProfileBtn() {
-  await w8();
-  return <div>test</div>;
 }

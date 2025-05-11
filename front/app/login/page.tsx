@@ -2,7 +2,7 @@
 import SendOtpForm from "@/_components/login/SendOtpForm";
 import VerifyOtpForm from "@/_components/login/VerifyOtpForm";
 import { useSession } from "@/_hooks/useSession";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
 
@@ -17,13 +17,13 @@ export default function LoginPage() {
   const { data: sessionData, isPending } = useSession();
   const router = useRouter();
 
-  // 🔥 Instant redirect if session exists
-  if (!isPending && sessionData) {
-    router.replace("/");
-    return null;
-  }
+  useEffect(() => {
+    if (!isPending && sessionData) {
+      router.replace("/");
+    }
+  }, [isPending, sessionData, router]);
 
-  if (isPending) return <div>loading....</div>;
+  if (isPending) return <div>loading...</div>;
 
   return (
     <div className="mt-10">
