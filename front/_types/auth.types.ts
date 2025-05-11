@@ -9,4 +9,5 @@ export type verifyOtpProps = {
     code: string;
     expire_date: string;
   };
+  onResendSuccess: (data: any) => void;
 };

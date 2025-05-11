@@ -1,6 +1,7 @@
 import { IVerifyOtpDto } from "@/_types/auth.types";
 
 export async function sendOtp(mobile: string) {
+  console.log("sending otp started!");
   const regex = /^0?9\d{9}$/;
   if (!mobile || !regex.test(mobile)) {
     throw new Error("Invalid mobile number");
@@ -28,6 +29,7 @@ export async function verifyOtp(verifyOtpDto: IVerifyOtpDto) {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
   if (!res.ok) {
     const err = await res.json();
@@ -35,4 +37,15 @@ export async function verifyOtp(verifyOtpDto: IVerifyOtpDto) {
   }
 
   return res.json();
+}
+
+export async function getSession() {
+  const res = await fetch("http://localhost:3001/auth/session", {
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to get session");
+  }
+  return await res.json();
 }

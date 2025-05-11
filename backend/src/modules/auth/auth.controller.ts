@@ -35,14 +35,19 @@ export class AuthController {
     @Res() res: Response,
   ) {
     const token = await this.authService.checkOtp(checkOtpDto);
-    res.cookie('token', token.token, { httpOnly: true });
+    res.cookie('token', token.token, {
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: true,
+    });
     return res.send({ message: 'Login successful' });
   }
 
   @UseGuards(VerifyJwtGurds)
   @Get('session')
   async getSession(@Req() req: RequestWithUser) {
-   return await this.authService.getSession(req.user);
+    return await this.authService.getSession(req.user);
   }
 
   @Get('test-otp')

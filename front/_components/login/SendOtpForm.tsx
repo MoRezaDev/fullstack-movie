@@ -27,8 +27,6 @@ export default function SendOtpForm({ onSuccess }: sendOtpProps) {
     }
   }, [mutation.isSuccess]);
 
-  console.log(mutation.data);
-
   return (
     <form
       onSubmit={sendOtpSubmitHandler}
