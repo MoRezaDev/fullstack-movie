@@ -45,7 +45,7 @@ export class AuthService {
       data: otp,
       select: { code: true, expire_date: true },
     });
-    return updatedOtp;
+    return { ...updatedOtp, mobile: sendOtpDto.mobile };
   }
 
   async checkOtp(checkOtpDto: CheckOtpDto) {
