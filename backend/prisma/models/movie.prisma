@@ -15,7 +15,6 @@ model Movie {
     has_dub Boolean @default(false)
     imdb_id String @unique 
 
-    download_links DownloadLink[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

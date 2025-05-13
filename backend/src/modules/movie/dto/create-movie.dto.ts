@@ -34,9 +34,7 @@ export class CreateMovieDto {
 
   genre: string[];
 
-  has_subtitles?: boolean;
+  has_subtitle?: boolean;
 
   has_dub?: boolean;
-
-  download_links?: { title: string; link_url: string }[];
 }

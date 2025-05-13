@@ -1,0 +1,12 @@
+model Post {
+    id String @id @default(uuid())
+    title String
+    description String
+    is_premium Boolean @default(false)
+
+    extra_info String?
+    download_info String?
+    
+
+    download_links DownloadLink[]
+}

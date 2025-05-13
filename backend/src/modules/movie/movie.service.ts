@@ -2,28 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { DatabaseService } from '../database/database.service';
-import { Prisma, PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class MovieService {
   constructor(private databaseService: DatabaseService) {}
-  create(createMovieDto: CreateMovieDto) {
-    return 'This action adds a new movie';
+  async create(createMovieDto: CreateMovieDto) {
+    return await this.databaseService.movie.create({
+      data: createMovieDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all movie`;
+  async findAll() {
+    return await this.databaseService.movie.findMany({
+      include: { download_links: true },
+    });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} movie`;
   }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
+  async update(id: number, updateMovieDto: UpdateMovieDto) {
     return `This action updates a #${id} movie`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} movie`;
+  }
+
+  async removeAll() {
+    return this.databaseService.movie.deleteMany();
   }
 }

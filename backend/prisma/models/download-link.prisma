@@ -6,14 +6,17 @@ model DownloadLink {
     link_url String[]
 
     // Polymorphic relationship fields
-    movieId String?  // Nullable for polymorphism
-    movie Movie? @relation(fields: [movieId], references: [id])
+    // movieId String?  // Nullable for polymorphism
+    // movie Movie? @relation(fields: [movieId], references: [id])
 
-    seriesId String? // Nullable for polymorphism
-    series Series? @relation(fields: [seriesId], references: [id])
+    // seriesId String? // Nullable for polymorphism
+    // series Series? @relation(fields: [seriesId], references: [id])
 
-    animeId String?  // Nullable for polymorphism
-    anime Anime? @relation(fields: [animeId], references: [id])
+    // animeId String?  // Nullable for polymorphism
+    // anime Anime? @relation(fields: [animeId], references: [id])
+
+    postId String?
+    post Post? @relation(fields: [postId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
