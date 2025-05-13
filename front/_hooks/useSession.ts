@@ -1,4 +1,4 @@
-import { getSession } from "@/_lib/api";
+import { getSession } from "@/_lib/auth-api";
 import { useQuery } from "@tanstack/react-query";
 
 export function useSession() {

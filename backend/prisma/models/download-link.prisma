@@ -1,0 +1,20 @@
+model DownloadLink {
+    id String @id @default(uuid())
+    title String
+    episode String?
+    season Int?
+    link_url String[]
+
+    // Polymorphic relationship fields
+    movieId String?  // Nullable for polymorphism
+    movie Movie? @relation(fields: [movieId], references: [id])
+
+    seriesId String? // Nullable for polymorphism
+    series Series? @relation(fields: [seriesId], references: [id])
+
+    animeId String?  // Nullable for polymorphism
+    anime Anime? @relation(fields: [animeId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

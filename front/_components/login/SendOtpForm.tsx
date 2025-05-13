@@ -1,6 +1,6 @@
 "use client";
 
-import { sendOtp } from "@/_lib/api";
+import { sendOtp } from "@/_lib/auth-api";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
@@ -30,7 +30,7 @@ export default function SendOtpForm({ onSuccess }: sendOtpProps) {
   return (
     <form
       onSubmit={sendOtpSubmitHandler}
-      className="flex flex-col gap-4 p-6 border rounded-lg shadow-sm bg-white max-w-md mx-auto"
+      className="flex flex-col gap-4 p-6 border rounded-lg shadow-sm  max-w-md mx-auto"
     >
       <div className="flex flex-col gap-1">
         <label className="text-gray-700 font-medium">Enter your Mobile</label>

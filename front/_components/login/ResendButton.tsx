@@ -1,5 +1,5 @@
 "use client";
-import { sendOtp } from "@/_lib/api";
+import { sendOtp } from "@/_lib/auth-api";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";

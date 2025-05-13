@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { MovieModule } from './modules/movie/movie.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { APP_GUARD } from '@nestjs/core';
         },
       ],
     }),
+    MovieModule,
   ],
   controllers: [AppController],
   providers: [

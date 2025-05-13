@@ -1,0 +1,27 @@
+model Movie {
+    id String @id @default(uuid())
+
+    title String
+    slug String
+    description String
+    year Int
+    duration String
+    rating Float
+    stars String[]
+    director String @default("N/A")
+    images_url String[]
+    genre String[]
+    has_subtitle Boolean @default(false)
+    has_dub Boolean @default(false)
+    imdb_id String @unique 
+
+    download_links DownloadLink[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([genre],type : Hash)
+    @@index([title],type : Hash)
+    @@index([imdb_id],type : Hash)
+
+}

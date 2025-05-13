@@ -14,3 +14,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Test {
+  id String @id @default(uuid())
+  name String
+  title String
+}
+

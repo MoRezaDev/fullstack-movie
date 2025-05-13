@@ -5,7 +5,6 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
 
 @Injectable()
 export class VerifyJwtGurds implements CanActivate {
@@ -13,7 +12,13 @@ export class VerifyJwtGurds implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: any = context.switchToHttp().getRequest();
 
-    const token = request.cookies['token'] || request.headers['authorization'];
+    let tokenFromHeader = request.headers['authorization'];
+
+    if (tokenFromHeader.startsWith('Bearer ')) {
+      tokenFromHeader = request.headers['authorization'].split(' ')[1];
+    }
+
+    const token = request.cookies['token'] || tokenFromHeader;
 
     if (!token) {
       throw new HttpException('Unauthorized', 401);
