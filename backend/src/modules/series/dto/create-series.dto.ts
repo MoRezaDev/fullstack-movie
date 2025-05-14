@@ -1,36 +1,40 @@
-import { IsInt, IsNotEmpty, Matches } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+} from 'class-validator';
 
-export class CreateMovieDto {
+export class CreateSeriesDto {
   @IsNotEmpty()
-  @Matches(/^[a-zA-Z0-9 ]{1,100}$/)
   title: string;
 
   @IsNotEmpty()
   description: string;
 
-  @IsNotEmpty()
   @IsInt()
   year: number;
-
   @IsNotEmpty()
   duration: string;
 
-  @IsNotEmpty()
-  @IsInt()
+  status?: string;
+
+  @IsNumber()
   rating: number;
 
-  @IsNotEmpty()
-  imdb_id: string;
-
-  stars?: string[];
+  stars: string[];
 
   director?: string;
 
   images_url?: string[];
 
+  @IsArray()
   genre: string[];
 
   has_subtitle?: boolean;
 
   has_dub?: boolean;
+
+  @IsNotEmpty()
+  imdb_id: string;
 }

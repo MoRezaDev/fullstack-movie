@@ -13,9 +13,7 @@ export class MovieService {
   }
 
   async findAll() {
-    return await this.databaseService.movie.findMany({
-      include: { download_links: true },
-    });
+    return await this.databaseService.movie.findMany();
   }
 
   async findOne(id: number) {

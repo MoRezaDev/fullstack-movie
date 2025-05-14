@@ -1,0 +1,14 @@
+model WatchList {
+    id String @id @default(uuid())
+    title String
+    description String?
+
+    posts Post[]
+
+    userId String @unique
+    user User @relation(fields: [userId],references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+}

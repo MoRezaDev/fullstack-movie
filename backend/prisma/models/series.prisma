@@ -1,7 +1,6 @@
 model Series {
     id String @id @default(uuid())
     title String
-    slug String
     description String
     year Int
     duration String
@@ -14,6 +13,9 @@ model Series {
     has_subtitle Boolean @default(false)
     has_dub Boolean @default(false)
     imdb_id String @unique 
+
+    postId String? @unique
+    post Post? @relation(fields: [postId], references: [id])
 
 
     createdAt DateTime @default(now())

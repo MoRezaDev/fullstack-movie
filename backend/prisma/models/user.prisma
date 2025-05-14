@@ -4,6 +4,8 @@ model User {
 
     otp Otp?
 
+    watchlist WatchList?
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

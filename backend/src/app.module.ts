@@ -8,7 +8,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { MovieModule } from './modules/movie/movie.module';
 import { PostModule } from './post/post.module';
-
+import { SeriesModule } from './modules/series/series.module';
 
 @Module({
   imports: [
@@ -25,6 +25,7 @@ import { PostModule } from './post/post.module';
     }),
     MovieModule,
     PostModule,
+    SeriesModule,
   ],
   controllers: [AppController],
   providers: [
