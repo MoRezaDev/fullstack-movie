@@ -16,16 +16,19 @@ export class MovieService {
     return await this.databaseService.movie.findMany();
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} movie`;
+  async findOne(id: string) {
+    return await this.databaseService.movie.findUnique({ where: { id } });
   }
 
-  async update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+  async update(id: string, updateMovieDto: UpdateMovieDto) {
+    return await this.databaseService.movie.update({
+      where: { id },
+      data: updateMovieDto,
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} movie`;
+  async remove(id: string) {
+    return await this.databaseService.movie.delete({where: {id}})
   }
 
   async removeAll() {

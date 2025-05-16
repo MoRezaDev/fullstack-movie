@@ -9,6 +9,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { MovieModule } from './modules/movie/movie.module';
 import { PostModule } from './post/post.module';
 import { SeriesModule } from './modules/series/series.module';
+import { AnimeModule } from './modules/anime/anime.module';
+import { WatchlistModule } from './modules/watchlist/watchlist.module';
+import { LikeModule } from './modules/like/like.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { SeriesModule } from './modules/series/series.module';
     MovieModule,
     PostModule,
     SeriesModule,
+    AnimeModule,
+    WatchlistModule,
+    LikeModule,
   ],
   controllers: [AppController],
   providers: [

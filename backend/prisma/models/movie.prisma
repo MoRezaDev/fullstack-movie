@@ -5,7 +5,7 @@ model Movie {
     description String
     year Int
     duration String
-    rating Float
+    rating String @default("N/A")
     stars String[]
     director String @default("N/A")
     images_url String[]

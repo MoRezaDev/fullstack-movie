@@ -5,7 +5,6 @@ model Anime {
     year Int
     duration String
     status String @default("N/A")
-    rating Float
     stars String[]
     director String @default("N/A")
     images_url String[]
@@ -13,7 +12,9 @@ model Anime {
     has_subtitle Boolean @default(false)
     has_dub Boolean @default(false)
     imdb_id String @unique 
+    imdb_rating String @default("N/A")
     mal_id  String @unique
+    mal_rating String @default("N/A")
 
     postId String? @unique
     post Post? @relation(fields: [postId], references: [id])

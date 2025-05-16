@@ -1,9 +1,4 @@
-import {
-  IsArray,
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-} from 'class-validator';
+import { IsArray, IsInt, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateSeriesDto {
   @IsNotEmpty()
@@ -19,8 +14,7 @@ export class CreateSeriesDto {
 
   status?: string;
 
-  @IsNumber()
-  rating: number;
+  rating?: string;
 
   stars: string[];
 

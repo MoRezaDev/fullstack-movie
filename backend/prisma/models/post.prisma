@@ -10,11 +10,17 @@ model Post {
 
     watchlist WatchList[]
 
+
     movie Movie?
 
     anime Anime?
 
     series Series?
+
+    likes Like[]
+    like_count Int @default(0)
+
+    views Int @default(0)
     
 
     download_links DownloadLink[]

@@ -5,9 +5,11 @@ export class CreatePostDto {
   title: string;
 
   @IsNotEmpty()
+  slug: string;
+
+  @IsNotEmpty()
   description: string;
 
-  @IsBoolean()
   is_premium?: boolean;
 
   extra_info?: string;

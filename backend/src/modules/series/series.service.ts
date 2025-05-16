@@ -6,23 +6,26 @@ import { DatabaseService } from '../database/database.service';
 @Injectable()
 export class SeriesService {
   constructor(private databaseService: DatabaseService) {}
-  create(createSeriesDto: CreateSeriesDto) {
-    return 'This action adds a new series';
+  async create(createSeriesDto: CreateSeriesDto) {
+    return await this.databaseService.series.create({ data: createSeriesDto });
   }
 
-  findAll() {
-    return `This action returns all series`;
+  async findAll() {
+    return await this.databaseService.series.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} series`;
+  async findOne(id: string) {
+    return await this.databaseService.series.findUnique({ where: { id } });
   }
 
-  update(id: number, updateSeriesDto: UpdateSeriesDto) {
-    return `This action updates a #${id} series`;
+  async update(id: string, updateSeriesDto: UpdateSeriesDto) {
+    return await this.databaseService.series.update({
+      where: { id },
+      data: updateSeriesDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} series`;
+  async remove(id: string) {
+    return await this.databaseService.series.delete({ where: { id } });
   }
 }

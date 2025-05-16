@@ -5,7 +5,7 @@ model Series {
     year Int
     duration String
     status String @default("N/A")
-    rating Float
+    rating String @default("N/A")
     stars String[]
     director String @default("N/A")
     images_url String[]
@@ -21,7 +21,7 @@ model Series {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-     @@index([genre],type : Hash)
+    @@index([genre],type : Hash)
     @@index([title],type : Hash)
     @@index([imdb_id],type : Hash)
 }

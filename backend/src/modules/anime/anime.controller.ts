@@ -1,0 +1,46 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+} from '@nestjs/common';
+import { AnimeService } from './anime.service';
+import { CreateAnimeDto } from './dto/create-anime.dto';
+import { UpdateAnimeDto } from './dto/update-anime.dto';
+
+@Controller('anime')
+export class AnimeController {
+  constructor(private readonly animeService: AnimeService) {}
+
+  @Post()
+  async create(@Body(new ValidationPipe()) createAnimeDto: CreateAnimeDto) {
+    return this.animeService.create(createAnimeDto);
+  }
+
+  @Get()
+  async findAll() {
+    return this.animeService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.animeService.findOne(id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateAnimeDto: UpdateAnimeDto,
+  ) {
+    return this.animeService.update(id, updateAnimeDto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.animeService.remove(id);
+  }
+}

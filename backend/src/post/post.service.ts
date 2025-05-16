@@ -15,22 +15,37 @@ export class PostService {
   async findAll() {
     return await this.databaseService.post.findMany({
       include: {
-        anime: true,
-        movie: true,
-        series: true,
+        anime: { where: { NOT: { title: undefined } } },
+        movie: { where: { NOT: { title: undefined } } },
+        series: { where: { NOT: { title: undefined } } },
+        likes: true,
       },
     });
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: string) {
+    return await this.databaseService.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        anime: { where: { NOT: { title: undefined } } },
+        movie: { where: { NOT: { title: undefined } } },
+        series: { where: { NOT: { title: undefined } } },
+      },
+    });
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: string, updatePostDto: UpdatePostDto) {
+    return await this.databaseService.post.update({
+      where: {
+        id,
+      },
+      data: updatePostDto,
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: string) {
+    return await this.databaseService.post.delete({ where: { id } });
   }
 }

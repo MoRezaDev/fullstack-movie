@@ -1,0 +1,13 @@
+model Like {
+
+    userId String @unique
+    user User @relation(fields: [userId],references: [id])
+
+    postId String @unique
+    post Post @relation(fields: [postId],references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@id([userId, postId]) // composite primary key
+}
