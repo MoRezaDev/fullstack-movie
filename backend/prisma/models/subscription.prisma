@@ -1,0 +1,18 @@
+model Subscription {
+    id String @id @default(uuid())
+    transaction_code String @unique
+    amount Int
+    status Status @default(pending)
+    
+
+    userId String @unique
+    user User @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Status {
+    success
+    pending
+}
