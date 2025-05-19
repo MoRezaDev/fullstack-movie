@@ -10,3 +10,9 @@ backend/prisma/migrations
 front/node_modules
 front/.next
 front/build
+
+#admin
+admin/node_modules
+admin/dist
+dist-ssr
+admin/*.local

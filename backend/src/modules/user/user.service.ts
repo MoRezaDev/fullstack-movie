@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DatabaseService } from 'src/modules/database/database.service';
+import { SubscribeDto } from './dto/create-subscribe.dto';
 
 @Injectable()
 export class UserService {
@@ -33,6 +34,13 @@ export class UserService {
 
   async remove(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async addSubscribe(subscribeDto: SubscribeDto) {
+    return await this.databaseService.user.update({
+      where: { id: subscribeDto.userId },
+      data: subscribeDto,
+    });
   }
 
   //utility functions

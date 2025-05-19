@@ -17,6 +17,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Post('sub')
+  async addSubscribe() {}
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
