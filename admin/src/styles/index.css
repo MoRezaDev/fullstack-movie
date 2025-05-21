@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "yekan";
+  src: url(fonts/yekan.woff) format("woff");
+}
+
+@font-face {
+  font-family: "yekan-bold";
+  src: url(fonts/yekan-bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "yekan-medium";
+  src: url(fonts/yekan-medium.woff) format("woff");
+}
