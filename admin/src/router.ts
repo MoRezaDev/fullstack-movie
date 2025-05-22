@@ -6,6 +6,7 @@ import Signup from "./modules/auth/ui/Signup";
 import AuthLayout from "./modules/auth/ui/AuthLayout";
 import NavigateToDashboard from "./modules/layout/ui/NavigateToDashboard";
 import Dashboard from "./modules/dashboard/ui/Dashboard";
+import NotFound from "./modules/layout/ui/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: NavigateToDashboard },
       { path: "dashboard", Component: Dashboard },
+      { path: "*", Component: NotFound },
     ],
   },
   {

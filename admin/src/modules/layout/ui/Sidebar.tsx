@@ -23,7 +23,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <div className="w-[240px] h-screen bg-[#111] text-gray-300 flex flex-col items-center py-6 gap-8 shadow-md">
+    <div className="w-[240px] border-l border-l-neutral-600 h-screen bg-neutral-900 text-gray-300 flex flex-col items-center py-6 gap-8 shadow-md">
       {/* Logo */}
       <div className="flex items-center gap-2 text-xl font-semibold text-white">
         <FaFilm className="text-[#38bdf8]" />
