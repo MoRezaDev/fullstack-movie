@@ -7,6 +7,7 @@ import AuthLayout from "./modules/auth/ui/AuthLayout";
 import NavigateToDashboard from "./modules/layout/ui/NavigateToDashboard";
 import Dashboard from "./modules/dashboard/ui/Dashboard";
 import NotFound from "./modules/layout/ui/NotFound";
+import MoviePostCreate from "./components/post/MoviePostCreate";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       { index: true, Component: NavigateToDashboard },
       { path: "dashboard", Component: Dashboard },
       { path: "*", Component: NotFound },
+      {
+        path: "new-post",
+        children: [{ path: "movie", Component: MoviePostCreate }],
+      },
     ],
   },
   {

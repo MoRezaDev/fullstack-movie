@@ -8,7 +8,7 @@ export default function RootLayout() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 h-screen">
+        <div className="flex-1 min-h-screen">
           <Navbar />
           <Outlet />
         </div>

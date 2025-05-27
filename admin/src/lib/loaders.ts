@@ -12,7 +12,7 @@ export async function rootLayoutLoader() {
 export async function authLoader() {
   const session = await getUserSession();
   if (session) {
-    return redirect("/");
+    return redirect("/"); 
   }
   return session;
 }

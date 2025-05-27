@@ -5,7 +5,6 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  CartesianGrid,
 } from "recharts";
 
 const data = [
@@ -22,7 +21,7 @@ const PostsBarChart = () => {
         <XAxis dataKey="name" stroke="#aaa" />
         <YAxis stroke="#aaa" />
         <Tooltip
-          cursor={{fill: "transparent"}}
+          cursor={{ fill: "transparent" }}
           contentStyle={{
             backgroundColor: "#222",
             borderColor: "#333",
