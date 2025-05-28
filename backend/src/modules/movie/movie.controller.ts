@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -30,6 +31,10 @@ export class MovieController {
     return this.movieService.removeAll();
   }
 
+  @Get('find-add')
+  async addOrFindMovie(@Query('imdb_id') imdb_id: string) {
+    return await this.movieService.addOrFindMovie(imdb_id);
+  }
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.movieService.findOne(id);

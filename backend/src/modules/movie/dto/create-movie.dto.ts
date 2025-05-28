@@ -31,4 +31,6 @@ export class CreateMovieDto {
   has_subtitle?: boolean;
 
   has_dub?: boolean;
+
+  poster?: string;
 }

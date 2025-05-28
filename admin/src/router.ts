@@ -8,6 +8,8 @@ import NavigateToDashboard from "./modules/layout/ui/NavigateToDashboard";
 import Dashboard from "./modules/dashboard/ui/Dashboard";
 import NotFound from "./modules/layout/ui/NotFound";
 import MoviePostCreate from "./components/post/MoviePostCreate";
+import { findOrAddMovieAction } from "./lib/actions";
+import ErrorMoviePage from "./components/post/ErrorMoviePage";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +21,14 @@ export const router = createBrowserRouter([
       { path: "*", Component: NotFound },
       {
         path: "new-post",
-        children: [{ path: "movie", Component: MoviePostCreate }],
+        children: [
+          {
+            path: "movie",
+            Component: MoviePostCreate,
+            action: findOrAddMovieAction,
+            ErrorBoundary: ErrorMoviePage,
+          },
+        ],
       },
     ],
   },
