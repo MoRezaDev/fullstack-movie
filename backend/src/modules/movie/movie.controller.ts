@@ -35,6 +35,12 @@ export class MovieController {
   async addOrFindMovie(@Query('imdb_id') imdb_id: string) {
     return await this.movieService.addOrFindMovie(imdb_id);
   }
+
+  @Post('translate')
+  async translateMovieDescription(@Body('description') description: string) {
+    return await this.movieService.translateMovieDescription(description);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.movieService.findOne(id);

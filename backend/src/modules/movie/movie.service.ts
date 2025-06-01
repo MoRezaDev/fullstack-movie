@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import * as fsSync from 'fs';
+import OpenAI from 'openai';
 
 @Injectable()
 export class MovieService {
@@ -80,9 +81,14 @@ export class MovieService {
       writer.on('error', reject);
     });
 
+    //create translator
+    const translatedDescription = await this.translateMovieDescription(
+      data.Plot,
+    );
+
     const movie = await this.create({
       title: data.Title,
-      description: data.Plot,
+      description: translatedDescription ?? data.Plot,
       imdb_id: data.imdbID,
       duration: data.Runtime,
       poster: `http://localhost:3001/content/movie/${imdb_id}/poster.jpg`,
@@ -93,5 +99,24 @@ export class MovieService {
       stars: data.Actors.split(', '),
     });
     return movie;
+  }
+
+  async translateMovieDescription(description: string) {
+    const openai = new OpenAI({
+      baseURL: 'https://api.aimlapi.com/v1',
+      apiKey: `${process.env.ML_API_KEY}`,
+    });
+
+    const response = await openai.chat.completions.create({
+      model: 'chatgpt-4o-latest',
+      messages: [
+        {
+          role: 'user',
+          content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${description}. and please in response just show me the translated text without any other text or answers**`,
+        },
+      ],
+    });
+
+    return response.choices[0].message.content;
   }
 }
