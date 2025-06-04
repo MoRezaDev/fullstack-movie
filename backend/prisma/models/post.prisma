@@ -4,6 +4,7 @@ model Post {
     slug String @unique
     description String
     is_premium Boolean @default(false)
+    status String?
 
     extra_info String?
     download_info String?

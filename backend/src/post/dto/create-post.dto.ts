@@ -16,6 +16,8 @@ export class CreatePostDto {
 
   download_info?: string;
 
+  status?: string;
+
   movie?: {
     connect: {
       id: string;

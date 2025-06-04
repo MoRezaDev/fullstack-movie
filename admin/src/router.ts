@@ -7,7 +7,7 @@ import AuthLayout from "./modules/auth/ui/AuthLayout";
 import NavigateToDashboard from "./modules/layout/ui/NavigateToDashboard";
 import Dashboard from "./modules/dashboard/ui/Dashboard";
 import NotFound from "./modules/layout/ui/NotFound";
-import MoviePostCreate from "./components/post/MoviePostCreate";
+import MoviePostCreate from "./modules/post/ui/create/DownloadLinksMoviePostForm";
 import { findOrAddMovieAction } from "./lib/actions";
 import ErrorMoviePage from "./components/post/ErrorMoviePage";
 

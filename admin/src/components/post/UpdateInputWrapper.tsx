@@ -4,7 +4,7 @@ export default function UpdateInputWrapper({
   disabled = false,
 }: {
   label: string;
-  defaultValue: string | number | undefined;
+  defaultValue?: string | number;
   disabled?: boolean;
 }) {
   return (
