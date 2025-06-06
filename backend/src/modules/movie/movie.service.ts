@@ -97,6 +97,7 @@ export class MovieService {
       rating: data.imdbRating,
       director: data.Director,
       stars: data.Actors.split(', '),
+      language: data.language.split(', '),
     });
     return movie;
   }

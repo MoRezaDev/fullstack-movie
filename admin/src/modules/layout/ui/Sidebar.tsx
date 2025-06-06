@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router";
 import { useState } from "react";
+import { FaNoteSticky } from "react-icons/fa6";
 
 const menuItems = [
   { label: "کاربران", icon: <FaUserFriends />, to: "/users" },
@@ -26,7 +27,7 @@ export default function Sidebar() {
   const toggleSubMenu = () => setShowSubMenu(!showSubMenu);
 
   return (
-    <div className="hidden md:flex w-[180px] border-l border-l-neutral-600 min-h-screen bg-neutral-900 text-gray-300 flex-col items-center py-6 gap-8 shadow-md">
+    <div className="hidden md:flex w-[180px] border-l border-l-neutral-600 min-h-screen bg-neutral-900 text-gray-300 flex-col items-center py-6 gap-8 shadow-md ">
       {/* Logo */}
       <div className="flex items-center gap-2 text-xl font-semibold text-white">
         <FaFilm className="text-[#38bdf8]" />
@@ -50,12 +51,26 @@ export default function Sidebar() {
           </span>
           <span>داشبورد</span>
         </Link>
+        <Link
+          to="/posts/new"
+          className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
+            ${
+              location.pathname === "/posts/new"
+                ? "bg-[#1e90ff]/90 text-white font-bold"
+                : "hover:bg-white/10"
+            }`}
+        >
+          <span className="text-base">
+            <FaNoteSticky />
+          </span>
+          <span>افزودن پست</span>
+        </Link>
 
         {/* New Post with SubMenu */}
         <div className="flex flex-col gap-1">
           <button
             onClick={toggleSubMenu}
-            className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200 justify-between text-left w-full
+            className={`flex items-center gap-3 p-2 rounded-md text-xs transition-colors duration-200 justify-between text-left w-full
               ${
                 location.pathname.includes("/new-post")
                   ? "bg-[#1e90ff]/90 text-white font-bold"
@@ -64,7 +79,7 @@ export default function Sidebar() {
           >
             <div className="flex items-center gap-3">
               <FaPlusCircle className="text-base" />
-              <span>پست جدید</span>
+              <span>افزودن محتوا</span>
             </div>
             <FaChevronDown
               className={`transition-transform duration-300 ${

@@ -2,8 +2,21 @@ import { useFetcher } from "react-router";
 import { movieType } from "../../../../common/types";
 import UpdateInputWrapper from "../../../../components/post/UpdateInputWrapper";
 
-export default function CreateMoviePostForm({ movie }: { movie: movieType }) {
+async function w8() {
+  return new Promise((res) => setTimeout(() => res, 3000));
+}
+
+export default function CreateMovieForm({ movie }: { movie: movieType }) {
   const fetcher = useFetcher();
+
+  async function b() {
+    console.log("before calling w8");
+
+    await w8();
+    console.log("after calling w8");
+  }
+
+  b().then(() => console.log("after calling b"));
 
   return (
     <fetcher.Form className="max-w-5xl mx-auto bg-neutral-900 p-4 rounded-md flex flex-col gap-4 ">
@@ -11,7 +24,6 @@ export default function CreateMoviePostForm({ movie }: { movie: movieType }) {
 
       {/* adding title */}
       <UpdateInputWrapper defaultValue={movie.title} label="عنوان" />
-      <UpdateInputWrapper label="توضیحات بنر" />
 
       {/* adding description */}
       <div className="flex flex-col gap-2">
@@ -32,9 +44,6 @@ export default function CreateMoviePostForm({ movie }: { movie: movieType }) {
           defaultValue={movie.imdb_id}
         />
         <UpdateInputWrapper label="نمره" defaultValue={movie.rating} />
-        <UpdateInputWrapper label="وضعیت پخش" />
-
-        
       </div>
     </fetcher.Form>
   );
