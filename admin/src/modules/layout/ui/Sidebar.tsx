@@ -94,9 +94,9 @@ export default function Sidebar() {
             }`}
           >
             <Link
-              to="/new-post/movie"
+              to="/movies/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
-                location.pathname === "/new-post/movie"
+                location.pathname === "/movies/new"
                   ? "bg-[#1e90ff]/90 text-white font-bold"
                   : "hover:bg-white/10"
               }`}
@@ -104,9 +104,9 @@ export default function Sidebar() {
               فیلم
             </Link>
             <Link
-              to="/new-post/series"
+              to="/movies/series"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
-                location.pathname === "/new-post/series"
+                location.pathname === "/movies/series"
                   ? "bg-[#1e90ff]/90 text-white font-bold"
                   : "hover:bg-white/10"
               }`}
@@ -114,9 +114,9 @@ export default function Sidebar() {
               سریال
             </Link>
             <Link
-              to="/new-post/anime"
+              to="/movies/anime"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
-                location.pathname === "/new-post/anime"
+                location.pathname === "/movies/anime"
                   ? "bg-[#1e90ff]/90 text-white font-bold"
                   : "hover:bg-white/10"
               }`}
@@ -125,6 +125,23 @@ export default function Sidebar() {
             </Link>
           </div>
         </div>
+
+        {/* Movies, Animes, Series Section */}
+        
+        <Link
+          to="/dashboard"
+          className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
+            ${
+              location.pathname === "/dashboard"
+                ? "bg-[#1e90ff]/90 text-white font-bold"
+                : "hover:bg-white/10"
+            }`}
+        >
+          <span className="text-base">
+            <FaTachometerAlt />
+          </span>
+          <span>داشبورد</span>
+        </Link>
 
         {/* Other Menu Items */}
         {menuItems.map((item, index) => {

@@ -58,8 +58,8 @@ export class MovieService {
       `${process.env.MOVIE_BASE_URL}i=${imdb_id}` || '',
     );
 
-    if (typeof data === 'string')
-      throw new HttpException('Movie not found', 404);
+    if (typeof data === 'string' || data.Error)
+      throw new HttpException(data.Error ?? 'Movie not found', 404);
 
     const staticPath = path.join(
       process.cwd(),
@@ -69,6 +69,7 @@ export class MovieService {
       'movie',
       imdb_id,
     );
+    console.log('ajab');
     const imagePath = path.join(staticPath, 'poster.jpg');
     fsSync.mkdirSync(staticPath, { recursive: true });
     const writer = fsSync.createWriteStream(imagePath);
@@ -97,7 +98,7 @@ export class MovieService {
       rating: data.imdbRating,
       director: data.Director,
       stars: data.Actors.split(', '),
-      language: data.language.split(', '),
+      language: data.Language.split(', '),
     });
     return movie;
   }

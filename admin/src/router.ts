@@ -7,9 +7,10 @@ import AuthLayout from "./modules/auth/ui/AuthLayout";
 import NavigateToDashboard from "./modules/layout/ui/NavigateToDashboard";
 import Dashboard from "./modules/dashboard/ui/Dashboard";
 import NotFound from "./modules/layout/ui/NotFound";
-import MoviePostCreate from "./modules/movie/ui/create/MoviePostCreate";
+import CreateMovie from "./modules/movie/ui/create/CreateMovie";
+import UpdateMovie from "./modules/movie/ui/update/UpdateMovie";
 import { findOrAddMovieAction } from "./lib/actions";
-import ErrorMoviePage from "./components/post/ErrorMoviePage";
+import Movie from "./modules/movie/ui/Movie";
 
 export const router = createBrowserRouter([
   {
@@ -20,14 +21,11 @@ export const router = createBrowserRouter([
       { path: "dashboard", Component: Dashboard },
       { path: "*", Component: NotFound },
       {
-        path: "new-post",
+        path: "movies",
         children: [
-          {
-            path: "movie",
-            Component: MoviePostCreate,
-            action: findOrAddMovieAction,
-            ErrorBoundary: ErrorMoviePage,
-          },
+          { path: "new", Component: CreateMovie, action: findOrAddMovieAction },
+          { path: "update", Component: UpdateMovie },
+          { index: true, Component: Movie },
         ],
       },
     ],

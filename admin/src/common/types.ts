@@ -24,4 +24,6 @@ export type movieType = {
   has_dub?: boolean;
 
   poster?: string;
+
+  language?: string[];
 };
