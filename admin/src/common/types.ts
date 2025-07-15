@@ -17,7 +17,7 @@ export type movieType = {
 
   images_url?: string[];
 
-  genre: string[];
+  genre: string[] | string;
 
   has_subtitle?: boolean;
 

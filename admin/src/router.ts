@@ -24,7 +24,10 @@ export const router = createBrowserRouter([
         path: "movies",
         children: [
           { path: "new", Component: CreateMovie, action: findOrAddMovieAction },
-          { path: "update", Component: UpdateMovie },
+          {
+            path: "update",
+            Component: UpdateMovie,
+          },
           { index: true, Component: Movie },
         ],
       },
