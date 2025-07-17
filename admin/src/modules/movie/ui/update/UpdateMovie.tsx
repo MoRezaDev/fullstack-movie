@@ -1,9 +1,12 @@
-import { Navigate, useFetcher, useLocation } from "react-router";
+import { Navigate, useFetcher, useLocation, useNavigate } from "react-router";
 import { movieType } from "../../../../common/types";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function UpdateMovie() {
   const location = useLocation();
   const data = location.state as movieType;
+  const navigate = useNavigate();
 
   const fetcher = useFetcher();
 
@@ -16,18 +19,34 @@ export default function UpdateMovie() {
     "Romance",
   ];
 
-  console.log("state of location", data);
+  useEffect(() => {
+    if (fetcher.data?.success && fetcher.state === "idle") {
+      toast.success("انجام شد، شما در حال رفتن به صفحه فیلم ها هستید");
+
+      const timerId = setTimeout(() => {
+        navigate("/movies");
+      }, 3000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [navigate, fetcher.state, fetcher.data]);
+
+  console.log("fetcher data", fetcher.data);
 
   if (!data) {
     return <Navigate to={"/movies"} />;
   }
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 text-sm ">
       <h1 className="text-2xl mb-4">فرم تغییر اطلاعات فیلم</h1>
-      <fetcher.Form className="grid md:grid-cols-3 bg-neutral-900 p-4 gap-4">
+      <fetcher.Form
+        method="post"
+        className="grid md:grid-cols-3 bg-neutral-900 p-4 gap-4"
+      >
         <div className="flex flex-col">
           <label>عنوان</label>
           <input
+            name="title"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.title ?? ""}
@@ -36,7 +55,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>آیدی Imdb</label>
           <input
-            disabled
+            name="imdb_id"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.imdb_id ?? ""}
@@ -45,6 +64,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>نمره</label>
           <input
+            name="rating"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.rating ?? ""}
@@ -53,6 +73,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col col-span-3">
           <label>توضیحات</label>
           <textarea
+            name="description"
             className="bg-neutral-800 p-2 rounded-lg h-38"
             defaultValue={data.description ?? ""}
           />
@@ -60,6 +81,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>کارگردان</label>
           <input
+            name="director"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.director ?? ""}
@@ -68,6 +90,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>مدت زمان</label>
           <input
+            name="duration"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.duration ?? ""}
@@ -76,6 +99,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>زبان</label>
           <input
+            name="language"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.language ?? ""}
@@ -85,6 +109,7 @@ export default function UpdateMovie() {
         <div className="flex flex-col">
           <label>ستارگان</label>
           <input
+            name="stars"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
             defaultValue={data.stars ?? ""}
@@ -95,8 +120,8 @@ export default function UpdateMovie() {
           <label>زیرنویس</label>
           <select
             className="bg-neutral-800 text-white p-2 rounded-lg border-2"
-            defaultValue={data.has_subtitle ? "دارد" : "ندارد"}
-            name="has_sub"
+            defaultValue={data.has_subtitle ? "true" : "false"}
+            name="has_subtitle"
           >
             <option value="true">دارد</option>
             <option value="false">ندارد</option>
@@ -107,7 +132,7 @@ export default function UpdateMovie() {
           <label>دوبله</label>
           <select
             className="bg-neutral-800 text-white p-2 rounded-lg border-2"
-            defaultValue={data.has_dub ? "دارد" : "ندارد"}
+            defaultValue={data.has_dub ? "true" : "false"}
             name="has_dub"
           >
             <option value="true">دارد</option>
@@ -135,9 +160,18 @@ export default function UpdateMovie() {
 
         <div></div>
 
-        
+        <div className="col-span-3">
+          <label>پوستر</label>
+          <img src={data.poster} className="object-cover size-[160px]" />
+        </div>
 
-        <button type="submit">Sub</button>
+        <button
+          disabled={fetcher.state !== "idle"}
+          className="bg-blue-500 w-fit p-1 rounded-lg transition cursor-pointer hover:bg-blue-400"
+          type="submit"
+        >
+          {fetcher.state !== "idle" ? "لطفا صبر کنید" : "بروزرسانی"}
+        </button>
       </fetcher.Form>
     </div>
   );

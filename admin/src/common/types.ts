@@ -11,7 +11,7 @@ export type movieType = {
 
   imdb_id: string;
 
-  stars?: string[];
+  stars?: string | string[];
 
   director?: string;
 
@@ -25,5 +25,5 @@ export type movieType = {
 
   poster?: string;
 
-  language?: string[];
+  language?: string[] | string;
 };

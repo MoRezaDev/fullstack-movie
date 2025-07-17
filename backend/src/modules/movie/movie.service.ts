@@ -21,7 +21,7 @@ export class MovieService {
   }
 
   async findAll() {
-    return await this.databaseService.movie.findMany();
+    return await this.databaseService.movie.findMany({orderBy: {createdAt: 'desc'}});
   }
 
   async findOne(id: string) {
@@ -29,9 +29,11 @@ export class MovieService {
   }
 
   async update(id: string, updateMovieDto: UpdateMovieDto) {
+    const movie = await this.findById(id);
+
     return await this.databaseService.movie.update({
-      where: { id },
-      data: updateMovieDto,
+      where: { imdb_id: movie.imdb_id },
+      data: { ...updateMovieDto },
     });
   }
 
@@ -45,7 +47,12 @@ export class MovieService {
 
   //for admin features
   async findById(imdb_id: string) {
-    return await this.databaseService.movie.findUnique({ where: { imdb_id } });
+    const movie = await this.databaseService.movie.findUnique({
+      where: { imdb_id },
+    });
+    if (!imdb_id || !movie)
+      throw new HttpException('movie not found with this Id', 404);
+    return movie;
   }
 
   async addOrFindMovie(imdb_id: string) {
@@ -69,7 +76,6 @@ export class MovieService {
       'movie',
       imdb_id,
     );
-    console.log('ajab');
     const imagePath = path.join(staticPath, 'poster.jpg');
     fsSync.mkdirSync(staticPath, { recursive: true });
     const writer = fsSync.createWriteStream(imagePath);
