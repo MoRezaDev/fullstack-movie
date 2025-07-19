@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import * as fsSync from 'fs';
 import OpenAI from 'openai';
+import Together from 'together-ai';
 
 @Injectable()
 export class MovieService {
@@ -21,7 +22,9 @@ export class MovieService {
   }
 
   async findAll() {
-    return await this.databaseService.movie.findMany({orderBy: {createdAt: 'desc'}});
+    return await this.databaseService.movie.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   async findOne(id: string) {
@@ -56,7 +59,9 @@ export class MovieService {
   }
 
   async addOrFindMovie(imdb_id: string) {
-    const foundedMovie = await this.findById(imdb_id);
+    const foundedMovie = await this.databaseService.movie.findUnique({
+      where: { imdb_id },
+    });
     if (foundedMovie) {
       return foundedMovie;
     }
@@ -65,8 +70,9 @@ export class MovieService {
       `${process.env.MOVIE_BASE_URL}i=${imdb_id}` || '',
     );
 
-    if (typeof data === 'string' || data.Error)
+    if (typeof data === 'string' || data.Error) {
       throw new HttpException(data.Error ?? 'Movie not found', 404);
+    }
 
     const staticPath = path.join(
       process.cwd(),
@@ -93,38 +99,47 @@ export class MovieService {
       data.Plot,
     );
 
-    const movie = await this.create({
-      title: data.Title,
-      description: translatedDescription ?? data.Plot,
-      imdb_id: data.imdbID,
-      duration: data.Runtime,
-      poster: `http://localhost:3001/content/movie/${imdb_id}/poster.jpg`,
-      genre: data.Genre.split(', '),
-      year: +data.Year,
-      rating: data.imdbRating,
-      director: data.Director,
-      stars: data.Actors.split(', '),
-      language: data.Language.split(', '),
+    const movie = await this.databaseService.movie.create({
+      data: {
+        title: data.Title,
+        description: translatedDescription ?? data.Plot,
+        imdb_id: data.imdbID,
+        duration: data.Runtime,
+        poster: `http://localhost:3001/content/movie/${imdb_id}/poster.jpg`,
+        genre: data.Genre.split(', '),
+        year: +data.Year,
+        rating: data.imdbRating,
+        director: data.Director,
+        stars: data.Actors.split(', '),
+        language: data.Language.split(', '),
+      },
     });
+    console.log('movie!!!!', movie);
+
     return movie;
   }
 
   async translateMovieDescription(description: string) {
-    const openai = new OpenAI({
-      baseURL: 'https://api.aimlapi.com/v1',
-      apiKey: `${process.env.ML_API_KEY}`,
-    });
+    // const openai = new OpenAI({
+    //   baseURL: 'https://api.aimlapi.com/v1',
+    //   apiKey: `${process.env.ML_API_KEY}`,
+    // });
 
-    const response = await openai.chat.completions.create({
-      model: 'chatgpt-4o-latest',
-      messages: [
-        {
-          role: 'user',
-          content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${description}. and please in response just show me the translated text without any other text or answers**`,
-        },
-      ],
-    });
+    const together = new Together();
+    try {
+      const response = await together.chat.completions.create({
+        model: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
+        messages: [
+          {
+            role: 'user',
+            content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${description}. and please in response just show me the translated text without any other text or answers**`,
+          },
+        ],
+      });
 
-    return response.choices[0].message.content;
+      return response.choices[0].message?.content;
+    } catch (err) {
+      console.log('errrrrrrrr', err);
+    }
   }
 }

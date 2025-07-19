@@ -11,13 +11,14 @@ import CreateMovie from "./modules/movie/ui/create/CreateMovie";
 import UpdateMovie from "./modules/movie/ui/update/UpdateMovie";
 import { findOrAddMovieAction, updateMovieAction } from "./lib/actions";
 import Movie from "./modules/movie/ui/Movie";
-import LoadingMovie from "./modules/movie/ui/LoadingMovie";
 import ErrorPage from "./components/ErrorPage";
+import GlobalLoading from "./components/GlobalLoading";
 
 export const router = createBrowserRouter([
   {
     Component: RootLayout,
     loader: rootLayoutLoader,
+    HydrateFallback: GlobalLoading,
     errorElement: ErrorPage(),
     children: [
       { index: true, Component: NavigateToDashboard },
@@ -37,7 +38,6 @@ export const router = createBrowserRouter([
             index: true,
             Component: Movie,
             loader: MoviesLoader,
-            hydrateFallbackElement: LoadingMovie(),
           },
         ],
       },

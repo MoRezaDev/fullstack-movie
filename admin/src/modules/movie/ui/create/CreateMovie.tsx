@@ -31,9 +31,14 @@ export default function CreateMovie() {
           />
           <button
             type="submit"
-            className="px-2 py-1 hover:cursor-pointer bg-blue-500 rounded-md"
+            className="bg-indigo-500 ...  w-[200px]"
+            disabled
           >
-            جستجو
+            <svg
+              className="mr-3 size-5 animate-spin ..."
+              viewBox="0 0 24 24"
+            ></svg>
+            Processing…
           </button>
         </div>
       </section>
