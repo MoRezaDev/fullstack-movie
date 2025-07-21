@@ -26,4 +26,6 @@ export type movieType = {
   poster?: string;
 
   language?: string[] | string;
+
+  createdAt: string | number;
 };
