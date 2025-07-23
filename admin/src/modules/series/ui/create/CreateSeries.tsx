@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useFetcher, useNavigate } from "react-router";
 import { toast } from "sonner";
 
-export default function CreateMovie() {
+export default function CreateSeries() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   console.log(fetcher.data);

@@ -1,6 +1,9 @@
 import { HttpException } from '@nestjs/common';
+import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
+import { finished } from 'stream/promises';
+import Together from 'together-ai';
 
 export async function deleteFolderWithFiles(path: string) {
   fs.rm(path, { recursive: true, force: true }, (err) => {
@@ -49,4 +52,56 @@ export async function deleteAnimeFolder(id: string) {
   fs.rm(staticPath, { recursive: true, force: true }, (err) => {
     if (err) throw new HttpException(err, 500);
   });
+}
+
+export async function SavePoster(
+  imageLink: string,
+  id: string,
+  type: 'movie' | 'series' | 'anime',
+) {
+  if (!imageLink || !id || !type)
+    throw new HttpException('invalid arguments', 403);
+
+  const staticPath = path.join(
+    process.cwd(),
+    'src',
+    'public',
+    'content',
+    type,
+    id,
+  );
+  const imagePath = path.join(staticPath, 'poster.jpg');
+  fs.mkdirSync(staticPath, { recursive: true });
+
+  //creating Stream file
+  const writer = fs.createWriteStream(imagePath);
+
+  try {
+    const response = await axios.get(imageLink, { responseType: 'stream' });
+    response.data.pipe(writer);
+    await finished(writer);
+  } catch (err) {
+    throw new HttpException(
+      err.message ?? 'something wrong on saving file',
+      500,
+    );
+  }
+  return `http://localhost:3001/content/${type}/${id}/poster.jpg`;
+}
+
+export async function translatePersian(content: string) {
+  const together = new Together();
+  try {
+    const response = await together.chat.completions.create({
+      model: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${description}. and please in response just show me the translated text without any other text or answers**`,
+        },
+      ],
+    });
+
+    return response.choices[0].message?.content;
+  } catch (err) {}
 }

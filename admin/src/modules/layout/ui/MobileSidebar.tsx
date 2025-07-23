@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
+import { BiMovie } from "react-icons/bi";
 
 export default function MobileSidebar({
   isOpen,
@@ -121,6 +122,10 @@ export default function MobileSidebar({
 
           {/* Other Menu Items */}
           {[
+            { label: "فیلم ها", icon: <BiMovie />, to: "/movies" },
+            { label: "سریال ها", icon: <BiMovie />, to: "/series" },
+            { label: "انیمه ها", icon: <BiMovie />, to: "/animes" },
+
             { label: "کاربران", icon: <FaUserFriends />, to: "/users" },
             { label: "کامنت ها", icon: <FaCommentDots />, to: "/comments" },
             { label: "درخواستی ها", icon: <FaInbox />, to: "/requests" },

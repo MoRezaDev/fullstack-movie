@@ -40,4 +40,7 @@ export class SeriesController {
   remove(@Param('id') id: string) {
     return this.seriesService.remove(id);
   }
+
+  //for admin
+  
 }

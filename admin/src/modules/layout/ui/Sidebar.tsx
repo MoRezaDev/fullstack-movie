@@ -104,7 +104,7 @@ export default function Sidebar() {
               فیلم
             </Link>
             <Link
-              to="/movies/series"
+              to="/series/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                 location.pathname === "/movies/series"
                   ? "bg-[#1e90ff]/90 text-white font-bold"
@@ -114,7 +114,7 @@ export default function Sidebar() {
               سریال
             </Link>
             <Link
-              to="/movies/anime"
+              to="/anime/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                 location.pathname === "/movies/anime"
                   ? "bg-[#1e90ff]/90 text-white font-bold"
@@ -127,12 +127,12 @@ export default function Sidebar() {
         </div>
 
         {/* Movies, Animes, Series Section */}
-        
+
         <Link
-          to="/dashboard"
+          to="/movies"
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
-              location.pathname === "/dashboard"
+              location.pathname === "/movies"
                 ? "bg-[#1e90ff]/90 text-white font-bold"
                 : "hover:bg-white/10"
             }`}
@@ -140,7 +140,37 @@ export default function Sidebar() {
           <span className="text-base">
             <FaTachometerAlt />
           </span>
-          <span>داشبورد</span>
+          <span>فیلم ها</span>
+        </Link>
+
+        <Link
+          to="/series"
+          className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
+            ${
+              location.pathname === "/series"
+                ? "bg-[#1e90ff]/90 text-white font-bold"
+                : "hover:bg-white/10"
+            }`}
+        >
+          <span className="text-base">
+            <FaTachometerAlt />
+          </span>
+          <span> سریال ها</span>
+        </Link>
+
+        <Link
+          to="/animes"
+          className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
+            ${
+              location.pathname === "/animes"
+                ? "bg-[#1e90ff]/90 text-white font-bold"
+                : "hover:bg-white/10"
+            }`}
+        >
+          <span className="text-base">
+            <FaTachometerAlt />
+          </span>
+          <span> انیمه ها</span>
         </Link>
 
         {/* Other Menu Items */}

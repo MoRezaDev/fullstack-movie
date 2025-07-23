@@ -13,6 +13,9 @@ import { findOrAddMovieAction, updateMovieAction } from "./lib/actions";
 import Movie from "./modules/movie/ui/Movie";
 import ErrorPage from "./components/ErrorPage";
 import GlobalLoading from "./components/GlobalLoading";
+import Series from "./modules/series/Series";
+import CreateSeries from "./modules/series/ui/create/CreateSeries";
+import UpdateSeries from "./modules/series/ui/update/UpdateSeries";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +42,14 @@ export const router = createBrowserRouter([
             Component: Movie,
             loader: MoviesLoader,
           },
+        ],
+      },
+      {
+        path: "series",
+        children: [
+          { index: true, Component: Series },
+          { path: "new", Component: CreateSeries },
+          { path: "update", Component: UpdateSeries },
         ],
       },
     ],

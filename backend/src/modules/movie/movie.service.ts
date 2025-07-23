@@ -6,7 +6,6 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import * as fsSync from 'fs';
-import OpenAI from 'openai';
 import Together from 'together-ai';
 
 @Injectable()
@@ -41,7 +40,13 @@ export class MovieService {
   }
 
   async remove(id: string) {
-    return await this.databaseService.movie.delete({ where: { id } });
+    try {
+      return await this.databaseService.movie.delete({
+        where: { imdb_id: id },
+      });
+    } catch (err) {
+      throw new HttpException('آیدی در دیتابیس یافت نشد', 404);
+    }
   }
 
   async removeAll() {
@@ -114,7 +119,6 @@ export class MovieService {
         language: data.Language.split(', '),
       },
     });
-    console.log('movie!!!!', movie);
 
     return movie;
   }
@@ -138,8 +142,6 @@ export class MovieService {
       });
 
       return response.choices[0].message?.content;
-    } catch (err) {
-      console.log('errrrrrrrr', err);
-    }
+    } catch (err) {}
   }
 }
