@@ -9,7 +9,7 @@ export default function CreateSeries() {
 
   useEffect(() => {
     if (fetcher.data && !fetcher.data.error) {
-      navigate("/movies/update", {
+      navigate("/series/update", {
         state: fetcher.data,
       });
     }

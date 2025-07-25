@@ -72,7 +72,7 @@ export class MovieService {
     }
 
     const { data } = await axios.get(
-      `${process.env.MOVIE_BASE_URL}i=${imdb_id}` || '',
+      `${process.env.MOVIE_BASE_URL}i=${imdb_id}&plot=full` || '',
     );
 
     if (typeof data === 'string' || data.Error) {

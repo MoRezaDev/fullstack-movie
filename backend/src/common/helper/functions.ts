@@ -36,7 +36,9 @@ export async function deleteSeriesFolder(id: string) {
   );
 
   fs.rm(staticPath, { recursive: true, force: true }, (err) => {
-    if (err) throw new HttpException(err, 500);
+    if (err) {
+      throw new HttpException(err, 500);
+    }
   });
 }
 export async function deleteAnimeFolder(id: string) {
@@ -97,7 +99,7 @@ export async function translatePersian(content: string) {
       messages: [
         {
           role: 'user',
-          content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${description}. and please in response just show me the translated text without any other text or answers**`,
+          content: `this is the decription text for the movie,without any external answers like Here are a few Persian translations, with slightly different nuances, to capture the meaning of the description text:\n\n**Option 1 (More Literal) or something else...please translate this text to persian: ${content}. and please in response just show me the translated text without any other text or answers**`,
         },
       ],
     });

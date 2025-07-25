@@ -1,6 +1,7 @@
 import { IsArray, IsInt, IsNotEmpty, IsNumber } from 'class-validator';
+import { Prisma } from 'generated/prisma';
 
-export class CreateSeriesDto {
+export class CreateSeriesDto implements Prisma.SeriesCreateInput {
   @IsNotEmpty()
   title: string;
 
@@ -31,4 +32,14 @@ export class CreateSeriesDto {
 
   @IsNotEmpty()
   imdb_id: string;
+
+  country?: string;
+
+  language?: string[] | Prisma.SeriesCreatelanguageInput;
+
+  poster: string;
+
+  released?: string;
+
+  total_seasons: number;
 }

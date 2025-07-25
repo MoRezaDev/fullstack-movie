@@ -9,7 +9,11 @@ import Dashboard from "./modules/dashboard/ui/Dashboard";
 import NotFound from "./modules/layout/ui/NotFound";
 import CreateMovie from "./modules/movie/ui/create/CreateMovie";
 import UpdateMovie from "./modules/movie/ui/update/UpdateMovie";
-import { findOrAddMovieAction, updateMovieAction } from "./lib/actions";
+import {
+  findOrAddMovieAction,
+  findOrAddSeriesAction,
+  updateMovieAction,
+} from "./lib/actions";
 import Movie from "./modules/movie/ui/Movie";
 import ErrorPage from "./components/ErrorPage";
 import GlobalLoading from "./components/GlobalLoading";
@@ -48,7 +52,11 @@ export const router = createBrowserRouter([
         path: "series",
         children: [
           { index: true, Component: Series },
-          { path: "new", Component: CreateSeries },
+          {
+            path: "new",
+            Component: CreateSeries,
+            action: findOrAddSeriesAction,
+          },
           { path: "update", Component: UpdateSeries },
         ],
       },

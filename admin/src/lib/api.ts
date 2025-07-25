@@ -1,4 +1,4 @@
-import { movieType } from "../common/types";
+import { movieType, SeriesType } from "../common/types";
 
 export async function findOrAddMovie(imdb_id: string) {
   const response = await fetch(
@@ -54,4 +54,36 @@ export async function deleteMovie(imdb_id: string) {
   }
 
   return response.json();
+}
+
+export async function findOrAddSeries(imdb_id: string) {
+  const response = await fetch(
+    `http://localhost:3001/series/find-add?imdb_id=${imdb_id}`
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message ?? "something wrong!");
+  }
+
+  return data;
+}
+
+export async function updatesSeries(imdb_id: string, updateDto: SeriesType) {
+  const response = await fetch(`http://localhost:3001/movie/${imdb_id}`, {
+    method: "POST",
+    body: JSON.stringify(updateDto),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message ?? "something wrong in update!");
+  }
+
+  return data;
 }

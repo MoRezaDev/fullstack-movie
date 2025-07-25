@@ -8,11 +8,16 @@ model Series {
     rating String @default("N/A")
     stars String[]
     director String @default("N/A")
+    poster String
     images_url String[]
     genre String[]
     has_subtitle Boolean @default(false)
     has_dub Boolean @default(false)
     imdb_id String @unique 
+    language String[]
+    total_seasons Int
+    country String @default("N/A")
+    released String @default("N/A")
 
     postId String? @unique
     post Post? @relation(fields: [postId], references: [id])
