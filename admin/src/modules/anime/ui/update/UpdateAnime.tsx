@@ -1,31 +1,23 @@
 import { Navigate, useFetcher, useLocation, useNavigate } from "react-router";
-import { SeriesType } from "../../../../common/types";
+import { AnimeType } from "../../../../common/types";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export default function UpdateSeries() {
   const location = useLocation();
-  const data = location.state as SeriesType;
+  const data = location.state as AnimeType;
   const navigate = useNavigate();
 
   const fetcher = useFetcher();
 
-  const allGenres = [
-    "Action",
-    "Drama",
-    "Comedy",
-    "Horror",
-    "Sci-Fi",
-    "Romance",
-    "Mystery",
-  ];
+  const allGenres = data.genre.concat(data.demographics);
 
   useEffect(() => {
     if (fetcher.data?.success && fetcher.state === "idle") {
-      toast.success("انجام شد، شما در حال رفتن به صفحه سریال ها هستید");
+      toast.success("انجام شد، شما در حال رفتن به صفحه انیمه ها هستید");
 
       const timerId = setTimeout(() => {
-        navigate("/series");
+        navigate("/anime");
       }, 3000);
 
       return () => clearTimeout(timerId);
@@ -35,11 +27,11 @@ export default function UpdateSeries() {
   console.log("fetcher data", fetcher.data);
 
   if (!data) {
-    return <Navigate to={"/series"} />;
+    return <Navigate to={"/anime"} />;
   }
   return (
     <div className="w-full p-4 text-sm ">
-      <h1 className="text-2xl mb-4">فرم تغییر اطلاعات سریال</h1>
+      <h1 className="text-2xl mb-4">فرم تغییر اطلاعات انیمه ها</h1>
       <fetcher.Form
         method="PATCH"
         className="grid md:grid-cols-3 bg-neutral-900 p-4 gap-4"
@@ -54,12 +46,12 @@ export default function UpdateSeries() {
           />
         </div>
         <div className="flex flex-col">
-          <label>آیدی Imdb</label>
+          <label>آیدی MyAnimeList</label>
           <input
-            name="imdb_id"
+            name="mal_id"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.imdb_id ?? ""}
+            defaultValue={data.mal_id ?? ""}
           />
         </div>
         <div className="flex flex-col">
@@ -157,7 +149,7 @@ export default function UpdateSeries() {
           />
         </div>
 
-         <div className="flex flex-col">
+        <div className="flex flex-col">
           <label>وضعیت پخش</label>
           <input
             name="status"

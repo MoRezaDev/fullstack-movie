@@ -31,7 +31,7 @@ export type movieType = {
 };
 
 export type SeriesType = {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   year: number;
@@ -40,8 +40,8 @@ export type SeriesType = {
   rating: string;
   stars: string[];
   director: string;
-  poster: string;
-  images_url: string[];
+  poster?: string;
+  images_url?: string[];
   genre: string[];
   has_subtitle: boolean;
   has_dub: boolean;
@@ -54,6 +54,46 @@ export type SeriesType = {
   post?: {
     id: string;
   } | null;
-  createdAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type AnimeType = {
+  id: string;
+  mal_id: string;
+  mal_url: string;
+  images_url: string[];
+  poster?: string;
+  title: string;
+  title_english: string;
+  title_japanese: string;
+  type: string;
+  episodes: string;
+  status: string;
+  aired_from: string;
+  duration: string;
+  rating: string;
+  mal_score: string;
+  mal_scored_by: string;
+  mal_rank: string;
+  mal_popularity: string;
+  description: string;
+  season: string;
+  year: number;
+  broadcast: string;
+  genre: string[];
+  demographics: string[];
+  streaming: string[];
+
+  has_subtitle: boolean;
+  has_dub: boolean;
+
+  postId?: string;
+  post?: {
+    id: string;
+    // Add more Post props if needed
+  };
+
+  createdAt: string; // Date as ISO string (if you're serializing it from DB)
   updatedAt: string;
 };

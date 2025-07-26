@@ -5,7 +5,7 @@ import { DatabaseModule } from './modules/database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { MovieModule } from './modules/movie/movie.module';
 import { PostModule } from './post/post.module';
 import { SeriesModule } from './modules/series/series.module';

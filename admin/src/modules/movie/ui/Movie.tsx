@@ -1,16 +1,21 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigation } from "react-router";
 import TableMovie from "../../../components/movie/TableMovie";
 import { getPaginatedData } from "../../../lib/functions";
 import PaginateButtons from "../../../components/movie/PaginateButtons";
-import { ReactElement, ReactEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { movieType } from "../../../common/types";
+import NavigationLoader from "../../../components/NavigationLoader";
 
 export default function Movie() {
   const data = useLoaderData();
   const [currentPageState, setCurrentPageState] = useState(1);
   const [searchValue, setSearchValue] = useState("");
 
-  const { currentMovies, currentPage, totalPages } = getPaginatedData(
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+
+  const { currentContent, currentPage, totalPages } = getPaginatedData(
     data,
     5,
     currentPageState
@@ -28,11 +33,11 @@ export default function Movie() {
     setSearchValue(e.target.value);
   }
 
-  const filteredMovies = currentMovies.filter((movie) =>
+  const filteredMovies = currentContent.filter((movie) =>
     movie.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
-  );
+  ) as movieType[];
 
-  console.log(filteredMovies);
+  if (isNavigating) return <NavigationLoader />;
 
   return (
     <div className="p-6">

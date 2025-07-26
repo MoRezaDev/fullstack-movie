@@ -1,11 +1,13 @@
 import { SeriesType } from "../common/types";
 import {
+  findOrAddAnime,
   findOrAddMovie,
   findOrAddSeries,
   updateMovie,
   updatesSeries,
 } from "./api";
 
+//Movie
 export async function findOrAddMovieAction(props: any) {
   const { request } = props;
   const formData = await request.formData();
@@ -57,8 +59,6 @@ export async function updateMovieAction({ request }: { request: Request }) {
   } catch (err) {
     console.log(err.message);
   }
-
-  console.log(has_subtitle, has_dub, genre, imdb_id);
 }
 
 //series
@@ -85,26 +85,51 @@ export async function updateSeriesAction({ request }: { request: Request }) {
   const language = formData.get("language") as string;
   const year = formData.get("year") as string;
   const stars = formData.get("stars") as string;
+  const duration = formData.get("duration") as string;
+  const country = formData.get("country") as string;
+  const status = formData.get("status") as string;
+  const released = formData.get("released") as string;
+  const total_seasons = formData.get("total_seasons") as string;
   const has_subtitle = formData.get("has_subtitle") as string;
   const has_dub = formData.get("has_dub") as string;
   const genre = formData.getAll("genre") as string[];
 
-  const updateDto : SeriesType = {
+  const updateDto: SeriesType = {
     imdb_id,
     title,
     rating,
     description,
     director,
     language: language.split(","),
-    year : +year,
+    year: +year,
     stars: stars.split(","),
     has_subtitle: has_subtitle === "true" ? true : false,
     has_dub: has_dub === "true" ? true : false,
     genre,
+    country,
+    total_seasons: +total_seasons,
+    released,
+    duration,
+    status,
   };
   try {
-    const updatedSeries = await updatesSeries(imdb_id,updateDto);
+    await updatesSeries(imdb_id, updateDto);
+    return { success: true };
   } catch (err: any) {
     return { error: err.message ?? "somethings wrong!" };
+  }
+}
+
+//anime
+export async function findOrAddAnimeAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const mal_id = formData.get("mal_id") as string;
+
+  try {
+    return await findOrAddAnime(mal_id);
+  } catch (err: any) {
+    return {
+      error: err.message ?? "ajab",
+    };
   }
 }

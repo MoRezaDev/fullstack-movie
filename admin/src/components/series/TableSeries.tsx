@@ -1,20 +1,20 @@
 import { FaTrash } from "react-icons/fa6";
-import { movieType } from "../../common/types";
+import { SeriesType } from "../../common/types";
 import { FaEdit } from "react-icons/fa";
 import Modal from "../Modal";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { deleteMovie } from "../../lib/api";
+import { deleteSeries } from "../../lib/api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
-export default function TableMovie({ movies }: { movies: movieType[] }) {
+export default function TableSeries({ series }: { series: SeriesType[] }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: deleteMovie,
+    mutationFn: deleteSeries,
     onError: (err) => {
       setShowDeleteModal(false);
       toast.error(err.message ?? "مشکلی پیش آمده، لطفا دوباره تلاش کنید");
@@ -24,8 +24,8 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
     },
   });
 
-  const handleEdit = (movie: movieType) => {
-    navigate("/movies/update", { state: movie });
+  const handleEdit = (series: SeriesType) => {
+    navigate("/series/update", { state: series });
   };
 
   return (
@@ -41,22 +41,24 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie: movieType, idx: any) => (
+            {series.map((series_item: SeriesType, idx: any) => (
               <tr
-                key={movie.imdb_id}
+                key={series_item.imdb_id}
                 className={`*:p-2 *:border-neutral-700 ${
-                  idx === movies.length - 1 ? "" : "*:border-b"
+                  idx === series.length - 1 ? "" : "*:border-b"
                 }`}
               >
                 <td>
                   <img
-                    src={movie.poster}
+                    src={series_item.poster}
                     className="w-16 h-22 object-cover rounded-md"
                   />
                 </td>
-                <td>{movie.title}</td>
+                <td>{series_item.title}</td>
                 <td className="hidden md:table-cell">
-                  {new Date(movie.createdAt).toLocaleDateString("fa-ir")}
+                  {new Date(series_item.createdAt as string).toLocaleDateString(
+                    "fa-ir"
+                  )}
                 </td>
                 <td>
                   <div className="flex gap-2">
@@ -79,7 +81,9 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
                           <div className="space-x-2 ">
                             <button
                               disabled={mutation.isPending}
-                              onClick={() => mutation.mutate(movie.imdb_id)}
+                              onClick={() =>
+                                mutation.mutate(series_item.imdb_id)
+                              }
                               className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
                             >
                               {mutation.isPending ? "شکیبا باشید" : "بله"}
@@ -95,7 +99,7 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(movie)}
+                      onClick={(e) => handleEdit(series_item)}
                       className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />

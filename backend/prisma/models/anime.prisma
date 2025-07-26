@@ -1,20 +1,32 @@
 model Anime {
     id String @id @default(uuid())
-    title String
-    description String
-    year Int
-    duration String
-    status String @default("N/A")
-    stars String[]
-    director String @default("N/A")
+    mal_id  String @unique
+    mal_url String @default("N/A")
     images_url String[]
+    poster String?
+    title String
+    title_english String @default("N/A")
+    title_japanese String @default("N/A")
+    type String @default("N/A")
+    episodes String @default("N/A")
+    status String @default("N/A")
+    aired_from String @default("N/A")
+    duration String @default("N/A")
+    rating String @default("N/A")
+    mal_score String @default("N/A")
+    mal_scored_by String @default("N/A")
+    mal_rank String @default("N/A")
+    mal_popularity String @default("N/A")
+    description String  @default("N/A")
+    season String @default("N/A")
+    year Int
+    broadcast String @default("N/A")
     genre String[]
+    demographics String[]
+    streaming String[]
+
     has_subtitle Boolean @default(false)
     has_dub Boolean @default(false)
-    imdb_id String @unique 
-    imdb_rating String @default("N/A")
-    mal_id  String @unique
-    mal_rating String @default("N/A")
 
     postId String? @unique
     post Post? @relation(fields: [postId], references: [id])
@@ -25,5 +37,5 @@ model Anime {
 
      @@index([genre],type : Hash)
     @@index([title],type : Hash)
-    @@index([imdb_id],type : Hash)
+    @@index([mal_id],type : Hash)
 }

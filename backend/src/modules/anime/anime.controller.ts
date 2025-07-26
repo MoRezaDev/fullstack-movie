@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { AnimeService } from './anime.service';
 import { CreateAnimeDto } from './dto/create-anime.dto';
 import { UpdateAnimeDto } from './dto/update-anime.dto';
+import { MalDto } from './dto/mal-id.dto';
 
 @Controller('anime')
 export class AnimeController {
@@ -24,6 +26,12 @@ export class AnimeController {
   @Get()
   async findAll() {
     return this.animeService.findAll();
+  }
+
+  //admin
+  @Get('find-add')
+  async findOrAddAnime(@Query() malDto: MalDto) {
+    return this.animeService.findOrAddAnime(malDto.mal_id);
   }
 
   @Get(':id')
