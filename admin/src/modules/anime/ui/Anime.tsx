@@ -1,11 +1,11 @@
 import { useLoaderData, useNavigation } from "react-router";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { getPaginatedData } from "../../lib/functions";
-import TableSeries from "../../components/series/TableSeries";
-import { SeriesType } from "../../common/types";
-import PaginateButtons from "../../components/PaginateButtons";
-import NavigationLoader from "../../components/NavigationLoader";
+import { AnimeType } from "../../../common/types";
+import { getPaginatedData } from "../../../lib/functions";
+import TableAnime from "../../../components/anime/TableAnime";
+import NavigationLoader from "../../../components/NavigationLoader";
+import PaginateButtons from "../../../components/PaginateButtons";
 
 export default function Series() {
   const data = useLoaderData();
@@ -33,16 +33,16 @@ export default function Series() {
     setSearchValue(e.target.value);
   }
 
-  const filteredSeries = currentContent.filter((series) =>
-    series.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
-  ) as SeriesType[];
+  const filteredAnimes = currentContent.filter((anime) =>
+    anime.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+  ) as AnimeType[];
 
   if (isNavigating) return <NavigationLoader />;
 
   return (
     <div className="p-6">
       <div className="w-full mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="sm:text-2xl font-bold text-white ">🎬 لیست سریال ها</h1>
+        <h1 className="sm:text-2xl font-bold text-white ">🎬 لیست انیمه ها</h1>
         <div className=" border border-neutral-800 rounded-full flex items-center px-3">
           <input
             value={searchValue}
@@ -54,7 +54,7 @@ export default function Series() {
           <FaSearch className="text-sm text-neutral-500" />
         </div>
       </div>
-      <TableSeries series={filteredSeries} />
+      <TableAnime animes={filteredAnimes} />
       <PaginateButtons
         totalPage={totalPages}
         currentPage={currentPageState}

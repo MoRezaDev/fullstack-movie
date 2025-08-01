@@ -1,7 +1,7 @@
-import { movieType, SeriesType } from "../common/types";
+import { AnimeType, movieType, SeriesType } from "../common/types";
 
 export function getPaginatedData(
-  data: movieType[] | SeriesType[],
+  data: movieType[] | SeriesType[] | AnimeType[],
   itemsPerPage: number = 5,
   currentPage: number = 1
 ) {

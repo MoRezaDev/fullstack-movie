@@ -1,8 +1,12 @@
-import { SeriesType } from "../common/types";
+import { AnimeType, SeriesType } from "../common/types";
 import {
   findOrAddAnime,
   findOrAddMovie,
   findOrAddSeries,
+  getAnime,
+  getMovie,
+  getSeries,
+  updateAnime,
   updateMovie,
   updatesSeries,
 } from "./api";
@@ -130,6 +134,83 @@ export async function findOrAddAnimeAction({ request }: { request: Request }) {
   } catch (err: any) {
     return {
       error: err.message ?? "ajab",
+    };
+  }
+}
+
+export async function updateAnimeAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const mal_id = formData.get("mal_id") as string;
+  const title = formData.get("title") as string;
+  const broadcast = formData.get("broadcast") as string;
+  const description = formData.get("description") as string;
+  const mal_score = formData.get("mal_score") as string;
+  const mal_scored_by = formData.get("mal_scored_by") as string;
+  const mal_rank = formData.get("mal_rank") as string;
+  const mal_popularity = formData.get("mal_popularity") as string;
+  const duration = formData.get("duration") as string;
+  const aired_from = formData.get("aired_from") as string;
+  const year = formData.get("year") as string;
+  const season = formData.get("season") as string;
+  const episodes = formData.get("episodes") as string;
+  const status = formData.get("status") as string;
+  const streaming = formData.get("streaming") as string;
+  const has_subtitle = formData.get("has_subtitle") as string;
+  const has_dub = formData.get("has_dub") as string;
+  const genre = formData.getAll("genre") as string[];
+  const title_english = formData.get("title_english") as string;
+  const title_japanese = formData.get("title_japanese") as string;
+
+  const updateDto: Partial<AnimeType> = {
+    mal_id,
+    title,
+    broadcast,
+    description,
+    mal_score,
+    mal_scored_by,
+    mal_rank,
+    mal_popularity,
+    duration,
+    aired_from,
+    year: +year,
+    season,
+    episodes,
+    status,
+    streaming: streaming.split(","),
+    has_dub: has_dub === "true" ? true : false,
+    has_subtitle: has_subtitle === "true" ? true : false,
+    title_english,
+    title_japanese,
+    genre,
+  };
+
+  try {
+    await updateAnime(mal_id, updateDto);
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message ?? "somethings wrong!" };
+  }
+}
+
+//post
+export async function findContentByIdAction({ request }: { request: Request }) {
+  console.log("triggered!");
+  const formData = await request.formData();
+  const id = formData.get("id") as string;
+  const content = formData.get("content") as "movie" | "anime" | "series";
+
+  try {
+    let result;
+    if (content === "anime") result = await getAnime(id);
+    else if (content === "movie") result = await getMovie(id);
+    else if (content === "series") result = await getSeries(id);
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (err: any) {
+    return {
+      error: err.message ?? "somethings wrong!",
     };
   }
 }

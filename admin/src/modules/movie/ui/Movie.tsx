@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigation } from "react-router";
 import TableMovie from "../../../components/movie/TableMovie";
 import { getPaginatedData } from "../../../lib/functions";
-import PaginateButtons from "../../../components/movie/PaginateButtons";
+import PaginateButtons from "../../../components/PaginateButtons";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { movieType } from "../../../common/types";

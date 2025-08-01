@@ -10,7 +10,10 @@ export default function UpdateSeries() {
 
   const fetcher = useFetcher();
 
-  const allGenres = data.genre.concat(data.demographics);
+  const allGenres = data.genre
+    .concat(data.demographics)
+    .concat(["Action", "Fantasy", "Ecchi", "Isekay","Sci-Fi"]);
+  const dataGenres = data.genre.concat(data.demographics);
 
   useEffect(() => {
     if (fetcher.data?.success && fetcher.state === "idle") {
@@ -55,12 +58,12 @@ export default function UpdateSeries() {
           />
         </div>
         <div className="flex flex-col">
-          <label>نمره</label>
+          <label>زمان پخش</label>
           <input
-            name="rating"
+            name="broadcast"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.rating ?? ""}
+            defaultValue={data.broadcast ?? ""}
           />
         </div>
         <div className="flex flex-col col-span-3">
@@ -72,14 +75,42 @@ export default function UpdateSeries() {
           />
         </div>
         <div className="flex flex-col">
-          <label>کارگردان</label>
+          <label>نمره MyAnimeList</label>
           <input
-            name="director"
+            name="mal_score"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.director ?? ""}
+            defaultValue={data.mal_score ?? ""}
           />
         </div>
+        <div className="flex flex-col">
+          <label>تعداد آراء</label>
+          <input
+            name="mal_scored_by"
+            className="bg-neutral-800 p-2 rounded-lg"
+            type="text"
+            defaultValue={data.mal_scored_by ?? ""}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label>رتبه</label>
+          <input
+            name="mal_rank"
+            className="bg-neutral-800 p-2 rounded-lg"
+            type="text"
+            defaultValue={data.mal_rank ?? ""}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label>محبوبیت</label>
+          <input
+            name="mal_popularity"
+            className="bg-neutral-800 p-2 rounded-lg"
+            type="text"
+            defaultValue={data.mal_popularity ?? ""}
+          />
+        </div>
+
         <div className="flex flex-col">
           <label>مدت زمان</label>
           <input
@@ -89,33 +120,14 @@ export default function UpdateSeries() {
             defaultValue={data.duration ?? ""}
           />
         </div>
-        <div className="flex flex-col">
-          <label>زبان</label>
-          <input
-            name="language"
-            className="bg-neutral-800 p-2 rounded-lg"
-            type="text"
-            defaultValue={data.language ?? ""}
-          />
-        </div>
 
         <div className="flex flex-col">
-          <label>کشور سازنده</label>
+          <label>شروع فصل از</label>
           <input
-            name="country"
+            name="aired_from"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.country ?? ""}
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label>فصل ها</label>
-          <input
-            name="total_seasons"
-            className="bg-neutral-800 p-2 rounded-lg"
-            type="text"
-            defaultValue={data.total_seasons ?? ""}
+            defaultValue={new Date(data.aired_from).toLocaleDateString() ?? ""}
           />
         </div>
 
@@ -130,22 +142,22 @@ export default function UpdateSeries() {
         </div>
 
         <div className="flex flex-col">
-          <label>اولین پخش</label>
+          <label>فصل</label>
           <input
-            name="released"
+            name="season"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.released ?? ""}
+            defaultValue={data.season ?? ""}
           />
         </div>
 
         <div className="flex flex-col">
-          <label>مدت زمان</label>
+          <label>قسمت ها</label>
           <input
-            name="duration"
+            name="episodes"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.duration ?? ""}
+            defaultValue={data.episodes ?? ""}
           />
         </div>
 
@@ -160,12 +172,12 @@ export default function UpdateSeries() {
         </div>
 
         <div className="flex flex-col">
-          <label>ستارگان</label>
+          <label>شبکه های پخش</label>
           <input
-            name="stars"
+            name="streaming"
             className="bg-neutral-800 p-2 rounded-lg"
             type="text"
-            defaultValue={data.stars ?? ""}
+            defaultValue={data.streaming ?? ""}
           />
         </div>
 
@@ -201,7 +213,7 @@ export default function UpdateSeries() {
                 <input
                   type="checkbox"
                   value={genre}
-                  defaultChecked={data.genre.includes(genre)}
+                  defaultChecked={dataGenres.includes(genre)}
                   className="accent-sky-600 w-4 h-4"
                   name="genre"
                 />
@@ -211,7 +223,26 @@ export default function UpdateSeries() {
           </div>
         </div>
 
-        <div></div>
+         <div className="flex flex-col">
+          <label> عنوان به انگلیسی</label>
+          <input
+            name="title_english"
+            className="bg-neutral-800 p-2 rounded-lg"
+            type="duration"
+            defaultValue={data.title_english ?? ""}
+          />
+        </div>
+         <div className="flex flex-col">
+          <label> عنوان به ژاپنی</label>
+          <input
+            name="title_japanese"
+            className="bg-neutral-800 p-2 rounded-lg"
+            type="duration"
+            defaultValue={data.title_japanese ?? ""}
+          />
+        </div>
+
+        
 
         <div className="col-span-3">
           <label>پوستر</label>

@@ -159,10 +159,10 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          to="/animes"
+          to="/anime"
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
-              location.pathname === "/animes"
+              location.pathname === "/anime"
                 ? "bg-[#1e90ff]/90 text-white font-bold"
                 : "hover:bg-white/10"
             }`}

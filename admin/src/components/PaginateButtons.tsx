@@ -1,5 +1,4 @@
 import { IoCaretBackOutline, IoCaretForwardOutline } from "react-icons/io5";
-import { getPaginatedData } from "../../lib/functions";
 
 type paginatedProps = {
   onBack: () => void;
