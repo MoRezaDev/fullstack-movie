@@ -1,5 +1,6 @@
 import { AnimeType, SeriesType } from "../common/types";
 import {
+  addPost,
   findOrAddAnime,
   findOrAddMovie,
   findOrAddSeries,
@@ -60,7 +61,7 @@ export async function updateMovieAction({ request }: { request: Request }) {
       imdb_id,
     });
     return { success: true };
-  } catch (err) {
+  } catch (err: any) {
     console.log(err.message);
   }
 }
@@ -194,7 +195,6 @@ export async function updateAnimeAction({ request }: { request: Request }) {
 
 //post
 export async function findContentByIdAction({ request }: { request: Request }) {
-  console.log("triggered!");
   const formData = await request.formData();
   const id = formData.get("id") as string;
   const content = formData.get("content") as "movie" | "anime" | "series";
@@ -213,4 +213,11 @@ export async function findContentByIdAction({ request }: { request: Request }) {
       error: err.message ?? "somethings wrong!",
     };
   }
+}
+
+export async function addPostAction(dataObj: any) {
+  const { id, content, ...rest } = dataObj;
+  const newData = { ...rest, [content]: { connect: { id } } };
+
+  return await addPost(newData);
 }

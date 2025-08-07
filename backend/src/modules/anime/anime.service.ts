@@ -23,40 +23,41 @@ export class AnimeService {
   }
 
   async findOne(id: string) {
-    return await this.databaseService.anime.findUnique({ where: { id } });
+    return await this.checkAnimeExists(id);
   }
 
   async update(mal_id: string, updateSeriesDto: UpdateAnimeDto) {
-      return await this.databaseService.anime.update({
-        where: { mal_id },
-        data: updateSeriesDto,
-      });
-    }
+    return await this.databaseService.anime.update({
+      where: { mal_id },
+      data: updateSeriesDto,
+    });
+  }
 
- async remove(mal_id: string) {
-     return await this.databaseService.$transaction(async (tx) => {
-       try {
-         await deleteAnimeFolder(mal_id);
-         await tx.anime.delete({ where: { mal_id } });
-         return { status: 'success' };
-       } catch (err) {
-         throw new HttpException(
-           'مشکلی در حذف بوجود آمده، دوباره تلاش کنید',
-           500,
-         );
-       }
-     });
-   }
+  async remove(mal_id: string) {
+    return await this.databaseService.$transaction(async (tx) => {
+      try {
+        await deleteAnimeFolder(mal_id);
+        await tx.anime.delete({ where: { mal_id } });
+        return { status: 'success' };
+      } catch (err) {
+        throw new HttpException(
+          'مشکلی در حذف بوجود آمده، دوباره تلاش کنید',
+          500,
+        );
+      }
+    });
+  }
   //for admin
   async checkAnimeExists(mal_id: string) {
     const regex = /^\d{1,7}$/;
     if (!mal_id || !regex.test(mal_id))
       throw new HttpException('فرمت آیدی شتباه است', 403);
 
-    const foundedSeries = await this.databaseService.anime.findUnique({
+    const foundedAnime = await this.databaseService.anime.findUnique({
       where: { mal_id },
     });
-    if (!foundedSeries) throw new HttpException('آیدی در سایت موجود نیست', 404);
+    if (!foundedAnime) throw new HttpException('آیدی در سایت موجود نیست', 404);
+    return foundedAnime
   }
 
   async translateDescription(description: string) {
@@ -105,8 +106,8 @@ export class AnimeService {
         data: {
           mal_id: jikanData.data.mal_id.toString(),
           title: jikanData.data.title,
-          title_english: jikanData.data.title_english ?? "N/A",
-          title_japanese: jikanData.data.title_japanese || "N/A",
+          title_english: jikanData.data.title_english ?? 'N/A',
+          title_japanese: jikanData.data.title_japanese || 'N/A',
           description: translatedDescription,
           year: jikanData.data.year,
           aired_from: jikanData.data.aired.from,

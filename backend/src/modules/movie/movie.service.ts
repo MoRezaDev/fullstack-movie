@@ -27,7 +27,8 @@ export class MovieService {
   }
 
   async findOne(id: string) {
-    return await this.databaseService.movie.findUnique({ where: { id } });
+    console.log('trig');
+    return await this.checkMovieExists(id);
   }
 
   async update(id: string, updateMovieDto: UpdateMovieDto) {
@@ -143,5 +144,18 @@ export class MovieService {
 
       return response.choices[0].message?.content;
     } catch (err) {}
+  }
+
+  //helper functions
+  async checkMovieExists(imdb_id: string) {
+    const regex = /^tt.+$/;
+    if (!imdb_id || !regex.test(imdb_id))
+      throw new HttpException('فرمت آیدی شتباه است', 403);
+
+    const foundedMovie = await this.databaseService.movie.findUnique({
+      where: { imdb_id },
+    });
+    if (!foundedMovie) throw new HttpException('آیدی در سایت موجود نیست', 404);
+    return foundedMovie;
   }
 }

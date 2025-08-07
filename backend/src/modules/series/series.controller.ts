@@ -37,7 +37,6 @@ export class SeriesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log('ajab');
     return this.seriesService.findOne(id);
   }
 

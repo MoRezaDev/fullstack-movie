@@ -22,7 +22,7 @@ export class PostController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.postService.findAll();
   }
 

@@ -6,10 +6,21 @@ import { DatabaseService } from 'src/modules/database/database.service';
 @Injectable()
 export class PostService {
   constructor(private databaseService: DatabaseService) {}
+
   async create(createPostDto: CreatePostDto) {
-    return await this.databaseService.post.create({
-      data: createPostDto,
-    });
+    // const downloadLinkObj = createPostDto.download_links
+
+    // return await this.databaseService.post.create({
+    //   data: {
+    //     ...createPostDto,
+    //     download_links: {
+    //       create: {
+    //         link_url: createPostDto.download_links,
+    //       },
+    //     },
+    //   },
+    // });
+    return await this.databaseService.post.create({ data: createPostDto });
   }
 
   async findAll() {
@@ -19,6 +30,7 @@ export class PostService {
         movie: { where: { NOT: { title: undefined } } },
         series: { where: { NOT: { title: undefined } } },
         likes: true,
+        download_links: true,
       },
     });
   }
@@ -37,12 +49,10 @@ export class PostService {
   }
 
   async update(id: string, updatePostDto: UpdatePostDto) {
-    return await this.databaseService.post.update({
-      where: {
-        id,
-      },
-      data: updatePostDto,
-    });
+    return await this.databaseService.$transaction([
+      this.databaseService.downloadLink.deleteMany({ where: { postId: id } }),
+      this.databaseService.post.update({ where: { id }, data: updatePostDto }),
+    ])[1]; 
   }
 
   async remove(id: string) {

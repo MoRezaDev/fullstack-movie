@@ -1,9 +1,9 @@
 model DownloadLink {
     id String @id @default(uuid())
-    title String
     episode String?
-    season Int?
-    link_url String[]
+    season String?
+    link_url Json
+    quality String?
 
     // Polymorphic relationship fields
     // movieId String?  // Nullable for polymorphism
@@ -16,7 +16,7 @@ model DownloadLink {
     // anime Anime? @relation(fields: [animeId], references: [id])
 
     postId String?
-    post Post? @relation(fields: [postId], references: [id])
+    post Post? @relation(fields: [postId], references: [id],onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

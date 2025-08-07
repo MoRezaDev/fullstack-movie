@@ -12,6 +12,7 @@ import {
 import { Link, useLocation } from "react-router";
 import { useState } from "react";
 import { FaNoteSticky } from "react-icons/fa6";
+import { MdPostAdd } from "react-icons/md";
 
 const menuItems = [
   { label: "کاربران", icon: <FaUserFriends />, to: "/users" },
@@ -126,8 +127,22 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Movies, Animes, Series Section */}
+        {/* Movies, Posts, Animes, Series Section */}
 
+        <Link
+          to="/posts"
+          className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
+            ${
+              location.pathname === "/posts"
+                ? "bg-[#1e90ff]/90 text-white font-bold"
+                : "hover:bg-white/10"
+            }`}
+        >
+          <span className="text-base">
+            <MdPostAdd />
+          </span>
+          <span>پست ها</span>
+        </Link>
         <Link
           to="/movies"
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200

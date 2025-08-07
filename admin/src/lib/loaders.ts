@@ -1,6 +1,6 @@
 import { redirect } from "react-router";
 import { getUserSession } from "./auth";
-import { getAllAnimes, getAllMovies, getAllSeries } from "./api";
+import { getAllAnimes, getAllMovies, getAllPosts, getAllSeries } from "./api";
 
 export async function rootLayoutLoader() {
   const session = await getUserSession();
@@ -33,4 +33,10 @@ export async function seriesLoader() {
 export async function animeLoader() {
   const animes = await getAllAnimes();
   return animes;
+}
+
+//post
+export async function postLoader() {
+  const posts = await getAllPosts();
+  return posts;
 }

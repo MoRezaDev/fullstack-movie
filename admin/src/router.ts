@@ -4,6 +4,7 @@ import {
   animeLoader,
   authLoader,
   MoviesLoader,
+  postLoader,
   rootLayoutLoader,
   seriesLoader,
 } from "./lib/loaders";
@@ -99,7 +100,7 @@ export const router = createBrowserRouter([
       {
         path: "posts",
         children: [
-          { index: true, Component: Post },
+          { index: true, Component: Post, loader: postLoader },
           { path: "new", Component: CreatePost, action: findContentByIdAction },
           { path: "update", Component: UpdatePost },
         ],

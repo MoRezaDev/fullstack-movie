@@ -23,9 +23,7 @@ export class SeriesService {
   }
 
   async findOne(id: string) {
-    return await this.databaseService.series.findUnique({
-      where: { imdb_id: id },
-    });
+    return await this.checkSeriesExists(id);
   }
 
   async update(imdb_id: string, updateSeriesDto: UpdateSeriesDto) {
@@ -60,6 +58,7 @@ export class SeriesService {
       where: { imdb_id },
     });
     if (!foundedSeries) throw new HttpException('آیدی در سایت موجود نیست', 404);
+    return foundedSeries;
   }
 
   async translateDescription(description: string) {

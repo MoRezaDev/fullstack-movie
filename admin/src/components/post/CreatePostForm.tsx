@@ -1,22 +1,70 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { addPostAction } from "../../lib/actions";
+import { toast } from "sonner";
+import { createPostDto } from "../../lib/functions";
+import PostContent from "./PostContent";
+import SeriesOrAnimeDownloadLinkBox from "./SeriesOrAnimeDownloadLinkBox";
+import MovieDownloadLinkBox from "./MovieDownloadLinkBox";
+import {
+  AnimeDataType,
+  DownloadLinksMovieType,
+  DownloadLinksSeriesOrAnimeType,
+  MovieDataType,
+  SeriesDataType,
+} from "../../common/types";
 
 export default function CreatePostForm({
   data,
   content,
 }: {
-  data: any;
+  data: MovieDataType | SeriesDataType | AnimeDataType;
   content: string;
 }) {
   const [showContent, setShowContent] = useState(false);
+  const [downloadsLink, setDownloadsLink] = useState<DownloadLinksMovieType[]>(
+    []
+  );
+  const [seriesOrAnime, setSeriesOrAnime] = useState<
+    DownloadLinksSeriesOrAnimeType[]
+  >([]);
+
+  const navigate = useNavigate();
+  const formRef = useRef(null);
+
+  const mutation = useMutation({
+    mutationFn: addPostAction,
+    onSuccess: () => {
+      toast.success("موفقیت آمیز بود، شما در حال رفتن به منوی پست ها هستید");
+      setTimeout(() => {
+        navigate("/posts");
+      }, 3000);
+    },
+    onError: (err) => {
+      toast.error(err.message ?? "something wrong!");
+    },
+  });
 
   const contentLink = content === "movie" ? "movies" : content;
 
+  console.log(seriesOrAnime)
+
+  function submitHandler(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(formRef.current!);
+    const download_links = content === "movie" ? downloadsLink : seriesOrAnime;
+    const postDto = createPostDto(formData, content, download_links, data.id);
+
+    mutation.mutate(postDto);
+  }
+
   return (
-    <div className="w-full p-2">
+    <form ref={formRef} className="w-full p-2">
       <div className="bg-neutral-800 rounded-full w-fit p-1 mt-2 flex gap-2 mx-auto">
         <button
+          type="button"
           onClick={() => setShowContent(true)}
           className={clsx(
             "px-2 py-1 transition  rounded-full ",
@@ -27,6 +75,7 @@ export default function CreatePostForm({
           اطلاعات محتوا
         </button>
         <button
+          type="button"
           onClick={() => setShowContent(false)}
           className={clsx(
             "px-2 py-1 transition   rounded-full",
@@ -39,87 +88,74 @@ export default function CreatePostForm({
       </div>
 
       {/* showing the content */}
-      {showContent && (
-        <div className="w-full  mx-auto bg-neutral-800 grid md:grid-cols-3 p-4 gap-2 my-2">
+      {showContent && <PostContent data={data} contentLink={contentLink} />}
+      {!showContent && (
+        <div className="w-full p-4 grid  md:grid-cols-3 gap-2 bg-neutral-800 my-2">
           <div className="flex flex-col">
             <label>عنوان</label>
             <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.title ?? ""}
+              type="text"
+              name="title"
+              className="bg-neutral-700 p-1 rounded-md"
             />
           </div>
 
           <div className="flex flex-col">
-            <label>نمره</label>
+            <label>اطلاعات اضافی</label>
             <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.imdb_id ?? data.mal_id ?? ""}
+              type="text"
+              name="extra_info"
+              className="bg-neutral-700 p-1 rounded-md"
             />
           </div>
 
           <div className="flex flex-col">
-            <label>سال تولید</label>
+            <label>اطلاعات باکس دانلود</label>
             <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.year ?? ""}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>مدت زمان</label>
-            <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.duration ?? ""}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>ژانر</label>
-            <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.genre.join(", ") ?? ""}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>زبان</label>
-            <input
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
-              defaultValue={data.language.join(", ") ?? ""}
+              type="text"
+              name="download_info"
+              className="bg-neutral-700 p-1 rounded-md"
             />
           </div>
 
-          <div className="flex flex-col col-span-3">
+          <div className="flex flex-col md:col-span-3">
             <label>توضیحات</label>
             <textarea
-              className="bg-neutral-700 p-1 rounded-lg"
-              disabled
+              name="description"
               defaultValue={data.description ?? ""}
+              className="bg-neutral-700 p-1 rounded-md"
             />
           </div>
 
-          <div className="flex flex-col col-span-3">
-            <label>پوستر</label>
-            <div className="flex justify-between items-start">
-              <img
-                src={data.poster}
-                className="w-[100px] h-150px] object-cover rounded-md"
-              />
-              <Link
-                to={`/${contentLink}/update`}
-                state={data}
-                className="bg-blue-500 self-end transition hover:opacity-50 cursor-pointer px-2  py-1 rounded-lg"
+          <div className="md:col-span-3 grid  md:grid-cols-3">
+            <div className="flex flex-col">
+              <label>نمایش برای کاربران اشتراکی</label>
+              <select
+                className="bg-neutral-800 text-white p-2 rounded-lg border-2"
+                defaultValue={"false"}
+                name="is_premium"
               >
-                ویرایش
-              </Link>
+                <option value="true">بله</option>
+                <option value="false">خیر</option>
+              </select>
             </div>
           </div>
+
+          {content === "movie" ? (
+            <MovieDownloadLinkBox
+              dataState={downloadsLink}
+              setDataState={setDownloadsLink}
+              submitHandler={submitHandler}
+            />
+          ) : (
+            <SeriesOrAnimeDownloadLinkBox
+              dataState={seriesOrAnime}
+              setDataState={setSeriesOrAnime}
+              submitHandler={submitHandler}
+            />
+          )}
         </div>
       )}
-      {!showContent && <div>ss</div>}
-    </div>
+    </form>
   );
 }

@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, ValidateNested } from 'class-validator';
+import { Prisma } from 'generated/prisma';
 
 export class CreatePostDto {
   @IsNotEmpty()
@@ -36,12 +37,6 @@ export class CreatePostDto {
     };
   };
 
-  download_links?: {
-    create: {
-      title: string;
-      episode?: string;
-      season?: number;
-      link_url: string[];
-    }[];
-  };
+  @ValidateNested()
+  download_links?: Prisma.DownloadLinkCreateNestedManyWithoutPostInput 
 }
