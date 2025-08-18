@@ -1,8 +1,0 @@
-@import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
-
-@layer components {
-    .table-small th,td {
-        @apply text-red-500
-    }
-}
