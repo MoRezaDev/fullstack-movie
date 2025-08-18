@@ -15,7 +15,7 @@ export default function Series() {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
 
-  const { currentContent, currentPage, totalPages } = getPaginatedData(
+  const { currentContent, currentPage, totalPages } = getPaginatedData<AnimeType>(
     data,
     5,
     currentPageState

@@ -4,23 +4,29 @@ import PostsBarChart from "../../../components/charts/PostsBarChart";
 import CustomPieChart from "../../../components/charts/UsersPieChart";
 import LineChartData from "../../../components/charts/LineChart";
 import StackedBarChart from "../../../components/charts/StackedBarChart";
+import { useNavigation } from "react-router";
+import NavigationLoader from "../../../components/NavigationLoader";
 
 export default function Dashboard() {
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+
+  if (isNavigating) return <NavigationLoader />;
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <Breadcrumb />
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card title="تعداد کاربران">
-          <p className="text-2xl font-bold">۵۴۳</p>
+        <Card className="bg-blue-500" title="تعداد کاربران">
+          <p className="text-sm font-bold">100</p>
         </Card>
-        <Card title="تعداد کاربران">
-          <p className="text-2xl font-bold">۵۴۳</p>
+        <Card title="تعداد مشاهده ها">
+          <p className="text-sm font-bold">۵۴۳</p>
         </Card>
-        <Card title="تعداد کاربران">
-          <p className="text-2xl font-bold">۵۴۳</p>
+        <Card title="تعداد مشترکین VIP">
+          <p className="text-sm font-bold">30</p>
         </Card>
-        <Card title="تعداد کاربران">
-          <p className="text-2xl font-bold">۵۴۳</p>
+        <Card title="تعداد کامنت ها">
+          <p className="text-sm font-bold">40</p>
         </Card>
       </div>
       <div

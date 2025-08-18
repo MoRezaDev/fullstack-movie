@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import ContentTabs from "../../../../components/post/ContentTabs";
-import { useFetcher } from "react-router";
+import { useFetcher, useNavigation } from "react-router";
 import { toast } from "sonner";
 import CreatePostForm from "../../../../components/post/CreatePostForm";
+import NavigationLoader from "../../../../components/NavigationLoader";
 
 type ContentStateType = "anime" | "movie" | "series";
 
 export default function CreatePost() {
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+
+  if (isNavigating) return <NavigationLoader />;
+
   const [content, setContent] = useState<ContentStateType>("movie");
   const [data, setData] = useState(null);
   const fetcher = useFetcher();

@@ -12,13 +12,15 @@ import {
 import { Link, useLocation } from "react-router";
 import { useState } from "react";
 import { FaNoteSticky } from "react-icons/fa6";
-import { MdPostAdd } from "react-icons/md";
+import { MdLocalMovies, MdPostAdd } from "react-icons/md";
+import { IoTv } from "react-icons/io5";
+import { SiMyanimelist } from "react-icons/si";
 
 const menuItems = [
   { label: "کاربران", icon: <FaUserFriends />, to: "/users" },
   { label: "کامنت ها", icon: <FaCommentDots />, to: "/comments" },
   { label: "درخواستی ها", icon: <FaInbox />, to: "/requests" },
-  { label: "خرابی", icon: <FaBug />, to: "/report" },
+  { label: "خرابی", icon: <FaBug />, to: "/reports" },
 ];
 
 export default function Sidebar() {
@@ -32,7 +34,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex items-center gap-2 text-xl font-semibold text-white">
         <FaFilm className="text-[#38bdf8]" />
-        <span className="tracking-wide">MoviePanel</span>
+        <span className="tracking-wide text-lg">ADMIN PANEL</span>
       </div>
 
       {/* Menu Items */}
@@ -153,7 +155,7 @@ export default function Sidebar() {
             }`}
         >
           <span className="text-base">
-            <FaTachometerAlt />
+            <MdLocalMovies />
           </span>
           <span>فیلم ها</span>
         </Link>
@@ -168,7 +170,7 @@ export default function Sidebar() {
             }`}
         >
           <span className="text-base">
-            <FaTachometerAlt />
+            <IoTv />
           </span>
           <span> سریال ها</span>
         </Link>
@@ -183,7 +185,7 @@ export default function Sidebar() {
             }`}
         >
           <span className="text-base">
-            <FaTachometerAlt />
+            <SiMyanimelist />
           </span>
           <span> انیمه ها</span>
         </Link>

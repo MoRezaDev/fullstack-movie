@@ -1,10 +1,15 @@
-import { AnimeType, movieType, PostType, SeriesType } from "../common/types";
+import clsx from "clsx";
+import { ClassValue } from "clsx";
+import {twMerge} from 'tailwind-merge'
 
-export function getPaginatedData(
-  data: movieType[] | SeriesType[] | AnimeType[] | PostType[],
+
+export function getPaginatedData<T>(
+  data: T[],
   itemsPerPage: number = 5,
   currentPage: number = 1
 ) {
+  if (!data || !Array.isArray(data))
+    return { currentContent: [], currentPage: "", totalPages: 0 };
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -40,4 +45,9 @@ export function createPostDto(
     id: originalId,
     content,
   };
+}
+
+
+export function cn(...inputs : ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

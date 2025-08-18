@@ -1,18 +1,16 @@
 import { CgClose } from "react-icons/cg";
 import { FaDeleteLeft, FaLink, FaPlus } from "react-icons/fa6";
-import { DownloadLinksSeriesOrAnimeType } from "../../common/types";
+import {
+  DownloadLinkBoxProps,
+  DownloadLinksSeriesOrAnimeType,
+} from "../../common/types";
 
 export default function SeriesOrAnimeDownloadLinkBox({
   dataState,
   setDataState,
   submitHandler,
-}: {
-  dataState: DownloadLinksSeriesOrAnimeType[];
-  setDataState: React.Dispatch<
-    React.SetStateAction<DownloadLinksSeriesOrAnimeType[]>
-  >;
-  submitHandler: (e: React.FormEvent) => void;
-}) {
+  isPending,
+}: DownloadLinkBoxProps<DownloadLinksSeriesOrAnimeType>) {
   function handleAddSeriesOrAnime() {
     setDataState((prev) => [
       ...prev,
@@ -92,6 +90,7 @@ export default function SeriesOrAnimeDownloadLinkBox({
                 className="bg-neutral-700 rounded-md p-1"
                 type="text"
                 name="quality"
+                value={link.quality ?? ""}
               />
             </div>
             <div className="flex flex-col">
@@ -101,6 +100,7 @@ export default function SeriesOrAnimeDownloadLinkBox({
                 className="bg-neutral-700 rounded-md p-1"
                 type="text"
                 name="season"
+                value={link.season ?? ""}
               />
             </div>
             <div className="flex flex-col">
@@ -110,6 +110,7 @@ export default function SeriesOrAnimeDownloadLinkBox({
                 className="bg-neutral-700 rounded-md p-1"
                 type="text"
                 name="episode"
+                value={link.episode ?? ""}
               />
             </div>
           </div>
@@ -199,13 +200,16 @@ export default function SeriesOrAnimeDownloadLinkBox({
       ))}
 
       {/*  Submit Button */}
-      <button
-        onClick={submitHandler}
-        type="submit"
-        className="bg-blue-500 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer"
-      >
-        ارسال
-      </button>
+      {submitHandler && (
+        <button
+          disabled={isPending}
+          onClick={submitHandler}
+          type="submit"
+          className="bg-blue-500 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer p-2"
+        >
+          {isPending ? "شکیبا باشید" : "ارسال"}
+        </button>
+      )}
     </div>
   );
 }

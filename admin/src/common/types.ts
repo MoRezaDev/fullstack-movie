@@ -214,8 +214,8 @@ export type PostType = {
   createdAt: string;
   updatedAt: string;
 
-  anime: AnimeType; 
-  series: SeriesType; 
+  anime: AnimeType;
+  series: SeriesType;
 
   movie: movieType;
 
@@ -234,4 +234,26 @@ export type PostType = {
     createdAt: string;
     updatedAt: string;
   }[];
+};
+
+export type DownloadLinkBoxProps<T> = {
+  dataState: T[];
+  setDataState: React.Dispatch<React.SetStateAction<T[]>>;
+  submitHandler?: (e: React.FormEvent) => void;
+  isPending: boolean;
+};
+
+export type UserType = {
+  id: string;
+  mobile: string;
+  name: string | null;
+  is_premium: boolean;
+  plan_name: string;
+  expire_date: string | null; // could also be Date | null if parsed
+  createdAt: string; // or Date
+  updatedAt: string; // or Date
+  watchlist: any[]; // can replace `any` with proper item type later
+  comments: any[];
+  likes: any[];
+  subscriptions: any[];
 };

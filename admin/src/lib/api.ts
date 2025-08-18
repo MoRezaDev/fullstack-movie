@@ -321,3 +321,58 @@ export async function deletePost(postId: string) {
 
   return data;
 }
+
+export async function updatePost(postId: string, updateDto: any) {
+  //Validating
+  const validated = PostIdValidationSchema.safeParse({ postId });
+  if (!validated.success) throw new Error(validated.error.issues[0].message);
+
+  await new Promise((res, rej) => setTimeout(() => res("hi"), 3000));
+  const response = await fetch(`http://localhost:3001/post/${postId}`, {
+    method: "PATCH",
+    body: JSON.stringify(updateDto),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message ?? "something wrong in update!");
+  }
+
+  return data;
+}
+
+// users
+export async function getAllUsers() {
+  await new Promise((res) => setTimeout(() => res(""), 3000));
+
+  const response = await fetch(`http://localhost:3001/user`, {
+    credentials: "include",
+  });
+
+  const data = await response.json();
+  // if (!response.ok) {
+  //   throw new Error(data.message ?? "Failed to fetch data");
+  // }
+
+  return data;
+}
+
+export async function deleteUser(userId: string) {
+  //Validating
+
+  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  const response = await fetch(`http://localhost:3001/user/${userId}`, {
+    method: "DELETE",
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message ?? "faild to fetch data");
+  }
+
+  return data;
+}

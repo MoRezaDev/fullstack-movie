@@ -2,7 +2,7 @@ import { useLoaderData, useNavigation } from "react-router";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { getPaginatedData } from "../../lib/functions";
-import { PostDtoType, PostType, SeriesType } from "../../common/types";
+import { PostType } from "../../common/types";
 import PaginateButtons from "../../components/PaginateButtons";
 import NavigationLoader from "../../components/NavigationLoader";
 import TablePosts from "../../components/post/TablePosts";
@@ -15,7 +15,7 @@ export default function Post() {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
 
-  const { currentContent, currentPage, totalPages } = getPaginatedData(
+  const { currentContent, currentPage, totalPages } = getPaginatedData<PostType>(
     data,
     5,
     currentPageState

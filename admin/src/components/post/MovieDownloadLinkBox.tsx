@@ -1,19 +1,16 @@
 import { FaPlus } from "react-icons/fa6";
 import { FiDelete } from "react-icons/fi";
-import { DownloadLinksMovieType } from "../../common/types";
-
-//define types
-type MovieDownloadLinkBoxProps = {
-  dataState: DownloadLinksMovieType[];
-  setDataState: React.Dispatch<React.SetStateAction<DownloadLinksMovieType[]>>;
-  submitHandler: (e: React.FormEvent) => void;
-};
+import {
+  DownloadLinkBoxProps,
+  DownloadLinksMovieType,
+} from "../../common/types";
 
 export default function MovieDownloadLinkBox({
   dataState,
   setDataState,
   submitHandler,
-}: MovieDownloadLinkBoxProps) {
+  isPending,
+}: DownloadLinkBoxProps<DownloadLinksMovieType>) {
   function handleAddButton() {
     setDataState((prev) => [...prev, { link_url: { title: "", link: "" } }]);
   }
@@ -87,13 +84,16 @@ export default function MovieDownloadLinkBox({
             </div>
           </div>
         ))}
-        <button
-          onClick={submitHandler}
-          type="submit"
-          className="bg-blue-500 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer"
-        >
-          ارسال
-        </button>
+        {submitHandler && (
+          <button
+            disabled={isPending}
+            onClick={submitHandler}
+            type="submit"
+            className="bg-blue-500 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer p-2"
+          >
+            {isPending ? "شکیبا باشید" : "ارسال"}
+          </button>
+        )}
       </div>
     </div>
   );

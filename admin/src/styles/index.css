@@ -13,3 +13,8 @@
   font-family: "yekan-medium";
   src: url(fonts/yekan-medium.woff) format("woff");
 }
+
+.table-small th,
+.table-small td {
+  @apply p-2 text-start border-b border-neutral-600;
+}

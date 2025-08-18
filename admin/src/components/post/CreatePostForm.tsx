@@ -49,7 +49,7 @@ export default function CreatePostForm({
 
   const contentLink = content === "movie" ? "movies" : content;
 
-  console.log(seriesOrAnime)
+  console.log(seriesOrAnime);
 
   function submitHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -143,12 +143,14 @@ export default function CreatePostForm({
 
           {content === "movie" ? (
             <MovieDownloadLinkBox
+              isPending={mutation.isPending}
               dataState={downloadsLink}
               setDataState={setDownloadsLink}
               submitHandler={submitHandler}
             />
           ) : (
             <SeriesOrAnimeDownloadLinkBox
+              isPending={mutation.isPending}
               dataState={seriesOrAnime}
               setDataState={setSeriesOrAnime}
               submitHandler={submitHandler}

@@ -7,6 +7,7 @@ import {
   postLoader,
   rootLayoutLoader,
   seriesLoader,
+  usersLoader,
 } from "./lib/loaders";
 import Login from "./modules/auth/ui/Login";
 import Signup from "./modules/auth/ui/Signup";
@@ -23,6 +24,7 @@ import {
   findOrAddSeriesAction,
   updateAnimeAction,
   updateMovieAction,
+  updatePostAction,
   updateSeriesAction,
 } from "./lib/actions";
 import Movie from "./modules/movie/ui/Movie";
@@ -37,6 +39,10 @@ import Anime from "./modules/anime/ui/Anime";
 import Post from "./modules/post/Post";
 import CreatePost from "./modules/post/ui/create/CreatePost";
 import UpdatePost from "./modules/post/ui/update/UpdatePost";
+import Users from "./modules/users/ui/Users";
+import Comments from "./modules/comments/Comments";
+import Requests from "./modules/requests/Requests";
+import Reports from "./modules/reports/Reports";
 
 export const router = createBrowserRouter([
   {
@@ -102,14 +108,31 @@ export const router = createBrowserRouter([
         children: [
           { index: true, Component: Post, loader: postLoader },
           { path: "new", Component: CreatePost, action: findContentByIdAction },
-          { path: "update", Component: UpdatePost },
+          { path: "update", Component: UpdatePost, action: updatePostAction },
         ],
+      },
+      {
+        path: "users",
+        children: [{ index: true, Component: Users, loader: usersLoader }],
+      },
+      {
+        path: "comments",
+        children: [{ index: true, Component: Comments }],
+      },
+      {
+        path: "requests",
+        children: [{ index: true, Component: Requests }],
+      },
+      {
+        path: "reports",
+        children: [{ index: true, Component: Reports }],
       },
     ],
   },
   {
     Component: AuthLayout,
     loader: authLoader,
+    HydrateFallback: GlobalLoading,
     children: [
       { path: "login", Component: Login },
       { path: "signup", Component: Signup },

@@ -1,4 +1,4 @@
-import { AnimeType, SeriesType } from "../common/types";
+import { AnimeType, PostDtoType, SeriesType } from "../common/types";
 import {
   addPost,
   findOrAddAnime,
@@ -9,6 +9,7 @@ import {
   getSeries,
   updateAnime,
   updateMovie,
+  updatePost,
   updatesSeries,
 } from "./api";
 
@@ -220,4 +221,37 @@ export async function addPostAction(dataObj: any) {
   const newData = { ...rest, [content]: { connect: { id } } };
 
   return await addPost(newData);
+}
+
+export async function updatePostAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const formDataObject = Object.fromEntries(formData.entries());
+  const raw_download_links = JSON.parse(
+    formDataObject.download_links as string
+  );
+  console.log("raw", raw_download_links);
+  const download_links =
+    (formDataObject.type as string) === "movie"
+      ? raw_download_links
+      : raw_download_links.map((raw: any) => ({
+          episode: raw.episode,
+          season: raw.season,
+          link_url: raw.link_url,
+          quality: raw.quality,
+        }));
+
+  const updateDto = {
+    title: formDataObject.title as string,
+    download_info: formDataObject.download_info as string,
+    extra_info: formDataObject.extra_info as string,
+    is_premium: (formDataObject.is_premium as string) === "true" ? true : false,
+    download_links: { create: download_links },
+  };
+
+  try {
+    await updatePost(formDataObject.postId as string, updateDto);
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message ?? "somethings wrong!" };
+  }
 }
