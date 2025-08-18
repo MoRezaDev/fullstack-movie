@@ -7,12 +7,15 @@ model User {
     plan_name String @default("free")
     expire_date String?
     subscriptions Subscription[]
+    role String @default("USER")
 
     otp Otp?
 
     watchlist WatchList[]
 
     likes Like[]
+
+    comments Comment[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

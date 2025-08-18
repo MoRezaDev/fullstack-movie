@@ -14,7 +14,7 @@ export class VerifyJwtGurds implements CanActivate {
 
     let tokenFromHeader = request.headers['authorization'];
 
-    if (tokenFromHeader.startsWith('Bearer ')) {
+    if (tokenFromHeader && tokenFromHeader.startsWith('Bearer ')) {
       tokenFromHeader = request.headers['authorization'].split(' ')[1];
     }
 

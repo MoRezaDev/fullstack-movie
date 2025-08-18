@@ -1,24 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { VerifyJwtGurds } from 'src/common/gurds/verify-jwt.gurd';
+import { Roles, RolesGurd } from 'src/common/gurds/roles.gurd';
+import { Request } from 'express';
+import { SubscribeDto } from './dto/create-subscribe.dto';
 
+@UseGuards(VerifyJwtGurds)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
+  @UseGuards(RolesGurd)
+  @Roles(['EDITOR', 'ADMIN'])
   @Get()
-  findAll() {
+  async findAll() {
     return this.userService.findAll();
   }
 
   @Post('sub')
-  async addSubscribe() {}
+  async addSubscribe(
+    @Req() req: Request,
+    @Body() createSubscriptionDto: SubscribeDto,
+  ) {
+    return this.userService.addSubscribe({
+      ...createSubscriptionDto,
+      userId: req['user']['userId'],
+    });
+  }
+
+  @Get('delete-all')
+  async deleteAll() {
+    await this.userService.deleteAll();
+    return { message: 'success' };
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

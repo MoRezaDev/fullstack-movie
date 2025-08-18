@@ -8,11 +8,28 @@ import { SubscribeDto } from './dto/create-subscribe.dto';
 export class UserService {
   constructor(private databaseService: DatabaseService) {}
   async create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return await this.databaseService.user.create({
+      data: {
+        ...createUserDto,
+        otp: {
+          create: {
+            code: 123456,
+            expire_date: '123',
+          },
+        },
+      },
+    });
   }
 
   async findAll() {
-    return this.databaseService.user.findMany({ include: { watchlist: true } });
+    return this.databaseService.user.findMany({
+      include: {
+        watchlist: true,
+        comments: true,
+        likes: true,
+        subscriptions: true,
+      },
+    });
   }
 
   async findById(userId: string) {
@@ -28,6 +45,10 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
+  async deleteAll() {
+    return await this.databaseService.user.deleteMany();
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
@@ -37,9 +58,30 @@ export class UserService {
   }
 
   async addSubscribe(subscribeDto: SubscribeDto) {
+    if (!subscribeDto.transaction_code)
+      throw new HttpException('تراکنش انجام نشد', 403);
+
+    //create expire date
+    const expire_date =
+      subscribeDto.amount === 10000
+        ? (Date.now() + 30 * 24 * 60 * 60 * 1000).toString()
+        : subscribeDto.amount === 50000
+          ? (Date.now() + 90 * 24 * 60 * 60 * 1000).toString()
+          : '0';
+
     return await this.databaseService.user.update({
       where: { id: subscribeDto.userId },
-      data: subscribeDto,
+      data: {
+        expire_date,
+        plan_name: 'VIP',
+        is_premium: true,
+        subscriptions: {
+          create: {
+            amount: subscribeDto.amount,
+            transaction_code: subscribeDto.transaction_code,
+          },
+        },
+      },
     });
   }
 

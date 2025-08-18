@@ -73,7 +73,6 @@ export async function SavePoster(
     id,
   );
 
-
   const imagePath = path.join(staticPath, 'poster.jpg');
   fs.mkdirSync(staticPath, { recursive: true });
 
@@ -85,7 +84,7 @@ export async function SavePoster(
     response.data.pipe(writer);
     await finished(writer);
   } catch (err) {
-    console.log('catching error on try catch')
+    console.log('catching error on try catch');
     throw new HttpException(
       err?.message ?? 'something wrong on saving file',
       500,

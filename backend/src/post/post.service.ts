@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { DatabaseService } from 'src/modules/database/database.service';
@@ -49,10 +49,18 @@ export class PostService {
   }
 
   async update(id: string, updatePostDto: UpdatePostDto) {
-    return await this.databaseService.$transaction([
-      this.databaseService.downloadLink.deleteMany({ where: { postId: id } }),
-      this.databaseService.post.update({ where: { id }, data: updatePostDto }),
-    ])[1]; 
+    try {
+      const [deletedPost, updated] = await this.databaseService.$transaction([
+        this.databaseService.downloadLink.deleteMany({ where: { postId: id } }),
+        this.databaseService.post.update({
+          where: { id },
+          data: updatePostDto,
+        }),
+      ]);
+      return updated;
+    } catch (err) {
+      throw new HttpException(err.message, 500);
+    }
   }
 
   async remove(id: string) {

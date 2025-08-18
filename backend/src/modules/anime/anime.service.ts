@@ -57,7 +57,7 @@ export class AnimeService {
       where: { mal_id },
     });
     if (!foundedAnime) throw new HttpException('آیدی در سایت موجود نیست', 404);
-    return foundedAnime
+    return foundedAnime;
   }
 
   async translateDescription(description: string) {
@@ -89,6 +89,8 @@ export class AnimeService {
     const { data } = await axios.get(
       `${process.env.Anime_BASE_URL}/${mal_id}/full` || '',
     );
+
+    
 
     //creating folder and file
     console.log('saving poster');

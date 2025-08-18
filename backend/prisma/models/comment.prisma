@@ -1,0 +1,13 @@
+model Comment {
+    Id String @id @default(uuid())
+    text String
+
+    userId String
+    user User @relation(fields: [userId],references: [id])
+
+    postId String
+    post Post @relation(fields: [postId],references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

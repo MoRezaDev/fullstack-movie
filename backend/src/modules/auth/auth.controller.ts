@@ -11,11 +11,12 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SendOtpDto } from './dto/send-otp.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { CheckOtpDto } from './dto/check-otp.dto';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { VerifyJwtGurds } from 'src/common/gurds/verify-jwt.gurd';
 import { RequestWithUser } from 'src/common/types/globals.type';
+import { Roles } from 'src/common/gurds/roles.gurd';
 
 @SkipThrottle()
 @Controller('auth')
@@ -35,13 +36,18 @@ export class AuthController {
     @Res() res: Response,
   ) {
     const token = await this.authService.checkOtp(checkOtpDto);
-    res.cookie('token', token.token, {
-      httpOnly: true,
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: true,
-    });
-    return res.send({ message: 'Login successful' });
+
+    return (
+      res
+        .cookie('token', token.token, {
+          secure: true,
+          sameSite: 'none',
+          httpOnly: true,
+          maxAge: 60 * 60 * 1000,
+        })
+        // .cookie('token', token.token)
+        .send({ message: 'Login successful' })
+    );
   }
 
   @UseGuards(VerifyJwtGurds)
@@ -55,5 +61,20 @@ export class AuthController {
   async test() {
     // return 'test';
     throw new TypeError('test1111');
+  }
+
+  @Get('tt')
+  async testCookie(
+    @Res({ passthrough: true }) response: Response,
+    @Req() req: Request,
+  ) {
+    console.log(req.cookies);
+    response
+      .cookie('test', 'test1', {
+        sameSite: 'none',
+        httpOnly: true,
+        secure: true,
+      })
+      .send({ message: 'hu' });
   }
 }
