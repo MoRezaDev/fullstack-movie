@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function RootLayout({
   children,
@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="pt-[69px] bg-gray-200">
+    <main className="pt-[69px] bg-neutral-900 text-white text-sm">
       <Navbar />
       {children}
     </main>

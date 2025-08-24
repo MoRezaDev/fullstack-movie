@@ -46,7 +46,7 @@ export class AuthController {
           maxAge: 60 * 60 * 1000,
         })
         // .cookie('token', token.token)
-        .send({ message: 'Login successful' })
+        .send({ message: 'Login successful', token })
     );
   }
 

@@ -1,4 +1,4 @@
-import { AnimeType, PostDtoType, SeriesType } from "../common/types";
+import { AnimeType, SeriesType } from "../common/types";
 import {
   addPost,
   findOrAddAnime,
@@ -47,7 +47,7 @@ export async function updateMovieAction({ request }: { request: Request }) {
   console.log("imdb", imdb_id);
 
   try {
-    const updatedMovie = await updateMovie(imdb_id, {
+    await updateMovie(imdb_id, {
       title,
       rating,
       description,

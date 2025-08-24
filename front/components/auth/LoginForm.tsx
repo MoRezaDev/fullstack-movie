@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 import { cn } from "@/lib/functions";
-import { sendOtpAction } from "@/lib/actions";
+import { sendOtpAction, verifyOtpAction } from "@/lib/actions";
 
 export default function LoginForm() {
   // const [sendPhoneNumberState, setSendPhoneNumberState] = useState(true);
@@ -11,6 +11,10 @@ export default function LoginForm() {
     data: {},
     isSuccess: false,
   });
+  const [verifyState, verifyAction, verifyPending] = useActionState(
+    verifyOtpAction,
+    { error: "" }
+  );
 
   console.log(state);
 
@@ -18,7 +22,15 @@ export default function LoginForm() {
     if (state.error) {
       toast.error(state.error);
     }
-  }, [state.error]);
+  }, [state]);
+
+  useEffect(() => {
+    if (verifyState.error) {
+      toast.error(verifyState.error);
+    }
+  }, [verifyState]);
+
+  console.log("verifyState", verifyState);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-900 px-4">
@@ -56,7 +68,10 @@ export default function LoginForm() {
           </button>
         </form>
       ) : (
-        <form className="bg-neutral-800 w-full max-w-sm p-6 rounded-xl shadow-lg space-y-4">
+        <form
+          action={verifyAction}
+          className="bg-neutral-800 w-full max-w-sm p-6 rounded-xl shadow-lg space-y-4"
+        >
           <h2 className="text-center text-2xl font-semibold text-white">
             تایید کد
           </h2>
@@ -78,17 +93,18 @@ export default function LoginForm() {
               className="bg-neutral-700 p-3 w-full rounded-lg outline-none text-sm border border-neutral-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition placeholder:text-gray-400 tracking-widest text-center"
               placeholder="----"
             />
-            <input type="hidden" name="mobile" />
+            <input value={state.data.mobile} type="hidden" name="mobile" />
           </div>
 
           <button
+            disabled={verifyPending}
             type="submit"
             className={cn(
               "bg-gradient-to-r from-blue-500 to-indigo-500 w-full py-2.5 rounded-lg font-medium text-white hover:shadow-lg hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed",
-              true && "bg-neutral-700/20"
+              verifyPending && "bg-neutral-700/20"
             )}
           >
-            {true ? "⏳ درحال تایید..." : "ورود"}
+            {verifyPending ? "⏳ درحال تایید..." : "ورود"}
           </button>
         </form>
       )}
