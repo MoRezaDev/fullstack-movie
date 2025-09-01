@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 
 export default function Home() {
   return (
-    <div className="w-full  z-2">
+    <div className="w-full  z-2 pb-4">
       <Suspense fallback={<div>Loading...</div>}>
         <Slider />
       </Suspense>

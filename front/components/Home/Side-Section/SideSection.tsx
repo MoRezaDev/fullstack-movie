@@ -1,6 +1,11 @@
 import { DiAndroid } from "react-icons/di";
 import { FaTelegram } from "react-icons/fa";
 import GenreCard from "./GenreCard";
+import MovieCard from "./MovieCard";
+import { Suspense } from "react";
+import SkeletonLoader from "./SkeletonLoader";
+import SeriesCard from "./SeriesCard";
+import AnimeCard from "./AnimeCard";
 
 export default function SideSection() {
   return (
@@ -17,7 +22,7 @@ export default function SideSection() {
             <div className="absolute inset-0  animate-rainbow opacity-30" />
 
             {/* content */}
-            <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="relative  flex items-center justify-between w-full">
               <div className="flex flex-col justify-between h-14">
                 <span>آدرس کانال تلگرام</span>
                 <span>mamalFilm</span>
@@ -38,7 +43,7 @@ export default function SideSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
 
             {/* content */}
-            <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="relative  flex items-center justify-between w-full">
               <div className="flex flex-col justify-between h-14">
                 <span>دانلود اپلیکیشن اندروید</span>
                 <span>mamalFilm.apk</span>
@@ -50,6 +55,15 @@ export default function SideSection() {
       </div>
 
       <GenreCard />
+      <Suspense fallback={<SkeletonLoader />}>
+        <MovieCard />
+      </Suspense>
+      <Suspense fallback={<SkeletonLoader />}>
+        <SeriesCard />
+      </Suspense>
+      <Suspense fallback={<SkeletonLoader />}>
+        <AnimeCard />
+      </Suspense>
     </div>
   );
 }
