@@ -7,7 +7,7 @@ model Anime {
     title String
     title_english String @default("N/A")
     title_japanese String @default("N/A")
-    type String @default("N/A")
+    type String @default("anime")
     episodes String @default("N/A")
     status String @default("N/A")
     aired_from String @default("N/A")

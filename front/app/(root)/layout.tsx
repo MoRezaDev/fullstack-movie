@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <main className="pt-[69px] bg-neutral-900 text-white text-sm">
       <Navbar />
-      {children}
+      <section className="min-h-[calc(100vh-69px)]">{children}</section>
     </main>
   );
 }

@@ -32,7 +32,6 @@ export default async function UserProfile() {
     );
   return (
     <div className="flex gap-4 items-center">
-      <SearchBar />
       <div className="flex items-center gap-2 border-2 py-1 px-2 rounded-md border-neutral-700">
         <Link href={"/profile"}>
           <img

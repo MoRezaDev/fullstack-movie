@@ -33,6 +33,10 @@ export class SeriesService {
     });
   }
 
+  async updateAll(updateDto: UpdateSeriesDto) {
+    return await this.databaseService.series.updateMany({ data: updateDto });
+  }
+
   async remove(imdb_id: string) {
     return await this.databaseService.$transaction(async (tx) => {
       try {

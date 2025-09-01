@@ -18,6 +18,7 @@ model Series {
     total_seasons Int
     country String @default("N/A")
     released String @default("N/A")
+    type String @default("series")
 
     postId String? @unique
     post Post? @relation(fields: [postId], references: [id])

@@ -15,6 +15,7 @@ model Movie {
     imdb_id String @unique 
     poster String?
     language String[]
+    type String @default("movie")
 
     postId String? @unique
     post Post? @relation(fields: [postId], references: [id])
@@ -27,5 +28,6 @@ model Movie {
     @@index([genre],type : Hash)
     @@index([title],type : Hash)
     @@index([imdb_id],type : Hash)
+
 
 }

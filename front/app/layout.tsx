@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import localFont from "next/font/local";
+import ReactQueryProvider from "@/common/ReactQueryProvider";
 
 const yekan = localFont({
   src: "../fonts/yekan-medium.woff",
@@ -31,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body dir="rtl" className={`${yekan.className} antialiased`}>
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
         <Footer />
       </body>
     </html>

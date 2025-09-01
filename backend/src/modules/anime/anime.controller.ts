@@ -34,6 +34,11 @@ export class AnimeController {
     return this.animeService.findOrAddAnime(malDto.mal_id);
   }
 
+  @Post('update-all')
+  async updateAll(@Body() updateDto: UpdateAnimeDto) {
+    return this.animeService.updateAll(updateDto);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.animeService.findOne(id);

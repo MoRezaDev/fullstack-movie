@@ -33,6 +33,10 @@ export class AnimeService {
     });
   }
 
+  async updateAll(updateDto: UpdateAnimeDto) {
+    return await this.databaseService.anime.updateMany({ data: updateDto });
+  }
+
   async remove(mal_id: string) {
     return await this.databaseService.$transaction(async (tx) => {
       try {
@@ -89,8 +93,6 @@ export class AnimeService {
     const { data } = await axios.get(
       `${process.env.Anime_BASE_URL}/${mal_id}/full` || '',
     );
-
-    
 
     //creating folder and file
     console.log('saving poster');

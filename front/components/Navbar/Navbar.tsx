@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import UserProfile from "./UserProfile";
 import Image from "next/image";
+import SearchBar from "./SearchBar";
+import NavBurgerMenu from "./NavBurgerMenu";
 
 const linkData = [
   {
@@ -23,16 +25,18 @@ const linkData = [
 
 export default function Navbar() {
   return (
-    <nav className=" fixed h-[60px] inset-0 w-full  bg-neutral-800 text-[13px] font-[400]">
-      <div className="flex size-full items-center py-2 px-8 justify-between">
+    <nav className=" fixed h-[60px] inset-0 w-full  bg-neutral-800 text-[13px] font-[400] z-10">
+      <div className="hidden lg:flex size-full items-center py-2 px-8 justify-between">
         <div className="flex items-center gap-4">
-          <Image
-            src={"/logo.jpg"}
-            className="rounded-full"
-            width={40}
-            height={40}
-            alt="logo"
-          />
+          <a href="/">
+            <Image
+              src={"/logo.jpg"}
+              className="rounded-full"
+              width={40}
+              height={40}
+              alt="logo"
+            />
+          </a>
           <div className="flex flex-col items-center justify-center gap-1">
             <h1 className="text-[16px]">ممل فیلم</h1>
             <h1>دانلود رایگان فیلم، سریال، انیمه</h1>
@@ -48,12 +52,16 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <div>
+        <div className="flex items-center gap-4 ">
+          <SearchBar />
           <Suspense fallback={<div>Loading...</div>}>
             <UserProfile />
           </Suspense>
         </div>
       </div>
+
+      {/* For Mobile & Tab devices */}
+      <NavBurgerMenu />
     </nav>
   );
 }

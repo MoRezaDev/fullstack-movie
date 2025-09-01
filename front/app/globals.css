@@ -1,1 +1,89 @@
 @import "tailwindcss";
+
+@keyframes modalExpand {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes modalCollapse {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.modal-content {
+  animation: modalContent 0.5s ease forwards;
+}
+
+@keyframes modalContent {
+  from {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(100);
+  }
+}
+
+.swiper {
+  height: 1px;
+  width: 1px;
+}
+
+.swiper-initialized {
+  width: auto;
+  height: auto;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 6s infinite;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-rainbow {
+  background: linear-gradient(270deg, #ff00cc, #ff0077, #00ffff, #33ffcc, #ff9900);
+  background-size: 400% 400%; /* important! */
+  animation: rainbow 6s ease infinite;
+}
+

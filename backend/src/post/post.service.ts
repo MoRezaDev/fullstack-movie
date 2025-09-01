@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { DatabaseService } from 'src/modules/database/database.service';
+import { QueryPostDto } from './dto/query-post.dto';
 
 @Injectable()
 export class PostService {
@@ -32,6 +33,18 @@ export class PostService {
         likes: true,
         download_links: true,
       },
+    });
+  }
+
+  async searchPost(queryDto: QueryPostDto) {
+    return await this.databaseService.post.findMany({
+      where: { title: { contains: queryDto.query, mode: 'insensitive' } },
+      include: {
+        anime: true,
+        movie: true,
+        series: true,
+      },
+      orderBy: { createdAt: 'desc' },
     });
   }
 

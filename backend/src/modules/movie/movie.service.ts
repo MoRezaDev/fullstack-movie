@@ -40,6 +40,10 @@ export class MovieService {
     });
   }
 
+  async updateAll(updateDto: UpdateMovieDto) {
+    return await this.databaseService.movie.updateMany({ data: updateDto });
+  }
+
   async remove(id: string) {
     try {
       return await this.databaseService.movie.delete({

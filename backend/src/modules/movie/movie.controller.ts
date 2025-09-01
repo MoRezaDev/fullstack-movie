@@ -41,6 +41,11 @@ export class MovieController {
     return await this.movieService.translateMovieDescription(description);
   }
 
+  @Post('update-all')
+  async updateAll(@Body() updateDto: UpdateMovieDto) {
+    return this.movieService.updateAll(updateDto);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.movieService.findOne(id);

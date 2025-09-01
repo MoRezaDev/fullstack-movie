@@ -35,6 +35,11 @@ export class SeriesController {
     return await this.seriesService.findOrAddSeries(imdbIdDto.imdb_id);
   }
 
+  @Post('update-all')
+  async updateAll(@Body() updateDto: UpdateSeriesDto) {
+    return this.seriesService.updateAll(updateDto);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.seriesService.findOne(id);

@@ -109,3 +109,12 @@ export async function translatePersian(content: string) {
     return response.choices[0].message?.content;
   } catch (err) {}
 }
+
+//
+export function normalizeTitle(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[._]/g, ' ')
+    .replace(/\s+/g, ' ') // collapse spaces
+    .trim();
+}

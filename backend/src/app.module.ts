@@ -15,6 +15,7 @@ import { LikeModule } from './modules/like/like.module';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ContentModule } from './modules/content/content.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { join } from 'path';
     AnimeModule,
     WatchlistModule,
     LikeModule,
+    ContentModule,
   ],
   controllers: [AppController],
   providers: [
