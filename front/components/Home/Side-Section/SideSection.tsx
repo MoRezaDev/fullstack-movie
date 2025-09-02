@@ -55,7 +55,7 @@ export default function SideSection() {
       </div>
 
       <GenreCard />
-      <Suspense fallback={<SkeletonLoader />}>
+      {/* <Suspense fallback={<SkeletonLoader />}>
         <MovieCard />
       </Suspense>
       <Suspense fallback={<SkeletonLoader />}>
@@ -63,7 +63,7 @@ export default function SideSection() {
       </Suspense>
       <Suspense fallback={<SkeletonLoader />}>
         <AnimeCard />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 }

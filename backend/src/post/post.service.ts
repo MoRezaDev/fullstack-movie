@@ -24,7 +24,17 @@ export class PostService {
     return await this.databaseService.post.create({ data: createPostDto });
   }
 
-  async findAll() {
+  async findAll(type: string | null) {
+    if (type) {
+      const posts = await this.databaseService.post.findMany({
+        include: {
+          anime: true,
+          movie: true,
+          series: true,
+        },
+      });
+      return posts.filter((post) => post[type] !== null);
+    }
     return await this.databaseService.post.findMany({
       include: {
         anime: { where: { NOT: { title: undefined } } },

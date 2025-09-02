@@ -24,8 +24,8 @@ export class PostController {
   }
 
   @Get()
-  async findAll() {
-    return this.postService.findAll();
+  async findAll(@Query('type') type: string) {
+    return this.postService.findAll(type);
   }
 
   @Get('search')

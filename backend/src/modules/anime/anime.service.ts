@@ -96,10 +96,11 @@ export class AnimeService {
 
     //creating folder and file
     console.log('saving poster');
-    const poster = await SavePoster(
+    const [poster] = await SavePoster(
       data.data.images.jpg.image_url,
       mal_id,
       'anime',
+      data.data.images.jpg.large_image_url,
     );
     const jikanData = data as JikanResponse;
     const translatedDescription =

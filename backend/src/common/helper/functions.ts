@@ -60,6 +60,7 @@ export async function SavePoster(
   imageLink: string,
   id: string,
   type: 'movie' | 'series' | 'anime',
+  backgroundLink?: string,
 ) {
   if (!imageLink || !id || !type)
     throw new HttpException('invalid arguments', 403);
@@ -83,6 +84,18 @@ export async function SavePoster(
     const response = await axios.get(imageLink, { responseType: 'stream' });
     response.data.pipe(writer);
     await finished(writer);
+
+    if (backgroundLink) {
+      const imagePath = path.join(staticPath, 'background-1280.jpg');
+      const writer = fs.createWriteStream(imagePath);
+
+      const response = await axios.get(backgroundLink, {
+        responseType: 'stream',
+      });
+
+      response.data.pipe(writer);
+      await finished(writer);
+    }
   } catch (err) {
     console.log('catching error on try catch');
     throw new HttpException(
@@ -90,7 +103,7 @@ export async function SavePoster(
       500,
     );
   }
-  return `http://localhost:3001/content/${type}/${id}/poster.jpg`;
+  return [`http://localhost:3001/content/${type}/${id}/poster.jpg`,`http://localhost:3001/content/${type}/${id}/background-1280.jpg`];
 }
 
 export async function translatePersian(content: string) {

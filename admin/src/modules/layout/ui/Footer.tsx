@@ -1,8 +1,8 @@
-import { FaGithub, FaLinkedin, FaWhatsapp, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950 text-neutral-400 border-t border-neutral-800 mt-10">
+    <footer className="bg-neutral-950 text-neutral-400 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand */}
         <div>

@@ -4,9 +4,8 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { DatabaseService } from '../database/database.service';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
-import * as path from 'path';
-import * as fsSync from 'fs';
 import Together from 'together-ai';
+import { SavePoster } from 'src/common/helper/functions';
 
 @Injectable()
 export class MovieService {
@@ -80,29 +79,27 @@ export class MovieService {
       `${process.env.MOVIE_BASE_URL}i=${imdb_id}&plot=full` || '',
     );
 
+    const { data: backgroundData } = await axios.get(
+      `https://api.themoviedb.org/3/find/${imdb_id}?external_source=imdb_id`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+        },
+      },
+    );
+
     if (typeof data === 'string' || data.Error) {
       throw new HttpException(data.Error ?? 'Movie not found', 404);
     }
 
-    const staticPath = path.join(
-      process.cwd(),
-      'src',
-      'public',
-      'content',
-      'movie',
+    const [poster, backgroundPoster] = await SavePoster(
+      data.Poster,
       imdb_id,
+      'movie',
+      `https://image.tmdb.org/t/p/w1280/${backgroundData.movie_results[0].backdrop_path}`,
     );
-    const imagePath = path.join(staticPath, 'poster.jpg');
-    fsSync.mkdirSync(staticPath, { recursive: true });
-    const writer = fsSync.createWriteStream(imagePath);
-    const response = await axios.get(data.Poster, { responseType: 'stream' });
-    response.data.pipe(writer);
-
-    // Wait for stream to finish
-    await new Promise<void>((resolve, reject) => {
-      writer.on('finish', resolve);
-      writer.on('error', reject);
-    });
 
     //create translator
     const translatedDescription = await this.translateMovieDescription(
@@ -115,7 +112,8 @@ export class MovieService {
         description: translatedDescription ?? data.Plot,
         imdb_id: data.imdbID,
         duration: data.Runtime,
-        poster: `http://localhost:3001/content/movie/${imdb_id}/poster.jpg`,
+        poster,
+        images_url: [backgroundPoster],
         genre: data.Genre.split(', '),
         year: +data.Year,
         rating: data.imdbRating,

@@ -1,4 +1,4 @@
-import MainContent from "./MainContent";
+import MainContent from "./Main-content/MainContent";
 import SideSection from "./Side-Section/SideSection";
 
 export default function MainWrapper() {

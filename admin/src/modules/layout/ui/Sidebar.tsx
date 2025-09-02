@@ -30,7 +30,7 @@ export default function Sidebar() {
   const toggleSubMenu = () => setShowSubMenu(!showSubMenu);
 
   return (
-    <div className="hidden md:flex w-[180px] border-l border-l-neutral-600 min-h-screen bg-neutral-900 text-gray-300 flex-col items-center py-6 gap-8 shadow-md ">
+    <div className="hidden md:flex w-[180px]  border-l border-l-neutral-600 min-h-screen bg-neutral-900 text-gray-300 flex-col items-center py-6 gap-8 shadow-md ">
       {/* Logo */}
       <div className="flex items-center gap-2 text-xl font-semibold text-white">
         <FaFilm className="text-[#38bdf8]" />

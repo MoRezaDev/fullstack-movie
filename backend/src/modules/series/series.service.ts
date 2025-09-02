@@ -95,6 +95,17 @@ export class SeriesService {
       `${process.env.MOVIE_BASE_URL}i=${imdb_id}&plot=full` || '',
     );
 
+    const { data: backgroundData } = await axios.get(
+      `https://api.themoviedb.org/3/find/${imdb_id}?external_source=imdb_id`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+        },
+      },
+    );
+
     if (typeof data === 'string' || data.Error)
       throw new HttpException(data.Error ?? 'Movie not found', 404);
 
@@ -103,8 +114,12 @@ export class SeriesService {
     }
 
     //creating folder and file
-    const poster = await SavePoster(data.Poster, imdb_id, 'series');
-    console.log('poster', poster);
+    const [poster, backgroundPoster] = await SavePoster(
+      data.Poster,
+      imdb_id,
+      'series',
+      `https://image.tmdb.org/t/p/w1280/${backgroundData.tv_results[0].backdrop_path}`,
+    );
     const translatedDescription = await translatePersian(data.Plot);
     const newData: OmdbSeriesResponse = data;
 
@@ -125,6 +140,7 @@ export class SeriesService {
           released: newData.Released,
           language: newData.Language.split(', '),
           poster,
+          images_url: backgroundPoster ? [backgroundPoster] : [],
         },
       });
     } catch (err) {
