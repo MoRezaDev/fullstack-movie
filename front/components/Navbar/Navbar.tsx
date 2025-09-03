@@ -25,7 +25,7 @@ const linkData = [
 
 export default function Navbar() {
   return (
-    <nav className=" fixed h-[60px] inset-0 w-full  bg-neutral-800 text-[13px] font-[400] z-10">
+    <nav className=" fixed h-[60px] inset-0 w-full  bg-black/80 text-[13px] font-[400] z-10">
       <div className="hidden lg:flex size-full items-center py-2 px-8 justify-between">
         <div className="flex items-center gap-4">
           <a href="/">

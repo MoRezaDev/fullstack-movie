@@ -4,6 +4,7 @@ import { SiMyanimelist } from "react-icons/si";
 
 export default async function AnimeCard() {
   const animes = await getPostsByType("anime");
+  if (animes.error) throw new Error(animes.error)
   return (
     <div className="p-2 bg-neutral-800 rounded-md">
       <div className="flex items-center gap-2 border-b p-2">
@@ -12,7 +13,7 @@ export default async function AnimeCard() {
       </div>
 
       <div className="mt-8 p-2 grid grid-cols-2 gap-4 text-[11px]">
-        {animes.map((item: any) => (
+        {animes?.map((item: any) => (
           <Link key={item.id} href={item.slug} className="cursor-pointer">
             <div className="group w-full aspect-[2/3] rounded-xl overflow-hidden shadow-lg transition-transform duration-300 relative text-[10px] flex flex-col ">
               <img

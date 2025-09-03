@@ -18,7 +18,8 @@ export default async function MainContent() {
 
       {/* main card  */}
       <section className="flex flex-col gap-4 mt-8">
-        <MainCard data={data} />
+        {data &&
+          data.map((item: any) => <MainCard data={item} key={item.title} />)}
       </section>
     </section>
   );

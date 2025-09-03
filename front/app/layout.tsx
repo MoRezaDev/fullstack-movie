@@ -10,6 +10,16 @@ const yekan = localFont({
   display: "swap",
 });
 
+const iranYekan = localFont({
+  src: "../fonts/iranYekan.ttf",
+  display: "swap",
+});
+
+const yekanWithNum = localFont({
+  src: "../fonts/yekanWithNum.ttf",
+  display: "swap",
+});
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body dir="rtl" className={`${yekan.className} antialiased`}>
+      <body dir="rtl" className={`${yekanWithNum.className}  antialiased`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Footer />
       </body>

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
+import { contains } from 'class-validator';
 
 @Injectable()
 export class ContentService {
@@ -41,5 +42,27 @@ export class ContentService {
       type: item.anime ? 'anime' : item.movie ? 'movie' : 'series',
     }));
     return data;
+  }
+
+  async findBySlug(slug: string) {
+    const decoded = decodeURIComponent(slug);
+    let post = await this.databaseSerivce.post.findUnique({
+      where: {
+        slug: decoded,
+      },
+    });
+
+    if (!post) {
+      post = await this.databaseSerivce.post.findFirst({
+        where: {
+          slug: {
+            contains: decoded,
+            mode: 'insensitive',
+          },
+        },
+      });
+    }
+
+    return post;
   }
 }

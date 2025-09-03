@@ -4,6 +4,8 @@ import { MdLocalMovies } from "react-icons/md";
 
 export default async function MovieCard() {
   const movies = await getPostsByType("movie");
+  if (movies.error) throw new Error(movies.error)
+
   return (
     <div className="p-2 bg-neutral-800 rounded-md">
       <div className="flex items-center gap-1 border-b p-2">
@@ -12,7 +14,7 @@ export default async function MovieCard() {
       </div>
 
       <div className="mt-8 p-2 grid grid-cols-2 gap-4 text-[11px]">
-        {movies.map((item: any) => (
+        {movies?.map((item: any) => (
           <Link key={item.id} href={item.slug} className="cursor-pointer">
             <div className="group w-full aspect-[2/3] rounded-xl overflow-hidden shadow-lg transition-transform duration-300 relative text-[10px] flex flex-col ">
               <img
