@@ -101,6 +101,7 @@ export type AnimeType = {
 export type MovieDataType = {
   id: string;
   title: string;
+  type: string;
   description: string;
   year: number;
   duration: string;
@@ -124,6 +125,7 @@ export type SeriesDataType = {
   title: string;
   description: string;
   year: number;
+  type: string;
   duration: string;
   status: string;
   rating: string;

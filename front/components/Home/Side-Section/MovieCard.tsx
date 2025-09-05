@@ -1,9 +1,9 @@
-import { getPostsByType } from "@/lib/api";
+import { getLastPostsByType,  } from "@/lib/api";
 import Link from "next/link";
 import { MdLocalMovies } from "react-icons/md";
 
 export default async function MovieCard() {
-  const movies = await getPostsByType("movie");
+  const movies = await getLastPostsByType("movie");
   if (movies.error) throw new Error(movies.error)
 
   return (

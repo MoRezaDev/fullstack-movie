@@ -1,10 +1,10 @@
-import { getPostsByType } from "@/lib/api";
+import { getLastPostsByType } from "@/lib/api";
 import Link from "next/link";
 import { SiMyanimelist } from "react-icons/si";
 
 export default async function AnimeCard() {
-  const animes = await getPostsByType("anime");
-  if (animes.error) throw new Error(animes.error)
+  const animes = await getLastPostsByType("anime");
+  if (animes.error) throw new Error(animes.error);
   return (
     <div className="p-2 bg-neutral-800 rounded-md">
       <div className="flex items-center gap-2 border-b p-2">

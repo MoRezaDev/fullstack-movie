@@ -62,7 +62,7 @@ export async function updateMovie(imdb_id: string, updateDto: movieType) {
 }
 
 export async function getAllMovies() {
-  await new Promise((res) => setTimeout(() => res(""), 3000));
+  await new Promise((res) => setTimeout(() => res(""), 1000));
 
   const response = await fetch(`http://localhost:3001/movie`);
   if (!response.ok) {
@@ -77,7 +77,7 @@ export async function deleteMovie(imdb_id: string) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  await new Promise((res, rej) => setTimeout(() => res("s"), 1000));
   const response = await fetch(`http://localhost:3001/movie/${imdb_id}`, {
     method: "DELETE",
   });
@@ -129,7 +129,7 @@ export async function updatesSeries(imdb_id: string, updateDto: SeriesType) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("hi"), 3000));
+  await new Promise((res, rej) => setTimeout(() => res("hi"), 1000));
   const response = await fetch(`http://localhost:3001/series/${imdb_id}`, {
     method: "PATCH",
     body: JSON.stringify(updateDto),
@@ -166,7 +166,7 @@ export async function deleteSeries(imdb_id: string) {
 }
 
 export async function getAllSeries() {
-  await new Promise((res) => setTimeout(() => res(""), 3000));
+  await new Promise((res) => setTimeout(() => res(""), 1000));
 
   const response = await fetch(`http://localhost:3001/series`);
 
@@ -240,7 +240,7 @@ export async function updateAnime(
 }
 
 export async function getAllAnimes() {
-  await new Promise((res) => setTimeout(() => res(""), 3000));
+  await new Promise((res) => setTimeout(() => res(""), 1000));
 
   const response = await fetch(`http://localhost:3001/anime`);
 
@@ -292,7 +292,7 @@ export async function addPost(postDto: PostDtoType) {
 }
 
 export async function getAllPosts() {
-  await new Promise((res) => setTimeout(() => res(""), 3000));
+  await new Promise((res) => setTimeout(() => res(""), 1000));
 
   const response = await fetch(`http://localhost:3001/post`);
 
@@ -327,7 +327,9 @@ export async function updatePost(postId: string, updateDto: any) {
   const validated = PostIdValidationSchema.safeParse({ postId });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("hi"), 3000));
+  console.log("validatedPostId", validated);
+
+  await new Promise((res, rej) => setTimeout(() => res("hi"), 1000));
   const response = await fetch(`http://localhost:3001/post/${postId}`, {
     method: "PATCH",
     body: JSON.stringify(updateDto),
@@ -347,7 +349,7 @@ export async function updatePost(postId: string, updateDto: any) {
 
 // users
 export async function getAllUsers() {
-  await new Promise((res) => setTimeout(() => res(""), 3000));
+  await new Promise((res) => setTimeout(() => res(""), 1000));
 
   const response = await fetch(`http://localhost:3001/user`, {
     credentials: "include",
@@ -364,7 +366,7 @@ export async function getAllUsers() {
 export async function deleteUser(userId: string) {
   //Validating
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  await new Promise((res, rej) => setTimeout(() => res("s"), 1000));
   const response = await fetch(`http://localhost:3001/user/${userId}`, {
     method: "DELETE",
   });

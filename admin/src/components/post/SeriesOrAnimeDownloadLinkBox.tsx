@@ -17,7 +17,7 @@ export default function SeriesOrAnimeDownloadLinkBox({
       {
         episode: "",
         season: 0,
-        link_url: [{ title: "", link: "" }],
+        link_url: [{ title: "قسمت 01", link: "" }],
         quality: "",
       },
     ]);
@@ -34,9 +34,20 @@ export default function SeriesOrAnimeDownloadLinkBox({
         else
           return {
             ...item,
-            link_url: item.link_url.filter(
-              (_, linkIdx) => linkIdx !== linkIndex
-            ),
+            link_url: item.link_url
+              .filter((_, linkIdx) => linkIdx !== linkIndex)
+              .map((linkObj, linkIdx) => {
+                if (linkObj.title.startsWith("قسمت")) {
+                  return {
+                    ...linkObj,
+                    title: `قسمت ${
+                      linkIdx + 1 < 10 ? `0${linkIdx + 1}` : linkIdx + 1
+                    }`,
+                  };
+                } else {
+                  return linkObj;
+                }
+              }),
           };
       })
     );
@@ -46,7 +57,20 @@ export default function SeriesOrAnimeDownloadLinkBox({
     setDataState((prev) =>
       prev.map((itm: any, idx: number) =>
         idx === index
-          ? { ...itm, link_url: [...itm.link_url, { title: "", link: "" }] }
+          ? {
+              ...itm,
+              link_url: [
+                ...itm.link_url,
+                {
+                  title: `قسمت ${
+                    itm.link_url.length + 1 < 10
+                      ? `0${itm.link_url.length + 1}`
+                      : itm.link_url.length + 1
+                  }`,
+                  link: "",
+                },
+              ],
+            }
           : itm
       )
     );

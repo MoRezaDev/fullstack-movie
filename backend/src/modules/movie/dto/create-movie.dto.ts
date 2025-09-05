@@ -2,7 +2,7 @@ import { IsInt, IsNotEmpty, Matches } from 'class-validator';
 
 export class CreateMovieDto {
   @IsNotEmpty()
-  @Matches(/^[a-zA-Z0-9 ]{1,100}$/)
+  @Matches(/^[a-zA-Z0-9 :-]{1,100}$/)
   title: string;
 
   @IsNotEmpty()

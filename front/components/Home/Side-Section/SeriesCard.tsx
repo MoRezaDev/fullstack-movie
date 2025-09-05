@@ -1,10 +1,10 @@
-import { getPostsByType } from "@/lib/api";
+import { getLastPostsByType } from "@/lib/api";
 import Link from "next/link";
 import { RiMovie2AiLine } from "react-icons/ri";
 
 export default async function SeriesCard() {
-  const series = await getPostsByType("series");
-  if (series.error) throw new Error(series.error)
+  const series = await getLastPostsByType("series");
+  if (series.error) throw new Error(series.error);
   return (
     <div className="p-2 bg-neutral-800 rounded-md">
       <div className="flex items-center gap-1 border-b p-2">

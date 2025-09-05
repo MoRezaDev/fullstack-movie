@@ -1,10 +1,6 @@
-import SingleContent from "@/components/content/SingleContent";
-import AdvancedSearch from "@/components/Home/AdvancedSearch";
-import LoadingSkeletonMain from "@/components/Home/Main-content/LoadingSkeletonMain";
-import SideSection from "@/components/Home/Side-Section/SideSection";
-import Slider from "@/components/Home/Slider";
+import SingleContentCard from "@/components/content/SingleContentCard";
 import { getPostBySlug } from "@/lib/api";
-import { Suspense } from "react";
+import { getUserSession } from "@/lib/dal";
 
 export default async function ContentSlugPage({
   params,
@@ -12,23 +8,11 @@ export default async function ContentSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const dt = await getPostBySlug(slug);
+  const data = await getPostBySlug(slug);
+  const user = await getUserSession();
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Slider />
-      </Suspense>
-
-      <AdvancedSearch />
-
-      <section className="w-[90%]  max-w-[1200px] mx-auto mt-10 grid grid-cols-1 gap-8 md:grid-cols-1 lg:grid-cols-3">
-        <div className="order-2 lg:order-1">
-          <SideSection />
-        </div>
-        <div className="lg:col-span-2 order-1 lg:order-2">
-          <SingleContent slug={slug} />
-        </div>
-      </section>
+      <SingleContentCard data={data} user={user} />
     </div>
   );
 }

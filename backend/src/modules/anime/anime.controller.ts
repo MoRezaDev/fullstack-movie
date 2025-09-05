@@ -39,6 +39,11 @@ export class AnimeController {
     return this.animeService.updateAll(updateDto);
   }
 
+  @Get('remove-all')
+  async removeAll() {
+    return this.animeService.romeAll();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.animeService.findOne(id);

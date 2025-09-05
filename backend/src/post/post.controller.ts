@@ -24,13 +24,18 @@ export class PostController {
   }
 
   @Get()
-  async findAll(@Query('type') type: string) {
-    return this.postService.findAll(type);
+  async findAll(@Query('page') page: string) {
+    return this.postService.findAll(page);
   }
 
   @Get('search')
   async searchPost(@Query(new ValidationPipe()) queryDto: QueryPostDto) {
     return this.postService.searchPost(queryDto);
+  }
+
+  @Get('type/:type')
+  async getLastPostsByType(@Param('type') type: "anime" | "movie" | "series") {
+    return this.postService.getLastPostsByType(type);
   }
 
   @Get(':id')

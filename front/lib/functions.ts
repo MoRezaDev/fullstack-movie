@@ -33,7 +33,7 @@ export function getTranslatedGenres(genre: string[]) {
     return {
       genre: g,
       translated: translationMap[lower] ?? g, // fallback to original if not found
-      link: `/content/${lower}`,
+      link: `/content/genre/${lower}`,
     };
   });
 }

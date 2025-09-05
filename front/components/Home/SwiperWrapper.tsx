@@ -8,6 +8,7 @@ import { useState } from "react";
 
 export default function SwiperWrapper({ data }: { data: any }) {
   const [bgUrl, setBgUrl] = useState(data[0].content.images_url[0]);
+
   return (
     <div className="w-full relative h-full flex items-center">
       <div dir="rtl" className="absolute inset-0 bg-black overflow-hidden">
@@ -18,9 +19,10 @@ export default function SwiperWrapper({ data }: { data: any }) {
       </div>
       <div className="max-w-[1280px]  relative  w-[95%] mx-auto  overflow-hidden mt-4">
         <Swiper
+          loop={true}
           className="overflow-hidden"
           onSlideChange={(swiper) => {
-            const currentIndex = swiper.activeIndex;
+            const currentIndex = swiper.realIndex;
             setBgUrl(data[currentIndex].content.images_url[0]);
           }}
           slidesPerView={6}

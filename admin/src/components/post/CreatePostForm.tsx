@@ -49,8 +49,6 @@ export default function CreatePostForm({
 
   const contentLink = content === "movie" ? "movies" : content;
 
-  console.log(seriesOrAnime);
-
   function submitHandler(e: React.FormEvent) {
     e.preventDefault();
     const formData = new FormData(formRef.current!);
@@ -59,6 +57,12 @@ export default function CreatePostForm({
 
     mutation.mutate(postDto);
   }
+
+  const defaltValueOptions = {
+    title: `دانلود ${
+      data.type === "series" ? "سریال" : data.type === "anime" ? "انیمه" : "فیلم"
+    } ${data.title}`,
+  };
 
   return (
     <form ref={formRef} className="w-full p-2">
@@ -94,6 +98,7 @@ export default function CreatePostForm({
           <div className="flex flex-col">
             <label>عنوان</label>
             <input
+              defaultValue={defaltValueOptions.title}
               type="text"
               name="title"
               className="bg-neutral-700 p-1 rounded-md"

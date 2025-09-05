@@ -1,12 +1,8 @@
-import { getTranslatedCountries, getTranslatedGenres } from "@/lib/functions";
+import { getTranslatedGenres } from "@/lib/functions";
 import Link from "next/link";
-import { BiHeart, BiLike, BiSolidMoviePlay } from "react-icons/bi";
+import { BiDownload, BiHeart, BiSolidMoviePlay } from "react-icons/bi";
 import { BsPersonWorkspace } from "react-icons/bs";
-import {
-  FaDownload,
-  FaImdb as FaimdbBold,
-  FaTheaterMasks,
-} from "react-icons/fa";
+import { FaTheaterMasks } from "react-icons/fa";
 import { FaImdb } from "react-icons/fa6";
 import { GiAlarmClock } from "react-icons/gi";
 import { GoNote } from "react-icons/go";
@@ -15,9 +11,24 @@ import { IoMicOutline } from "react-icons/io5";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { PiSubtitles } from "react-icons/pi";
 import { SiMyanimelist } from "react-icons/si";
+import SeriesDownloadBox from "./SeriesDownloadBox";
+import MovieDownloadBox from "./MovieDownloadBox";
+import RestrictedDownloadBox from "./RestrictedDownloadBox";
 
-export default function MainCard({ data }: { data: any }) {
+export default async function SingleContentCard({
+  data,
+  user,
+}: {
+  data: any;
+  user: any;
+}) {
   const translatedGenres = getTranslatedGenres(data.content.genre);
+  const isUserPremium = user && user.is_premium;
+  const isPostPremium = data.is_premium;
+
+  const showFreeSeriesDownloadBox = !isPostPremium && data.content !== "movie";
+  const showFreeMoviesDownloadBox = !isPostPremium && data.content === "movie";
+
   return (
     <div className="p-4 bg-neutral-800 rounded-md">
       <div className="grid md:grid-cols-4 gap-2">
@@ -78,10 +89,7 @@ export default function MainCard({ data }: { data: any }) {
               <FaTheaterMasks size={16} className="text-green-500" />
               <span className="font-[400]">ژانر :</span>
               {translatedGenres.map((ts, idx) => (
-                <div
-                  key={idx}
-                  className="transition hover:text-green-500"
-                >
+                <div key={idx} className="transition hover:text-green-500">
                   <Link href={ts.link}>
                     <span>{ts.translated}</span>
                     {translatedGenres.length - 1 !== idx && <span> ، </span>}
@@ -115,7 +123,7 @@ export default function MainCard({ data }: { data: any }) {
                 <a target="_blank" href={data.content.mal_url}>
                   <img
                     className="w-[38px] h-[25px] rounded-sm"
-                    src={"./myAnimeListLogo.png"}
+                    src={"/myAnimeListLogo.png"}
                   />
                 </a>
               ) : (
@@ -123,7 +131,7 @@ export default function MainCard({ data }: { data: any }) {
                   target="_blank"
                   href={`https://www.imdb.com/title/${data.content.imdb_id}`}
                 >
-                  <img className="w-[38px] rounded-sm" src={"./imdbLogo.png"} />
+                  <img className="w-[38px] rounded-sm" src="/imdbLogo.png" />
                 </a>
               )}
             </div>
@@ -162,13 +170,25 @@ export default function MainCard({ data }: { data: any }) {
             <span>{data.like_count}</span>
           </div>
         </div>
+      </div>
 
-        <Link href={`/content/${data.slug}`}>
-          <div className=" bg-blue-500 w-fit transition-opacity hover:opacity-60 py-2 px-4 rounded-md flex items-center gap-2">
-            <FaDownload />
-            <span>دانلود و ادامه </span>
-          </div>
-        </Link>
+      <div className="w-full p-4 rounded-md bg-neutral-900 mt-6 text-xs">
+        <div className="border-b pb-2 px-1 border-neutral-600 flex items-center justify-between">
+          <span className="text-green-500">باکس دانلود</span>
+          <BiDownload size={20} className="text-green-500" />
+        </div>
+        <div className="mt-2 text-justify p-1  ">
+          <span className="text-amber-300">توضیحات : </span>
+          {data.download_info && <span>{data.download_info}</span>}
+        </div>
+        {!isPostPremium && data.content.type !== "movie" && (
+          <SeriesDownloadBox downloadLinks={data.download_links} />
+        )}
+        {!isPostPremium && data.content.type === "movie" && (
+          <MovieDownloadBox downloadLinks={data.download_links} />
+        )}
+
+        {isPostPremium && !isUserPremium && <RestrictedDownloadBox />}
       </div>
     </div>
   );

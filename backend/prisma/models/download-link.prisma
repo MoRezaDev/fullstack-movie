@@ -15,8 +15,8 @@ model DownloadLink {
     // animeId String?  // Nullable for polymorphism
     // anime Anime? @relation(fields: [animeId], references: [id])
 
-    postId String?
-    post Post? @relation(fields: [postId], references: [id],onDelete: Cascade)
+    postId String
+    post Post @relation(fields: [postId], references: [id],onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

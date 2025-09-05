@@ -81,7 +81,7 @@ export default function AdvancedSearch() {
   });
 
   return (
-    <form method="GET" action="/s">
+    <form method="GET" action="/content/s">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 items-center gap-2  p-4 w-[90%] max-w-[1200px] mx-auto bg-neutral-800 rounded-lg xl:flex h-[150px] sm:h-auto overflow-y-auto sm:overflow-visible">
         <div className="p-4 sm:col-span-2 w-full xl:w-fit   bg-neutral-900 rounded-md flex gap-2 text-xs ">
           {/* Movie */}

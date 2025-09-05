@@ -6,12 +6,14 @@ import {
   NotFoundException,
   Post,
   Query,
+  Req,
   Res,
   ValidationPipe,
 } from '@nestjs/common';
 import { ContentService } from './content.service';
 import { QueryContent } from './dto/content-query.dto';
 import { Response } from 'express';
+import { AdvancedSearchQuery } from './dto/advanced-search-query.dto';
 
 @Controller('content')
 export class ContentController {
@@ -28,8 +30,15 @@ export class ContentController {
   }
 
   @Post('find-by-slug')
-  async findBySlug(@Body() slugDto: { slug: string }, @Res() res: Response) {
-    const post = await this.contentService.findBySlug(slugDto.slug);
+  async findBySlug(
+    @Body() slugDto: { slug: string },
+    @Res() res: Response,
+    @Req() req: Request,
+  ) {
+    const post = await this.contentService.findBySlug(
+      slugDto.slug,
+      req['user'],
+    );
 
     if (!post) throw new NotFoundException('Post not found!');
 
@@ -39,6 +48,12 @@ export class ContentController {
       });
     }
 
-    return res.json({ data: { ...post } });
+    return res.json(post);
+  }
+
+  @Get('s')
+
+  async getAdvancedSearchQuery(@Query() queryDto : AdvancedSearchQuery) {
+    return this.contentService.getAdvancedSearchQuery(queryDto);
   }
 }

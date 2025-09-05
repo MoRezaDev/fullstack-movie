@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { DatabaseService } from 'src/modules/database/database.service';
@@ -9,41 +9,40 @@ export class PostService {
   constructor(private databaseService: DatabaseService) {}
 
   async create(createPostDto: CreatePostDto) {
-    // const downloadLinkObj = createPostDto.download_links
-
-    // return await this.databaseService.post.create({
-    //   data: {
-    //     ...createPostDto,
-    //     download_links: {
-    //       create: {
-    //         link_url: createPostDto.download_links,
-    //       },
-    //     },
-    //   },
-    // });
     return await this.databaseService.post.create({ data: createPostDto });
   }
 
-  async findAll(type: string | null) {
-    if (type) {
-      const posts = await this.databaseService.post.findMany({
-        include: {
-          anime: true,
-          movie: true,
-          series: true,
-        },
-      });
-      return posts.filter((post) => post[type] !== null);
-    }
+  async findAll(page: string | null) {
+    const queryPage = page ? Number(page) : 1;
+    const skip = (queryPage - 1) * 8;
+
     return await this.databaseService.post.findMany({
+      skip,
+      take: 8,
+      orderBy: { createdAt: 'desc' },
       include: {
-        anime: { where: { NOT: { title: undefined } } },
-        movie: { where: { NOT: { title: undefined } } },
-        series: { where: { NOT: { title: undefined } } },
-        likes: true,
-        download_links: true,
+        movie: true,
+        series: true,
+        anime: true,
       },
     });
+  }
+
+  async getLastPostsByType(type: 'anime' | 'movie' | 'series') {
+    if (!['anime', 'movie', 'series'].includes(type)) {
+      throw new BadRequestException('type is not valid!');
+    }
+
+    const result = await this.databaseService.post.findMany({
+      where: {
+        [type]: { isNot: null },
+      },
+      take: 4,
+      orderBy: { createdAt: 'desc' },
+      include: { [type]: true },
+    });
+
+    return result.map((item) => ({ ...item, content: item[type], type }));
   }
 
   async searchPost(queryDto: QueryPostDto) {

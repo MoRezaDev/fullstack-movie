@@ -51,6 +51,12 @@ export class AnimeService {
       }
     });
   }
+
+  
+
+  async romeAll() {
+    return this.databaseService.anime.deleteMany({});
+  }
   //for admin
   async checkAnimeExists(mal_id: string) {
     const regex = /^\d{1,7}$/;
@@ -96,7 +102,7 @@ export class AnimeService {
 
     //creating folder and file
     console.log('saving poster');
-    const [poster] = await SavePoster(
+    const [poster, backgroundPoster] = await SavePoster(
       data.data.images.jpg.image_url,
       mal_id,
       'anime',
@@ -132,6 +138,7 @@ export class AnimeService {
           season: jikanData.data.season,
           streaming: jikanData.data.streaming.map((stream) => stream.name),
           status: jikanData.data.status,
+          images_url: [backgroundPoster],
         },
       });
     } catch (err) {

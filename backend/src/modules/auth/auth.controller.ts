@@ -55,26 +55,4 @@ export class AuthController {
   async getSession(@Req() req: RequestWithUser) {
     return await this.authService.getSession(req.user);
   }
-
-  @Get('test-otp')
-  // @UseGuards(VerifyJwtGurds)
-  async test() {
-    // return 'test';
-    throw new TypeError('test1111');
-  }
-
-  @Get('tt')
-  async testCookie(
-    @Res({ passthrough: true }) response: Response,
-    @Req() req: Request,
-  ) {
-    console.log(req.cookies);
-    response
-      .cookie('test', 'test1', {
-        sameSite: 'none',
-        httpOnly: true,
-        secure: true,
-      })
-      .send({ message: 'hu' });
-  }
 }
