@@ -137,7 +137,7 @@ export default function AdvancedSearch() {
             setSelected((prev) => ({ ...prev, genre: option }))
           }
         />
-        <Select
+        {/* <Select
           className="grow"
           styles={selectStyles}
           options={countryOptions}
@@ -146,7 +146,7 @@ export default function AdvancedSearch() {
           onChange={(option) =>
             setSelected((prev) => ({ ...prev, country: option }))
           }
-        />
+        /> */}
         <Select
           className="grow"
           styles={selectStyles}

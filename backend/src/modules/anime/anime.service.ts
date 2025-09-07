@@ -52,8 +52,6 @@ export class AnimeService {
     });
   }
 
-  
-
   async romeAll() {
     return this.databaseService.anime.deleteMany({});
   }

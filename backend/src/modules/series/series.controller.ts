@@ -28,6 +28,8 @@ export class SeriesController {
     return this.seriesService.findAll();
   }
 
+   
+
   //for admin
 
   @Get('find-add')

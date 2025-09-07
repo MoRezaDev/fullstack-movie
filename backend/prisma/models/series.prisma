@@ -6,7 +6,10 @@ model Series {
     duration String
     status String @default("N/A")
     rating String @default("N/A")
+    rating_search Float @default(0)
+
     stars String[]
+
     director String @default("N/A")
     poster String
     images_url String[]

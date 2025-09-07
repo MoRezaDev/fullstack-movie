@@ -119,18 +119,29 @@ export class ContentService {
       throw new BadRequestException('type is not valid!');
     }
 
-    const where: Prisma.PostWhereInput = {};
+    const where: Record<string, any> = { [type]: { isNot: undefined } };
 
-
-    if (type) where[type] = {isNot : null}
-    if (year_from) where.createdAt = { gte: new Date(year_from) };
-    if (year_to) where.createdAt = { lte: new Date(year_to) };
-    if (country) where[type] = { contains: country, mode: 'insensitive' };
-    if (genre) where[type].genre = { contains: genre, mode: 'insensitive' };
-    if (score && type === 'anime' && where.anime)
-      where.anime.mal_score = { gte: score };
-    if (score && type !== 'anime') where[type].rating = { gte: score };
-    if (is_dubbed) where[type].is_dubbed = is_dubbed === 'true' ? true : false;
+    if (genre) {
+      where[type] = {
+        ...where[type],
+        genre: { has: genre[0].toUpperCase() + genre.slice(1) },
+      };
+    }
+    if (is_dubbed) {
+      where[type] = {
+        ...where[type],
+        is_dubbed: is_dubbed === 'true',
+      };
+    }
+    if (score) {
+      where[type] = { ...where[type], rating_search: { gte: Number(score) } };
+    }
+    if (year_from) {
+      where[type] = { ...where[type], year: { gte: Number(year_from) } };
+    }
+    if (year_to) {
+      where[type] = { ...where[type], year: { lte: Number(year_to) } };
+    }
 
     return await this.databaseSerivce.post.findMany({
       where,

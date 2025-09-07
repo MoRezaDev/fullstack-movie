@@ -13,6 +13,7 @@ model Anime {
     aired_from String @default("N/A")
     duration String @default("N/A")
     rating String @default("N/A")
+    rating_search Float @default(0)
     mal_score String @default("N/A")
     mal_scored_by String @default("N/A")
     mal_rank String @default("N/A")

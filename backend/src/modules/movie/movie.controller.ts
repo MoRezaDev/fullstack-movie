@@ -46,6 +46,8 @@ export class MovieController {
     return this.movieService.updateAll(updateDto);
   }
 
+ 
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.movieService.findOne(id);
