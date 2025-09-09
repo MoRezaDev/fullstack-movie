@@ -6,7 +6,7 @@ export default async function Slider() {
 
   if (data.error) return <div>مشکلی در دریافت بوجود آمد</div>;
   return (
-    <div dir="ltr" className="w-full h-[400px] sm:h-[580px] mb-8">
+    <div dir="ltr" className="w-full h-[400px] sm:h-[480px] mb-8">
       <SwiperWrapper data={data} />
     </div>
   );

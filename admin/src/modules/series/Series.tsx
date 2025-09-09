@@ -6,6 +6,7 @@ import TableSeries from "../../components/series/TableSeries";
 import { SeriesType } from "../../common/types";
 import PaginateButtons from "../../components/PaginateButtons";
 import NavigationLoader from "../../components/NavigationLoader";
+import { BiEdit } from "react-icons/bi";
 
 export default function Series() {
   const data = useLoaderData();
@@ -41,8 +42,11 @@ export default function Series() {
 
   return (
     <div className="p-6">
-      <div className="w-full mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="sm:text-2xl font-bold text-white ">🎬 لیست سریال ها</h1>
+      <div className="w-full mb-4 pb-2 border-b border-b-neutral-700 flex flex-col sm:flex-row sm:items-center sm:justify-between ">
+        <div className="flex items-center gap-2">
+          <BiEdit size={18} className="text-green-500" />
+          <h1 className="sm:text-xl  text-white "> لیست سریال ها</h1>
+        </div>
         <div className=" border border-neutral-800 rounded-full flex items-center px-3">
           <input
             value={searchValue}

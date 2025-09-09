@@ -52,8 +52,6 @@ export class SeriesService {
     });
   }
 
- 
-
   //for admin
   async checkSeriesExists(imdb_id: string) {
     const regex = /^tt.+$/;
@@ -136,6 +134,11 @@ export class SeriesService {
           director: newData.Director,
           genre: newData.Genre.split(', '),
           rating: newData.imdbRating,
+          rating_search:
+            +data.imdbRating && data.imdbRating.toLowerCase() !== 'n/a'
+              ? Number(data.imdbRating)
+              : 0,
+
           total_seasons: +newData.totalSeasons,
           country: newData.Country,
           stars: newData.Actors.split(', '),

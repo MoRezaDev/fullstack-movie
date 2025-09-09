@@ -29,7 +29,7 @@ export default function TableSeries({ series }: { series: SeriesType[] }) {
   };
 
   return (
-    <div className="w-full overflow-x-auto ">
+    <div className="w-full overflow-x-auto text-sm ">
       <div className="w-full border rounded-md  border-neutral-700">
         <table className="w-full">
           <thead>
@@ -100,7 +100,7 @@ export default function TableSeries({ series }: { series: SeriesType[] }) {
                     )}
                     <button
                       onClick={(e) => handleEdit(series_item)}
-                      className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
+                      className="p-1 bg-green-500 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />
                     </button>

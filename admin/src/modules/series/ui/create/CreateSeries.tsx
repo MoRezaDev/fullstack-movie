@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useFetcher, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { cn } from "../../../../lib/functions";
 
 export default function CreateSeries() {
   const fetcher = useFetcher();
@@ -20,7 +21,7 @@ export default function CreateSeries() {
 
   return (
     <fetcher.Form method="post">
-      <section className="w-full h-full p-2">
+      <section className="w-full h-full p-2 text-xs">
         <div className="max-w-[980px] mx-auto  rounded-md my-2 flex gap-2">
           <input
             name="imdb_id"
@@ -31,7 +32,9 @@ export default function CreateSeries() {
           <button
             dir="ltr"
             type="submit"
-            className="bg-indigo-500 py-1 px-2 rounded-lg hover:cursor-pointer disabled:bg-indigo-700 disabled:text-gray-600 text-nowrap"
+            className={cn(
+              "bg-green-600 py-1 px-2 rounded-lg hover:cursor-pointer disabled:bg-neutral-800 disabled:text-white text-nowrap"
+            ,fetcher.state !== "idle" && "cursor-not-allowed opacity-50")}
             disabled={fetcher.state !== "idle"}
           >
             {fetcher.state !== "idle" ? "شکیبا باشید..." : "ارسال"}

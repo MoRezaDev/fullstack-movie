@@ -13,20 +13,20 @@ export default function Dashboard() {
 
   if (isNavigating) return <NavigationLoader />;
   return (
-    <div className="p-4 ">
+    <div className="p-4  ">
       <Breadcrumb />
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="bg-blue-500" title="تعداد کاربران">
-          <p className="text-sm font-bold">100</p>
+          <p className="text-sm text-green-500">100</p>
         </Card>
         <Card title="تعداد مشاهده ها">
-          <p className="text-sm font-bold">۵۴۳</p>
+          <p className="text-sm text-green-500">۵۴۳</p>
         </Card>
         <Card title="تعداد مشترکین VIP">
-          <p className="text-sm font-bold">30</p>
+          <p className="text-sm text-green-500">30</p>
         </Card>
         <Card title="تعداد کامنت ها">
-          <p className="text-sm font-bold">40</p>
+          <p className="text-sm text-green-500">40</p>
         </Card>
       </div>
       <div

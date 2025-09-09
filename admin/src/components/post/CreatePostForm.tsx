@@ -65,14 +65,14 @@ export default function CreatePostForm({
   };
 
   return (
-    <form ref={formRef} className="w-full p-2">
+    <form ref={formRef} className="w-full p-4 text-xs [&_label]:text-green-500 [&_select]:border-neutral-700 [&_select]:focus:outline-none [&_input]:outline-none">
       <div className="bg-neutral-800 rounded-full w-fit p-1 mt-2 flex gap-2 mx-auto">
         <button
           type="button"
           onClick={() => setShowContent(true)}
           className={clsx(
             "px-2 py-1 transition  rounded-full ",
-            { "bg-blue-500": showContent === true },
+            { "bg-green-600": showContent === true },
             { "hover:bg-neutral-700": showContent === false }
           )}
         >
@@ -83,7 +83,7 @@ export default function CreatePostForm({
           onClick={() => setShowContent(false)}
           className={clsx(
             "px-2 py-1 transition   rounded-full",
-            { "bg-blue-500": showContent === false },
+            { "bg-green-600": showContent === false },
             { "hover:bg-neutral-700": showContent === true }
           )}
         >

@@ -12,7 +12,7 @@ export default function SwiperWrapper({ data }: { data: any }) {
   return (
     <div className="w-full relative h-full flex items-center">
       <div dir="rtl" className="absolute inset-0 bg-black overflow-hidden">
-        <div className="w-full md:w-[65%] relative backdroptest">
+        <div className="w-full md:w-[55%] relative backdroptest">
           <img src={bgUrl} className="  size-full opacity-80   object-cover" />
           <div></div>
         </div>
@@ -38,7 +38,7 @@ export default function SwiperWrapper({ data }: { data: any }) {
         >
           {data.map((item: any) => (
             <SwiperSlide key={item.title}>
-              <Link href={item.slug} className="cursor-pointer">
+              <Link href={`/content/${item.slug}`} className="cursor-pointer">
                 <div className="group w-full aspect-[2/3] rounded-xl overflow-hidden shadow-lg transition-transform duration-300 relative text-[10px] flex flex-col ">
                   <img
                     src={item.content.poster}

@@ -12,13 +12,15 @@ export class VerifyJwtGurds implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: any = context.switchToHttp().getRequest();
 
-    let tokenFromHeader = request.headers['Authorization'];
+    let tokenFromHeader = request.headers['Authorization'] || request.headers['authorization'];
+
 
     if (tokenFromHeader && tokenFromHeader.startsWith('Bearer ')) {
-      tokenFromHeader = request.headers['Authorization'].split(' ')[1];
+      tokenFromHeader = tokenFromHeader.split(' ')[1];
     }
 
     const token = request.cookies['token'] || tokenFromHeader;
+
 
     if (!token) {
       throw new HttpException('Unauthorized', 401);

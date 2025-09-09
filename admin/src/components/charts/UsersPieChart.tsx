@@ -28,7 +28,7 @@ const UsersPieChart = () => {
               fill="#8884d8"
               labelLine={false}
             >
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -62,9 +62,10 @@ const UsersPieChart = () => {
               />
               <span className="text-sm text-gray-300">{item.name}</span>
             </div>
-            <span className="text-sm font-semibold text-white">
-              {item.value.toLocaleString()} عدد
-            </span>
+            <div className="text-sm  text-white flex gap-1">
+              <span>عدد</span>
+              <span>{item.value.toLocaleString()}</span>
+            </div>
           </div>
         ))}
       </div>

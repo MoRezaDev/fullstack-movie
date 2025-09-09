@@ -1,11 +1,12 @@
-import { getUserSession } from "@/lib/actions";
 import Link from "next/link";
 import React from "react";
 import SearchBar from "./SearchBar";
+import { getUserSession } from "@/lib/dal";
 
 export default async function UserProfile() {
   // const session = await getUserSession();
-  const session = { image: null };
+  const session =  await getUserSession()
+  console.log(session);
 
   if (!session)
     return (

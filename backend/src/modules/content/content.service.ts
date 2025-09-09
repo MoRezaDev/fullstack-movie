@@ -119,7 +119,7 @@ export class ContentService {
       throw new BadRequestException('type is not valid!');
     }
 
-    const where: Record<string, any> = { [type]: { isNot: undefined } };
+    const where: Record<string, any> = { [type]: { title: {not: undefined} } };
 
     if (genre) {
       where[type] = {
@@ -130,7 +130,7 @@ export class ContentService {
     if (is_dubbed) {
       where[type] = {
         ...where[type],
-        is_dubbed: is_dubbed === 'true',
+        has_dub: is_dubbed === 'true',
       };
     }
     if (score) {
@@ -143,9 +143,13 @@ export class ContentService {
       where[type] = { ...where[type], year: { lte: Number(year_to) } };
     }
 
-    return await this.databaseSerivce.post.findMany({
-      where,
+    const result = await this.databaseSerivce.post.findMany({
+      where ,
       include: { [type]: true },
     });
+
+    console.log(result)
+
+    return result.map((item) => ({ ...item, content: item[type], type }));
   }
 }

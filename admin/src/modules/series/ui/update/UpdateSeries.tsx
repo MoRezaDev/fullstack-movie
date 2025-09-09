@@ -2,6 +2,7 @@ import { Navigate, useFetcher, useLocation, useNavigate } from "react-router";
 import { SeriesType } from "../../../../common/types";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { BiEdit } from "react-icons/bi";
 
 export default function UpdateSeries() {
   const location = useLocation();
@@ -38,8 +39,11 @@ export default function UpdateSeries() {
     return <Navigate to={"/series"} />;
   }
   return (
-    <div className="w-full p-4 text-sm ">
-      <h1 className="text-2xl mb-4">فرم تغییر اطلاعات سریال</h1>
+    <div className="w-full p-4 text-xs [&_label]:text-green-500 [&_select]:border-neutral-700 [&_select]:focus:outline-none [&_input]:outline-none ">
+      <div className="border-b mb-4 border-neutral-700 pb-2 flex items-center gap-2">
+        <BiEdit size={18} className="text-green-500" />
+        <h1 className="text-lg ">فرم تغییر اطلاعات فیلم</h1>
+      </div>
       <fetcher.Form
         method="PATCH"
         className="grid md:grid-cols-3 bg-neutral-900 p-4 gap-4"
@@ -157,7 +161,7 @@ export default function UpdateSeries() {
           />
         </div>
 
-         <div className="flex flex-col">
+        <div className="flex flex-col">
           <label>وضعیت پخش</label>
           <input
             name="status"
@@ -203,7 +207,7 @@ export default function UpdateSeries() {
 
         <div className="flex flex-col col-span-2 ">
           <label className="font-semibold">ژانر</label>
-          <div className="flex flex-wrap gap-4  border-2 p-2 rounded-md">
+          <div className="flex flex-wrap gap-4  border-2 border-neutral-700 p-2 rounded-md">
             {allGenres.map((genre) => (
               <label key={genre} className="flex items-center gap-1 text-white">
                 <input
@@ -228,7 +232,7 @@ export default function UpdateSeries() {
 
         <button
           disabled={fetcher.state !== "idle"}
-          className="bg-blue-500 w-fit p-1 rounded-lg transition cursor-pointer hover:bg-blue-400"
+          className="bg-green-600 w-fit p-2 rounded-md transition cursor-pointer hover:opacity-60"
           type="submit"
         >
           {fetcher.state !== "idle" ? "لطفا صبر کنید" : "بروزرسانی"}

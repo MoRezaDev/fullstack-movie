@@ -117,6 +117,7 @@ export class MovieService {
         genre: data.Genre.split(', '),
         year: +data.Year,
         rating: data.imdbRating,
+        rating_search: +data.imdbRating && data.imdbRating.toLowerCase() !== 'n/a' ? Number(data.imdbRating)  : 0,
         director: data.Director,
         stars: data.Actors.split(', '),
         language: data.Language.split(', '),

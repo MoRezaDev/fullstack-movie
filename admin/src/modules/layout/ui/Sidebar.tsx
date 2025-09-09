@@ -32,9 +32,9 @@ export default function Sidebar() {
   return (
     <div className="hidden md:flex w-[180px]  border-l border-l-neutral-600 min-h-screen bg-neutral-900 text-gray-300 flex-col items-center py-6 gap-8 shadow-md ">
       {/* Logo */}
-      <div className="flex items-center gap-2 text-xl font-semibold text-white">
-        <FaFilm className="text-[#38bdf8]" />
-        <span className="tracking-wide text-lg">ADMIN PANEL</span>
+      <div className="flex items-center gap-2 text-xl  text-white">
+        <FaFilm className="text-green-500" />
+        <span className="tracking-wide text-lg">پنل ادمین</span>
       </div>
 
       {/* Menu Items */}
@@ -45,7 +45,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/dashboard"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -59,7 +59,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/posts/new"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -76,7 +76,7 @@ export default function Sidebar() {
             className={`flex items-center gap-3 p-2 rounded-md text-xs transition-colors duration-200 justify-between text-left w-full
               ${
                 location.pathname.includes("/new-post")
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
           >
@@ -100,7 +100,7 @@ export default function Sidebar() {
               to="/movies/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                 location.pathname === "/movies/new"
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
             >
@@ -109,8 +109,8 @@ export default function Sidebar() {
             <Link
               to="/series/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
-                location.pathname === "/movies/series"
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                location.pathname === "/series/new"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
             >
@@ -119,8 +119,8 @@ export default function Sidebar() {
             <Link
               to="/anime/new"
               className={`py-1 px-2 rounded-md transition-colors duration-200 ${
-                location.pathname === "/movies/anime"
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                location.pathname === "/anime/new"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
             >
@@ -136,7 +136,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/posts"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -150,7 +150,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/movies"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -165,7 +165,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/series"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -180,7 +180,7 @@ export default function Sidebar() {
           className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
             ${
               location.pathname === "/anime"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
         >
@@ -201,7 +201,7 @@ export default function Sidebar() {
               className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200
                 ${
                   isActive
-                    ? "bg-[#1e90ff]/90 text-white font-bold"
+                    ? "bg-green-600 text-white "
                     : "hover:bg-white/10"
                 }`}
             >

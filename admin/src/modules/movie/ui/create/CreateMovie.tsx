@@ -31,7 +31,7 @@ export default function CreateMovie() {
           <button
             dir="ltr"
             type="submit"
-            className="bg-indigo-500 py-1 px-2 rounded-lg hover:cursor-pointer disabled:bg-indigo-700 disabled:text-gray-600 text-nowrap"
+            className="bg-green-600 py-1 px-2 rounded-lg hover:cursor-pointer disabled:bg-neutral-800 disabled:text-white text-nowrap disabled:cursor-default"
             disabled={fetcher.state !== "idle"}
           >
             {fetcher.state !== "idle" ? "شکیبا باشید..." : "ارسال"}

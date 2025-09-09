@@ -8,6 +8,7 @@ import { cn } from "../../../lib/functions";
 export default function Login() {
   const [sendPhoneNumberState, setSendPhoneNumberState] = useState(true);
   const navigate = useNavigate();
+  const [mobileValue, setMobileValue] = useState("");
 
   const sendPhoneMutation = useMutation({
     mutationFn: (mobile: string) => sendOtp(mobile),
@@ -15,6 +16,7 @@ export default function Login() {
       toast.error(error.message ?? "مشکلی پیش آمد!");
     },
     onSuccess: (data) => {
+      setMobileValue(data.mobile);
       setSendPhoneNumberState(false);
       toast.success(`کد شما: ${data.code}`, { duration: 10000 });
     },
@@ -111,7 +113,7 @@ export default function Login() {
             <input
               type="hidden"
               name="mobile"
-              value={sendPhoneMutation.data?.mobile}
+              value={sendPhoneMutation.data?.mobile  || mobileValue || "nothing"}
             />
           </div>
 

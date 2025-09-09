@@ -17,7 +17,7 @@ import { PiSubtitles } from "react-icons/pi";
 import { SiMyanimelist } from "react-icons/si";
 
 export default function MainCard({ data }: { data: any }) {
-  const translatedGenres = getTranslatedGenres(data.content.genre);
+  const translatedGenres = getTranslatedGenres(data.content?.genre);
   return (
     <div className="p-4 bg-neutral-800 rounded-md">
       <div className="grid md:grid-cols-4 gap-2">
@@ -115,7 +115,7 @@ export default function MainCard({ data }: { data: any }) {
                 <a target="_blank" href={data.content.mal_url}>
                   <img
                     className="w-[38px] h-[25px] rounded-sm"
-                    src={"./myAnimeListLogo.png"}
+                    src={"/myAnimeListLogo.png"}
                   />
                 </a>
               ) : (
@@ -123,7 +123,7 @@ export default function MainCard({ data }: { data: any }) {
                   target="_blank"
                   href={`https://www.imdb.com/title/${data.content.imdb_id}`}
                 >
-                  <img className="w-[38px] rounded-sm" src={"./imdbLogo.png"} />
+                  <img className="w-[38px] rounded-sm" src={"/imdbLogo.png"} />
                 </a>
               )}
             </div>
@@ -171,5 +171,6 @@ export default function MainCard({ data }: { data: any }) {
         </Link>
       </div>
     </div>
+    
   );
 }

@@ -22,7 +22,7 @@ export default function ContentTabs({ content, setContent, tabs }: Props) {
               className={clsx(
                 "px-4 py-1.5 text-sm font-medium capitalize rounded-full transition-all duration-200",
                 isActive
-                  ? "bg-blue-600 text-white shadow-sm"
+                  ? "bg-green-600 text-white shadow-sm"
                   : "text-zinc-300 hover:bg-zinc-700"
               )}
             >

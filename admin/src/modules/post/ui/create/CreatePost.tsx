@@ -4,6 +4,7 @@ import { useFetcher, useNavigation } from "react-router";
 import { toast } from "sonner";
 import CreatePostForm from "../../../../components/post/CreatePostForm";
 import NavigationLoader from "../../../../components/NavigationLoader";
+import { cn } from "../../../../lib/functions";
 
 type ContentStateType = "anime" | "movie" | "series";
 
@@ -27,12 +28,10 @@ export default function CreatePost() {
     }
   }, [fetcher.state]);
 
-  console.log(fetcher.data);
-
   return (
     <div>
       {!data && (
-        <div className="w-full flex flex-col items-center mt-4 gap-2">
+        <div className="w-full flex flex-col items-center mt-4 gap-2 text-xs">
           <h3 className="text-sm">لطفا نوع محتوا را انتخاب کنید</h3>
           <ContentTabs
             content={content}
@@ -46,7 +45,7 @@ export default function CreatePost() {
             <input
               type="text"
               name="id"
-              className="bg-neutral-800 flex-1 w-full max-w-[900px]  px-2 py-1 outline-0 rounded-lg"
+              className="bg-neutral-800 flex-1 w-full max-w-[900px]  p-2 outline-0 rounded-lg"
               placeholder={
                 content === "anime"
                   ? "لطفا آیدی MyAnimeList را وارد کنید"
@@ -57,8 +56,11 @@ export default function CreatePost() {
             />
             <input type="hidden" name="content" value={content} />
             <button
-              className="bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700 cursor-pointer"
-              disabled={fetcher.state !== "idle"}
+              className={cn(
+                "bg-green-600 text-white px-4 py-2 rounded-lg transition hover:opacity-50 cursor-pointer",
+                fetcher.state !== "idle" && "cursor-not-allowed opacity-50"
+              )}
+              disabled={fetcher.state !== "idle" || fetcher.data?.title}
               type="submit"
             >
               {fetcher.state !== "idle" ? "شکیبا باشید" : "ارسال"}

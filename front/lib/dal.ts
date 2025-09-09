@@ -1,5 +1,5 @@
-import { cookies } from 'next/headers';
-import 'server-only'
+import { cookies } from "next/headers";
+import "server-only";
 
 export async function getUserSession() {
   // await new Promise((resolve) => setTimeout(resolve, 4000));
@@ -12,6 +12,7 @@ export async function getUserSession() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   });
 
   const data = await response.json();

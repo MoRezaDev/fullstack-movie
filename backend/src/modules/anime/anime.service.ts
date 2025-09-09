@@ -124,6 +124,7 @@ export class AnimeService {
           poster,
           episodes: jikanData.data.episodes.toString(),
           mal_score: jikanData.data.score.toString(),
+          rating_search: jikanData.data.score ? jikanData.data.score : 0,
           mal_scored_by: jikanData.data.scored_by.toString(),
           mal_popularity: jikanData.data.popularity.toString(),
           mal_rank: jikanData.data.rank.toString(),

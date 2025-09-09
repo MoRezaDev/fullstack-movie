@@ -41,8 +41,8 @@ export default function MobileSidebar({
         }`}
       >
         {/* Logo */}
-        <div className="flex items-center gap-2 text-xl font-semibold text-white mb-6">
-          <FaFilm className="text-[#38bdf8]" />
+        <div className="flex items-center gap-2 text-lg font-semibold text-white mb-6">
+          <FaFilm className="text-green-500" />
           <span className="tracking-wide">MoviePanel</span>
         </div>
 
@@ -53,7 +53,7 @@ export default function MobileSidebar({
             to="/dashboard"
             className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200 ${
               location.pathname === "/dashboard"
-                ? "bg-[#1e90ff]/90 text-white font-bold"
+                ? "bg-green-600 text-white "
                 : "hover:bg-white/10"
             }`}
           >
@@ -67,7 +67,7 @@ export default function MobileSidebar({
               onClick={toggleSubMenu}
               className={`flex items-center justify-between gap-3 p-2 rounded-md text-sm transition-colors duration-200 w-full ${
                 location.pathname.includes("/new-post")
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
             >
@@ -91,7 +91,7 @@ export default function MobileSidebar({
                 to="/new-post/movie"
                 className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                   location.pathname === "/new-post/movie"
-                    ? "bg-[#1e90ff]/90 text-white font-bold"
+                    ? "bg-green-600 text-white "
                     : "hover:bg-white/10"
                 }`}
               >
@@ -101,7 +101,7 @@ export default function MobileSidebar({
                 to="/new-post/series"
                 className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                   location.pathname === "/new-post/series"
-                    ? "bg-[#1e90ff]/90 text-white font-bold"
+                    ? "bg-green-600 text-white "
                     : "hover:bg-white/10"
                 }`}
               >
@@ -111,7 +111,7 @@ export default function MobileSidebar({
                 to="/new-post/anime"
                 className={`py-1 px-2 rounded-md transition-colors duration-200 ${
                   location.pathname === "/new-post/anime"
-                    ? "bg-[#1e90ff]/90 text-white font-bold"
+                    ? "bg-green-600 text-white "
                     : "hover:bg-white/10"
                 }`}
               >
@@ -136,7 +136,7 @@ export default function MobileSidebar({
               to={item.to}
               className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors duration-200 ${
                 location.pathname === item.to
-                  ? "bg-[#1e90ff]/90 text-white font-bold"
+                  ? "bg-green-600 text-white "
                   : "hover:bg-white/10"
               }`}
             >

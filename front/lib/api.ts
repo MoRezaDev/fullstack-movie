@@ -1,6 +1,7 @@
 import { permanentRedirect, redirect } from "next/navigation";
 
 export async function getSliderContent() {
+  await new Promise((res) => setTimeout(res, 1000));
   const response = await fetch("http://localhost:3001/content/slider");
 
   const data = await response.json();

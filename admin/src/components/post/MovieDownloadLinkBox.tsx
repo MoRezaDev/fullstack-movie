@@ -23,7 +23,7 @@ export default function MovieDownloadLinkBox({
       <button
         type="button"
         onClick={handleAddButton}
-        className="bg-blue-500 p-2 rounded-md transition hover:opacity-50 cursor-pointer mb-6 "
+        className="bg-green-600 p-2 rounded-md transition hover:opacity-50 cursor-pointer mb-6 "
       >
         <FaPlus />
       </button>
@@ -89,7 +89,7 @@ export default function MovieDownloadLinkBox({
             disabled={isPending}
             onClick={submitHandler}
             type="submit"
-            className="bg-blue-500 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer p-2"
+            className="bg-green-600 w-fit px-2 py1 rounded-md transition hover:opacity-50 cursor-pointer p-2"
           >
             {isPending ? "شکیبا باشید" : "ارسال"}
           </button>

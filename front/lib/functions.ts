@@ -7,6 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getTranslatedGenres(genre: string[]) {
+  console.log("genres", genre);
   const translationMap: Record<string, string> = {
     action: "اکشن",
     comedy: "کمدی",

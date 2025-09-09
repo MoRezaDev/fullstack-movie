@@ -32,7 +32,7 @@ export default function TablePosts({ posts }: { posts: PostType[] }) {
 
   return (
     <div className="w-full overflow-x-auto ">
-      <div className="w-full border rounded-md  border-neutral-700">
+      <div className="w-full border rounded-md  border-neutral-700 text-sm">
         <table className="w-full">
           <thead>
             <tr className=" *:text-start *:p-2 *:border-b *:border-neutral-700">
@@ -105,7 +105,7 @@ export default function TablePosts({ posts }: { posts: PostType[] }) {
                     )}
                     <button
                       onClick={(e) => handleEdit(posts_item)}
-                      className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
+                      className="p-1 bg-green-600 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />
                     </button>

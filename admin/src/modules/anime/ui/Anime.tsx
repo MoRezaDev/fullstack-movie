@@ -6,6 +6,7 @@ import { getPaginatedData } from "../../../lib/functions";
 import TableAnime from "../../../components/anime/TableAnime";
 import NavigationLoader from "../../../components/NavigationLoader";
 import PaginateButtons from "../../../components/PaginateButtons";
+import { BiEdit } from "react-icons/bi";
 
 export default function Series() {
   const data = useLoaderData();
@@ -15,11 +16,8 @@ export default function Series() {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
 
-  const { currentContent, currentPage, totalPages } = getPaginatedData<AnimeType>(
-    data,
-    5,
-    currentPageState
-  );
+  const { currentContent, currentPage, totalPages } =
+    getPaginatedData<AnimeType>(data, 5, currentPageState);
 
   function onBackButtonPressed() {
     setCurrentPageState((prev) => prev - 1);
@@ -41,8 +39,11 @@ export default function Series() {
 
   return (
     <div className="p-6">
-      <div className="w-full mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="sm:text-2xl font-bold text-white ">🎬 لیست انیمه ها</h1>
+      <div className="w-full mb-4 pb-2 border-b border-b-neutral-700 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2">
+          <BiEdit size={18} className="text-green-500" />
+          <h1 className="sm:text-xl  text-white "> لیست انیمه ها</h1>
+        </div>
         <div className=" border border-neutral-800 rounded-full flex items-center px-3">
           <input
             value={searchValue}

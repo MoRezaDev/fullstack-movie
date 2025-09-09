@@ -80,7 +80,7 @@ export default function PostContent({
           <Link
             to={`/${contentLink}/update`}
             state={data}
-            className="bg-blue-500 self-end transition hover:opacity-50 cursor-pointer px-2  py-1 rounded-lg"
+            className="bg-green-600 self-end transition hover:opacity-50 cursor-pointer p-2 rounded-md"
           >
             ویرایش
           </Link>
