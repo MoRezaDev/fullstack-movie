@@ -16,7 +16,7 @@ export async function sendOtpAction(state: any, formData: FormData) {
       error: validatedPhone.error.issues[0].message ?? "something wrong!",
     };
 
-  const response = await fetch("http://localhost:3001/auth/send-otp", {
+  const response = await fetch(`${process.env.BASE_URL}/auth/send-otp`, {
     method: "POST",
     body: JSON.stringify({ mobile: phone }),
     headers: {
@@ -38,7 +38,7 @@ export async function verifyOtpAction(state: any, formData: FormData) {
     return { error: validated.error.issues[0].message ?? "something wrong!" };
   }
 
-  const response = await fetch("http://localhost:3001/auth/check-otp", {
+  const response = await fetch(`${process.env.BASE_URL}/auth/check-otp`, {
     method: "POST",
     body: JSON.stringify({ code, mobile }),
     headers: {

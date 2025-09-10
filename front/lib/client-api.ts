@@ -8,7 +8,7 @@ export async function getContents(query: string | null) {
   }
 
   const response = await fetch(
-    `http://localhost:3001/post/search?query=${query}`
+    `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/post/search?query=${query}`
   );
 
   const data = await response.json();

@@ -78,6 +78,7 @@ export default function SearchBar() {
                       className="w-15 h-20 object-cover rounded-md"
                     />
                     <Link
+                      onClick={() => setIsMountedStyle(false)}
                       className="transition hover:text-blue-500"
                       href={`/content/${item.slug}`}
                     >

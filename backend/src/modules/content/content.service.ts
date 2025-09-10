@@ -148,7 +148,6 @@ export class ContentService {
       include: { [type]: true },
     });
 
-    console.log(result)
 
     return result.map((item) => ({ ...item, content: item[type], type }));
   }

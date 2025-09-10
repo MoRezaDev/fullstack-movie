@@ -2,7 +2,7 @@ import { permanentRedirect, redirect } from "next/navigation";
 
 export async function getSliderContent() {
   await new Promise((res) => setTimeout(res, 1000));
-  const response = await fetch("http://localhost:3001/content/slider");
+  const response = await fetch(`${process.env.BASE_URL}/content/slider`);
 
   const data = await response.json();
 
@@ -16,7 +16,7 @@ export async function getSliderContent() {
 
 export async function getLastPostsByType(type: string) {
   await new Promise((res) => setTimeout(res, 2000));
-  const response = await fetch(`http://localhost:3001/post/type/${type}`);
+  const response = await fetch(`${process.env.BASE_URL}/post/type/${type}`);
 
   const data = await response.json();
 
@@ -30,7 +30,7 @@ export async function getLastPostsByType(type: string) {
 
 export async function getAllPosts() {
   await new Promise((res) => setTimeout(res, 2000));
-  const response = await fetch(`http://localhost:3001/post`);
+  const response = await fetch(`${process.env.BASE_URL}/post`);
 
   const data = await response.json();
 
@@ -47,7 +47,7 @@ export async function getAllPosts() {
   return newData;
 }
 export async function getPostBySlug(slug: string) {
-  const response = await fetch(`http://localhost:3001/content/find-by-slug`, {
+  const response = await fetch(`${process.env.BASE_URL}/content/find-by-slug`, {
     method: "POST",
     body: JSON.stringify({ slug }),
     headers: {
@@ -83,7 +83,7 @@ export async function getAdvancedSearchQuery(searchQuery: any) {
   ).toString();
 
   const response = await fetch(
-    `http://localhost:3001/content/s?${queryString}`
+    `${process.env.BASE_URL}/content/s?${queryString}`
   );
 
   const data = await response.json();

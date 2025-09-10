@@ -4,7 +4,7 @@ import {
 } from "./validation.zod";
 
 export async function getUserSession() {
-  const response = await fetch("http://localhost:3001/auth/session", {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/session`, {
     credentials: "include",
   });
 
@@ -24,7 +24,7 @@ export async function sendOtp(mobile: string) {
 
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  const response = await fetch(`http://localhost:3001/auth/send-otp`, {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/send-otp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export async function verifyOtp({
 
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  const response = await fetch(`http://localhost:3001/auth/check-otp`, {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/check-otp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
