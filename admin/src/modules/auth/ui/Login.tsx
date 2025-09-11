@@ -83,7 +83,7 @@ export default function Login() {
             {sendPhoneMutation.isPending ? "⏳ درحال ارسال..." : "ارسال کد"}
           </button>
         </form>
-      ) : (
+      ) : mobileValue && sendPhoneMutation.data && (
         <form
           onSubmit={verifyCodeSubmitHandler}
           className="bg-neutral-800 w-full max-w-sm p-6 rounded-xl shadow-lg space-y-4"
@@ -113,7 +113,7 @@ export default function Login() {
             <input
               type="hidden"
               name="mobile"
-              value={sendPhoneMutation.data?.mobile  || mobileValue || "nothing"}
+              defaultValue={sendPhoneMutation.data?.mobile  || mobileValue || "nothing"}
             />
           </div>
 
