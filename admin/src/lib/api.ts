@@ -77,7 +77,7 @@ export async function deleteMovie(imdb_id: string) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 1000));
+  await new Promise((res) => setTimeout(() => res("s"), 1000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/movie/${imdb_id}`, {
     method: "DELETE",
   });
@@ -129,7 +129,7 @@ export async function updatesSeries(imdb_id: string, updateDto: SeriesType) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("hi"), 1000));
+  await new Promise((res) => setTimeout(() => res("hi"), 1000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`, {
     method: "PATCH",
     body: JSON.stringify(updateDto),
@@ -152,7 +152,7 @@ export async function deleteSeries(imdb_id: string) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  await new Promise((res) => setTimeout(() => res("s"), 3000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`, {
     method: "DELETE",
   });
@@ -221,7 +221,7 @@ export async function updateAnime(
   const validated = myAnimeListValidationSchema.safeParse({ mal_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("hi"), 3000));
+  await new Promise((res) => setTimeout(() => res("hi"), 3000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`, {
     method: "PATCH",
     body: JSON.stringify(updateDto),
@@ -257,7 +257,7 @@ export async function deleteAnime(mal_id: string) {
   const validated = myAnimeListValidationSchema.safeParse({ mal_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  await new Promise((res) => setTimeout(() => res("s"), 3000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`, {
     method: "DELETE",
   });
@@ -309,7 +309,7 @@ export async function deletePost(postId: string) {
   const validated = PostIdValidationSchema.safeParse({ postId });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 3000));
+  await new Promise((res) => setTimeout(() => res("s"), 3000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/post/${postId}`, {
     method: "DELETE",
   });
@@ -329,7 +329,7 @@ export async function updatePost(postId: string, updateDto: any) {
 
   console.log("validatedPostId", validated);
 
-  await new Promise((res, rej) => setTimeout(() => res("hi"), 1000));
+  await new Promise((res) => setTimeout(() => res("hi"), 1000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/post/${postId}`, {
     method: "PATCH",
     body: JSON.stringify(updateDto),
@@ -366,7 +366,7 @@ export async function getAllUsers() {
 export async function deleteUser(userId: string) {
   //Validating
 
-  await new Promise((res, rej) => setTimeout(() => res("s"), 1000));
+  await new Promise((res) => setTimeout(() => res("s"), 1000));
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/${userId}`, {
     method: "DELETE",
   });

@@ -95,7 +95,7 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(movie)}
+                      onClick={() => handleEdit(movie)}
                       className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />

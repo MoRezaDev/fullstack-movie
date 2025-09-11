@@ -16,7 +16,7 @@ export default function Post() {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
 
-  const { currentContent, currentPage, totalPages } =
+  const { currentContent,  totalPages } =
     getPaginatedData<PostType>(data, 5, currentPageState);
 
   function onBackButtonPressed() {

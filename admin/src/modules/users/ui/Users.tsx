@@ -17,7 +17,7 @@ export default function Users() {
 
   if (data.statusCode === 401) return <div className="text-2xl p-4">شمااجازه دسترسی به این بخش را ندارید</div>
 
-  const { currentContent, currentPage, totalPages } =
+  const { currentContent,  totalPages } =
     getPaginatedData<UserType>(data, 5, currentPageState);
 
   function onBackButtonPressed() {

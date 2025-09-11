@@ -99,7 +99,7 @@ export default function TableSeries({ series }: { series: SeriesType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(series_item)}
+                      onClick={() => handleEdit(series_item)}
                       className="p-1 bg-green-500 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />

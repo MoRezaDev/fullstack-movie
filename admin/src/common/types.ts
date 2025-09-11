@@ -27,7 +27,7 @@ export type movieType = {
 
   language?: string[] | string;
 
-  createdAt?: string | number;
+  createdAt: string | number;
 };
 
 export type SeriesType = {

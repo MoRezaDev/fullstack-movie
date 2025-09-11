@@ -104,7 +104,7 @@ export default function TablePosts({ posts }: { posts: PostType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(posts_item)}
+                      onClick={() => handleEdit(posts_item)}
                       className="p-1 bg-green-600 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />

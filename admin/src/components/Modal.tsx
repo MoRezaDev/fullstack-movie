@@ -3,7 +3,7 @@ type modalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-export default function Modal({ children, isOpen, onClose }: modalProps) {
+export default function Modal({ children, onClose }: modalProps) {
   return (
     <div
       onClick={onClose}

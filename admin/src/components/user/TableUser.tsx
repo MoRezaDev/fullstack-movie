@@ -111,7 +111,7 @@ export default function TableUsers({ users }: { users: UserType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(user_item)}
+                      onClick={() => handleEdit(user_item)}
                       className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />
@@ -120,7 +120,7 @@ export default function TableUsers({ users }: { users: UserType[] }) {
                 </td>
                 <td className="md:hidden">
                   <button
-                    onClick={(e) => {
+                    onClick={() => {
                       setShowDetailsModal(true);
                     }}
                     className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"

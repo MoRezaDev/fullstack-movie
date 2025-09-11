@@ -97,7 +97,7 @@ export default function TableAnime({ animes }: { animes: AnimeType[] }) {
                       </Modal>
                     )}
                     <button
-                      onClick={(e) => handleEdit(anime_item)}
+                      onClick={() => handleEdit(anime_item)}
                       className="p-1 bg-green-600 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaEdit />

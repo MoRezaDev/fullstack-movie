@@ -15,7 +15,7 @@ export default function Movie() {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
 
-  const { currentContent, currentPage, totalPages } = getPaginatedData<movieType>(
+  const { currentContent,  totalPages } = getPaginatedData<movieType>(
     data,
     5,
     currentPageState
