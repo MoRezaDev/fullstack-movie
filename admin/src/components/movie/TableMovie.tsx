@@ -56,7 +56,7 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
                 </td>
                 <td>{movie.title}</td>
                 <td className="hidden md:table-cell">
-                  {new Date(movie.createdAt).toLocaleDateString("fa-ir")}
+                  {movie.createdAt && new Date(movie.createdAt).toLocaleDateString("fa-ir")}
                 </td>
                 <td>
                   <div className="flex gap-2">

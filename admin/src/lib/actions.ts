@@ -1,4 +1,4 @@
-import { AnimeType, SeriesType } from "../common/types";
+import { AnimeType, movieType, SeriesType } from "../common/types";
 import {
   addPost,
   findOrAddAnime,
@@ -44,23 +44,23 @@ export async function updateMovieAction({ request }: { request: Request }) {
   const year = formData.get("year") as string;
   const genre = formData.getAll("genre") as string[];
 
-  console.log("imdb", imdb_id);
+  const updateDto: movieType = {
+    title,
+    rating,
+    description,
+    director,
+    duration,
+    language: language.split(","),
+    stars: stars.split(","),
+    has_dub: has_dub === "true" ? true : false,
+    has_subtitle: has_subtitle === "true" ? true : false,
+    genre,
+    year: +year,
+    imdb_id,
+  };
 
   try {
-    await updateMovie(imdb_id, {
-      title,
-      rating,
-      description,
-      director,
-      duration,
-      language: language.split(","),
-      stars: stars.split(","),
-      has_dub: has_dub === "true" ? true : false,
-      has_subtitle: has_subtitle === "true" ? true : false,
-      genre,
-      year: +year,
-      imdb_id,
-    });
+    await updateMovie(imdb_id, updateDto);
     return { success: true };
   } catch (err: any) {
     console.log(err.message);
