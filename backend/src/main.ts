@@ -9,7 +9,7 @@ async function bootstrap() {
 
   app.use(cookieParser());
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    origin: ['http://localhost:3000', 'http://localhost:5173','https://fullstack-movie-git-main-morezadevs-projects.vercel.app'],
     credentials: true,
   });
 
