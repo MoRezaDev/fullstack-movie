@@ -7,7 +7,7 @@ import { CatchEverythingFilter } from './common/filters/new-all-exceptions';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(cookieParser());
+  app.use(cookieParser.default ? cookieParser.default() : (cookieParser as any)());
   app.enableCors({
     origin: ['http://localhost:3000', 'http://localhost:5173','https://fullstack-movie-git-main-morezadevs-projects.vercel.app','https://fullstack-movie.vercel.app'],
     credentials: true,
