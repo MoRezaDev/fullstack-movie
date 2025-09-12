@@ -14,7 +14,7 @@ import { SendOtpDto } from './dto/send-otp.dto';
 import { Request, Response } from 'express';
 import { CheckOtpDto } from './dto/check-otp.dto';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
-import { VerifyJwtGurds } from 'src/common/gurds/verify-jwt.gurd';
+import { VerifyJwtGurds } from '../../common/gurds/verify-jwt.gurd';
 import { RequestWithUser } from 'src/common/types/globals.type';
 import { Roles } from 'src/common/gurds/roles.gurd';
 
