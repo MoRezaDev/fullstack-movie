@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/modules/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { SendOtpDto } from './dto/send-otp.dto';
 import { UserService } from 'src/modules/user/user.service';
 import { randomInt } from 'crypto';
