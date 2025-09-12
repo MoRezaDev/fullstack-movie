@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DatabaseService } from 'src/modules/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { SubscribeDto } from './dto/create-subscribe.dto';
 
 @Injectable()
