@@ -9,6 +9,7 @@ import {
 } from "./api";
 
 export async function rootLayoutLoader() {
+  await new Promise(res => setTimeout(res,2000))
   const session = await getUserSession();
 
   if (session && session.error) {
