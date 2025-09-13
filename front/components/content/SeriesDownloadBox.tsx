@@ -62,7 +62,7 @@ export default function SeriesDownloadBox({
           >
             <div className="overflow-hidden ">
               <div className="p-4 flex flex-col gap-6">
-                {item.link_url.map((linkObj, idx) => (
+                {item.link_url.map((linkObj : any, idx : number) => (
                   <div
                     key={idx}
                     className="flex items-center justify-between border-b border-neutral-600 pb-1"
