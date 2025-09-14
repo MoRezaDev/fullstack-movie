@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { finished } from 'stream/promises';
 import Together from 'together-ai';
-import { put } from '@vercel/blob'
+import { put } from '@vercel/blob';
 
 export async function deleteFolderWithFiles(path: string) {
   fs.rm(path, { recursive: true, force: true }, (err) => {
@@ -116,22 +116,36 @@ export async function SavePoster(
   //  NEW CODE (Blob storage, works on Vercel)
   try {
     // download poster as arraybuffer (binary)
-    const posterRes = await axios.get(imageLink, { responseType: 'arraybuffer' });
+    const posterRes = await axios.get(imageLink, {
+      responseType: 'arraybuffer',
+    });
     const posterBuffer = Buffer.from(posterRes.data);
 
-    const posterBlob = await put(`content/${type}/${id}/poster.jpg`, posterBuffer, {
-      access: 'public',
-    });
+    const posterBlob = await put(
+      `content/${type}/${id}/poster.jpg`,
+      posterBuffer,
+      {
+        access: 'public',
+        allowOverwrite: true,
+      },
+    );
 
     let backgroundBlobUrl: string | null = null;
 
     if (backgroundLink) {
-      const bgRes = await axios.get(backgroundLink, { responseType: 'arraybuffer' });
+      const bgRes = await axios.get(backgroundLink, {
+        responseType: 'arraybuffer',
+      });
       const bgBuffer = Buffer.from(bgRes.data);
 
-      const bgBlob = await put(`content/${type}/${id}/background-1280.jpg`, bgBuffer, {
-        access: 'public',
-      });
+      const bgBlob = await put(
+        `content/${type}/${id}/background-1280.jpg`,
+        bgBuffer,
+        {
+          access: 'public',
+          allowOverwrite: true,
+        },
+      );
 
       backgroundBlobUrl = bgBlob.url;
     }

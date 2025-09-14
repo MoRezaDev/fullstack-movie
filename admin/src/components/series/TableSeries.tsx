@@ -9,14 +9,14 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
 export default function TableSeries({ series }: { series: SeriesType[] }) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<SeriesType | null>(null); // 🔥 updated
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: deleteSeries,
     onError: (err) => {
-      setShowDeleteModal(false);
+      setDeleteTarget(null);
       toast.error(err.message ?? "مشکلی پیش آمده، لطفا دوباره تلاش کنید");
     },
     onSuccess: () => {
@@ -63,41 +63,12 @@ export default function TableSeries({ series }: { series: SeriesType[] }) {
                 <td>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => setShowDeleteModal(true)}
+                      onClick={() => setDeleteTarget(series_item)}
                       className="p-1 bg-red-600 rounded-md  cursor-pointer transition hover:opacity-70 "
                     >
                       <FaTrash />
                     </button>
-                    {showDeleteModal && (
-                      <Modal
-                        isOpen={showDeleteModal}
-                        onClose={() => setShowDeleteModal(false)}
-                      >
-                        <div
-                          onClick={(e) => e.stopPropagation()}
-                          className=" bg-neutral-800  p-4 w-[600px] rounded-md"
-                        >
-                          <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
-                          <div className="space-x-2 ">
-                            <button
-                              disabled={mutation.isPending}
-                              onClick={() =>
-                                mutation.mutate(series_item.imdb_id)
-                              }
-                              className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              {mutation.isPending ? "شکیبا باشید" : "بله"}
-                            </button>
-                            <button
-                              onClick={() => setShowDeleteModal(false)}
-                              className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              خیر
-                            </button>
-                          </div>
-                        </div>
-                      </Modal>
-                    )}
+
                     <button
                       onClick={() => handleEdit(series_item)}
                       className="p-1 bg-green-500 rounded-md cursor-pointer transition hover:opacity-70"
@@ -111,6 +82,32 @@ export default function TableSeries({ series }: { series: SeriesType[] }) {
           </tbody>
         </table>
       </div>
+
+      {deleteTarget && (
+        <Modal isOpen={!!deleteTarget} onClose={() => setDeleteTarget(null)}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className=" bg-neutral-800  p-4 w-[600px] rounded-md"
+          >
+            <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
+            <div className="space-x-2 ">
+              <button
+                disabled={mutation.isPending}
+                onClick={() => mutation.mutate(deleteTarget.imdb_id)}
+                className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                {mutation.isPending ? "شکیبا باشید" : "بله"}
+              </button>
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                خیر
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

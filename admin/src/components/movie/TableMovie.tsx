@@ -9,14 +9,14 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
 export default function TableMovie({ movies }: { movies: movieType[] }) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<movieType | null>(null); // 🔥 updated
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: deleteMovie,
+    mutationFn: (imdb_id: string) => deleteMovie(imdb_id),
     onError: (err) => {
-      setShowDeleteModal(false);
+      setDeleteTarget(null);
       toast.error(err.message ?? "مشکلی پیش آمده، لطفا دوباره تلاش کنید");
     },
     onSuccess: () => {
@@ -29,11 +29,11 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
   };
 
   return (
-    <div className="w-full overflow-x-auto ">
-      <div className="w-full border rounded-md  border-neutral-700">
+    <div className="w-full overflow-x-auto">
+      <div className="w-full border rounded-md border-neutral-700">
         <table className="w-full">
           <thead>
-            <tr className=" *:text-start *:p-2 *:border-b *:border-neutral-700">
+            <tr className="*:text-start *:p-2 *:border-b *:border-neutral-700">
               <th>پوستر</th>
               <th>عنوان</th>
               <th className="hidden md:table-cell">تاریخ افزودن</th>
@@ -41,7 +41,7 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie: movieType, idx: any) => (
+            {movies.map((movie: movieType, idx: number) => (
               <tr
                 key={movie.imdb_id}
                 className={`*:p-2 *:border-neutral-700 ${
@@ -56,44 +56,17 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
                 </td>
                 <td>{movie.title}</td>
                 <td className="hidden md:table-cell">
-                  {movie.createdAt && new Date(movie.createdAt).toLocaleDateString("fa-ir")}
+                  {movie.createdAt &&
+                    new Date(movie.createdAt).toLocaleDateString("fa-ir")}
                 </td>
                 <td>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => setShowDeleteModal(true)}
-                      className="p-1 bg-red-600 rounded-md  cursor-pointer transition hover:opacity-70 "
+                      onClick={() => setDeleteTarget(movie)}
+                      className="p-1 bg-red-600 rounded-md cursor-pointer transition hover:opacity-70"
                     >
                       <FaTrash />
                     </button>
-                    {showDeleteModal && (
-                      <Modal
-                        isOpen={showDeleteModal}
-                        onClose={() => setShowDeleteModal(false)}
-                      >
-                        <div
-                          onClick={(e) => e.stopPropagation()}
-                          className=" bg-neutral-800  p-4 w-[600px] rounded-md"
-                        >
-                          <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
-                          <div className="space-x-2 ">
-                            <button
-                              disabled={mutation.isPending}
-                              onClick={() => mutation.mutate(movie.imdb_id)}
-                              className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              {mutation.isPending ? "شکیبا باشید" : "بله"}
-                            </button>
-                            <button
-                              onClick={() => setShowDeleteModal(false)}
-                              className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              خیر
-                            </button>
-                          </div>
-                        </div>
-                      </Modal>
-                    )}
                     <button
                       onClick={() => handleEdit(movie)}
                       className="p-1 bg-blue-500 rounded-md cursor-pointer transition hover:opacity-70"
@@ -107,6 +80,35 @@ export default function TableMovie({ movies }: { movies: movieType[] }) {
           </tbody>
         </table>
       </div>
+
+      {/* Delete Modal */}
+      {deleteTarget && ( // 🔥 updated
+        <Modal isOpen={!!deleteTarget} onClose={() => setDeleteTarget(null)}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-neutral-800 p-4 w-[600px] rounded-md"
+          >
+            <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
+            <div className="space-x-2">
+              <button
+                disabled={mutation.isPending}
+                onClick={() => {
+                  mutation.mutate(deleteTarget.imdb_id); 
+                }}
+                className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                {mutation.isPending ? "شکیبا باشید" : "بله"}
+              </button>
+              <button
+                onClick={() => setDeleteTarget(null)} 
+                className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                خیر
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

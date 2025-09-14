@@ -4,19 +4,19 @@ import { FaEdit } from "react-icons/fa";
 import Modal from "../Modal";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { deleteSeries } from "../../lib/api";
+import { deleteAnime, deleteSeries } from "../../lib/api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
 export default function TableAnime({ animes }: { animes: AnimeType[] }) {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<AnimeType | null>(null); // 🔥 updated
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: deleteSeries,
+    mutationFn: deleteAnime,
     onError: (err) => {
-      setShowDeleteModal(false);
+      setDeleteTarget(null);
       toast.error(err.message ?? "مشکلی پیش آمده، لطفا دوباره تلاش کنید");
     },
     onSuccess: () => {
@@ -63,39 +63,12 @@ export default function TableAnime({ animes }: { animes: AnimeType[] }) {
                 <td>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => setShowDeleteModal(true)}
+                      onClick={() => setDeleteTarget(anime_item)}
                       className="p-1 bg-red-600 rounded-md  cursor-pointer transition hover:opacity-70 "
                     >
                       <FaTrash />
                     </button>
-                    {showDeleteModal && (
-                      <Modal
-                        isOpen={showDeleteModal}
-                        onClose={() => setShowDeleteModal(false)}
-                      >
-                        <div
-                          onClick={(e) => e.stopPropagation()}
-                          className=" bg-neutral-800  p-4 w-[600px] rounded-md"
-                        >
-                          <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
-                          <div className="space-x-2 ">
-                            <button
-                              disabled={mutation.isPending}
-                              onClick={() => mutation.mutate(anime_item.mal_id)}
-                              className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              {mutation.isPending ? "شکیبا باشید" : "بله"}
-                            </button>
-                            <button
-                              onClick={() => setShowDeleteModal(false)}
-                              className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
-                            >
-                              خیر
-                            </button>
-                          </div>
-                        </div>
-                      </Modal>
-                    )}
+
                     <button
                       onClick={() => handleEdit(anime_item)}
                       className="p-1 bg-green-600 rounded-md cursor-pointer transition hover:opacity-70"
@@ -109,6 +82,35 @@ export default function TableAnime({ animes }: { animes: AnimeType[] }) {
           </tbody>
         </table>
       </div>
+
+      {deleteTarget && (
+        <Modal
+          isOpen={!!deleteTarget}
+          onClose={() => setDeleteTarget(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className=" bg-neutral-800  p-4 w-[600px] rounded-md"
+          >
+            <h1 className="text-xl mb-10">آیا اطمینان دارید؟</h1>
+            <div className="space-x-2 ">
+              <button
+                disabled={mutation.isPending}
+                onClick={() => mutation.mutate(deleteTarget.mal_id)}
+                className="bg-blue-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                {mutation.isPending ? "شکیبا باشید" : "بله"}
+              </button>
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="bg-red-500 px-2 py-1 rounded-md cursor-pointer transition hover:opacity-50"
+              >
+                خیر
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

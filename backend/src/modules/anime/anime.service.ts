@@ -6,6 +6,7 @@ import Together from 'together-ai';
 import axios from 'axios';
 import { deleteAnimeFolder, SavePoster, translatePersian } from '../../common/helper/functions';
 import { JikanResponse } from '../../common/types/globals.type';
+import { del } from '@vercel/blob';
 
 @Injectable()
 export class AnimeService {
@@ -33,19 +34,20 @@ export class AnimeService {
     return await this.databaseService.anime.updateMany({ data: updateDto });
   }
 
-  async remove(mal_id: string) {
-    return await this.databaseService.$transaction(async (tx) => {
-      try {
-        await deleteAnimeFolder(mal_id);
-        await tx.anime.delete({ where: { mal_id } });
-        return { status: 'success' };
-      } catch (err) {
-        throw new HttpException(
-          'مشکلی در حذف بوجود آمده، دوباره تلاش کنید',
-          500,
-        );
-      }
-    });
+  async remove(id: string) {
+    try {
+      const data = await this.databaseService.anime.delete({
+        where: { mal_id: id },
+      });
+      await del([
+        `content/${data.type}/${id}/poster.jpg`,
+        `content/${data.type}/${id}/background-1280.jpg`,
+      ]);
+
+      return { success: true };
+    } catch (err) {
+      throw new HttpException('آیدی در دیتابیس یافت نشد', 404);
+    }
   }
 
   async romeAll() {

@@ -28,7 +28,6 @@ export default function TablePosts({ posts }: { posts: PostType[] }) {
     navigate("/posts/update", { state: posts });
   };
 
-  console.log(posts);
 
   return (
     <div className="w-full overflow-x-auto ">

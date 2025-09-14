@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import Together from 'together-ai';
 import { SavePoster } from '../../common/helper/functions';
+import { del } from '@vercel/blob';
 
 @Injectable()
 export class MovieService {
@@ -45,9 +46,15 @@ export class MovieService {
 
   async remove(id: string) {
     try {
-      return await this.databaseService.movie.delete({
+      const data = await this.databaseService.movie.delete({
         where: { imdb_id: id },
       });
+      await del([
+        `content/${data.type}/${id}/poster.jpg`,
+        `content/${data.type}/${id}/background-1280.jpg`,
+      ]);
+
+      return { success: true };
     } catch (err) {
       throw new HttpException('آیدی در دیتابیس یافت نشد', 404);
     }
@@ -117,7 +124,10 @@ export class MovieService {
         genre: data.Genre.split(', '),
         year: +data.Year,
         rating: data.imdbRating,
-        rating_search: +data.imdbRating && data.imdbRating.toLowerCase() !== 'n/a' ? Number(data.imdbRating)  : 0,
+        rating_search:
+          +data.imdbRating && data.imdbRating.toLowerCase() !== 'n/a'
+            ? Number(data.imdbRating)
+            : 0,
         director: data.Director,
         stars: data.Actors.split(', '),
         language: data.Language.split(', '),

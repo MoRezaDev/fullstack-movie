@@ -31,8 +31,6 @@ export default function TableUsers({ users }: { users: UserType[] }) {
     navigate("/users/update", { state: users });
   };
 
-  console.log(users);
-  console.log(showDetailsModal);
 
   return (
     <div className="w-full overflow-x-auto ">

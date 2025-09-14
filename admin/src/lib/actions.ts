@@ -63,7 +63,6 @@ export async function updateMovieAction({ request }: { request: Request }) {
     await updateMovie(imdb_id, updateDto);
     return { success: true };
   } catch (err: any) {
-    console.log(err.message);
   }
 }
 
@@ -229,7 +228,6 @@ export async function updatePostAction({ request }: { request: Request }) {
   const raw_download_links = JSON.parse(
     formDataObject.download_links as string
   );
-  console.log("raw", raw_download_links);
   const download_links =
     (formDataObject.type as string) === "movie"
       ? raw_download_links

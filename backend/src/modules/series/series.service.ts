@@ -4,9 +4,13 @@ import { UpdateSeriesDto } from './dto/update-series.dto';
 import { DatabaseService } from '../database/database.service';
 import Together from 'together-ai';
 import axios from 'axios';
-import { deleteSeriesFolder, SavePoster, translatePersian } from '../../common/helper/functions';
+import {
+  deleteSeriesFolder,
+  SavePoster,
+  translatePersian,
+} from '../../common/helper/functions';
 import { OmdbSeriesResponse } from '../../common/types/globals.type';
-
+import { del } from '@vercel/blob';
 
 @Injectable()
 export class SeriesService {
@@ -34,19 +38,20 @@ export class SeriesService {
     return await this.databaseService.series.updateMany({ data: updateDto });
   }
 
-  async remove(imdb_id: string) {
-    return await this.databaseService.$transaction(async (tx) => {
-      try {
-        await deleteSeriesFolder(imdb_id);
-        await tx.series.delete({ where: { imdb_id } });
-        return { status: 'success' };
-      } catch (err) {
-        throw new HttpException(
-          'مشکلی در حذف بوجود آمده، دوباره تلاش کنید',
-          500,
-        );
-      }
-    });
+  async remove(id: string) {
+    try {
+      const data = await this.databaseService.series.delete({
+        where: { imdb_id: id },
+      });
+      await del([
+        `content/${data.type}/${id}/poster.jpg`,
+        `content/${data.type}/${id}/background-1280.jpg`,
+      ]);
+
+      return { success: true };
+    } catch (err) {
+      throw new HttpException('آیدی در دیتابیس یافت نشد', 404);
+    }
   }
 
   //for admin

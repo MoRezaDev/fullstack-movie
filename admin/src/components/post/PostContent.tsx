@@ -7,7 +7,6 @@ export default function PostContent({
   data: any;
   contentLink: string;
 }) {
-  console.log("data", data);
   return (
     <div className="w-full  mx-auto bg-neutral-800 grid  md:grid-cols-3 p-4 gap-2 my-2">
       <div className="flex flex-col">

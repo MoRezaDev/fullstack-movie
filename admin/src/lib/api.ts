@@ -46,13 +46,16 @@ export async function updateMovie(imdb_id: string, updateDto: movieType) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res(""), 3000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/movie/${imdb_id}`, {
-    method: "PATCH",
-    body: JSON.stringify(updateDto),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/movie/${imdb_id}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(updateDto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch data");
@@ -78,9 +81,12 @@ export async function deleteMovie(imdb_id: string) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("s"), 1000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/movie/${imdb_id}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/movie/${imdb_id}`,
+    {
+      method: "DELETE",
+    }
+  );
 
   if (!response.ok) {
     const b = await response.json();
@@ -96,7 +102,9 @@ export async function getSeries(imdb_id: string) {
   const validated = imdbValidationSchema.safeParse({ imdb_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`);
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`
+  );
 
   const data = await response.json();
 
@@ -130,13 +138,16 @@ export async function updatesSeries(imdb_id: string, updateDto: SeriesType) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("hi"), 1000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`, {
-    method: "PATCH",
-    body: JSON.stringify(updateDto),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(updateDto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -153,9 +164,12 @@ export async function deleteSeries(imdb_id: string) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("s"), 3000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/series/${imdb_id}`,
+    {
+      method: "DELETE",
+    }
+  );
   const data = await response.json();
 
   if (!response.ok) {
@@ -185,7 +199,9 @@ export async function getAnime(mal_id: string) {
   const validated = myAnimeListValidationSchema.safeParse({ mal_id });
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`);
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`
+  );
 
   const data = await response.json();
 
@@ -222,13 +238,16 @@ export async function updateAnime(
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("hi"), 3000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`, {
-    method: "PATCH",
-    body: JSON.stringify(updateDto),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(updateDto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -258,9 +277,12 @@ export async function deleteAnime(mal_id: string) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("s"), 3000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/anime/${mal_id}`,
+    {
+      method: "DELETE",
+    }
+  );
   const data = await response.json();
 
   if (!response.ok) {
@@ -310,9 +332,12 @@ export async function deletePost(postId: string) {
   if (!validated.success) throw new Error(validated.error.issues[0].message);
 
   await new Promise((res) => setTimeout(() => res("s"), 3000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/post/${postId}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/post/${postId}`,
+    {
+      method: "DELETE",
+    }
+  );
   const data = await response.json();
 
   if (!response.ok) {
@@ -330,13 +355,16 @@ export async function updatePost(postId: string, updateDto: any) {
   console.log("validatedPostId", validated);
 
   await new Promise((res) => setTimeout(() => res("hi"), 1000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/post/${postId}`, {
-    method: "PATCH",
-    body: JSON.stringify(updateDto),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/post/${postId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(updateDto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -367,9 +395,12 @@ export async function deleteUser(userId: string) {
   //Validating
 
   await new Promise((res) => setTimeout(() => res("s"), 1000));
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/${userId}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/user/${userId}`,
+    {
+      method: "DELETE",
+    }
+  );
   const data = await response.json();
 
   if (!response.ok) {
