@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { finished } from 'stream/promises';
 import Together from 'together-ai';
+import { put } from '@vercel/blob'
 
 export async function deleteFolderWithFiles(path: string) {
   fs.rm(path, { recursive: true, force: true }, (err) => {
@@ -65,6 +66,8 @@ export async function SavePoster(
   if (!imageLink || !id || !type)
     throw new HttpException('invalid arguments', 403);
 
+  // ============ OLD FILESYSTEM CODE (Local Save) ============
+  /*
   const staticPath = path.join(
     process.cwd(),
     'src',
@@ -107,6 +110,44 @@ export async function SavePoster(
     `https://fullstack-movie-backend.vercel.app/content/${type}/${id}/poster.jpg`,
     `https://fullstack-movie-backend.vercel.app/content/${type}/${id}/background-1280.jpg`,
   ];
+  */
+  // ============================================================================================
+
+  //  NEW CODE (Blob storage, works on Vercel)
+  try {
+    // download poster as arraybuffer (binary)
+    const posterRes = await axios.get(imageLink, { responseType: 'arraybuffer' });
+    const posterBuffer = Buffer.from(posterRes.data);
+
+    const posterBlob = await put(`content/${type}/${id}/poster.jpg`, posterBuffer, {
+      access: 'public',
+    });
+
+    let backgroundBlobUrl: string | null = null;
+
+    if (backgroundLink) {
+      const bgRes = await axios.get(backgroundLink, { responseType: 'arraybuffer' });
+      const bgBuffer = Buffer.from(bgRes.data);
+
+      const bgBlob = await put(`content/${type}/${id}/background-1280.jpg`, bgBuffer, {
+        access: 'public',
+      });
+
+      backgroundBlobUrl = bgBlob.url;
+    }
+
+    return [
+      posterBlob.url,
+      backgroundBlobUrl ??
+        `https://dummyimage.com/1280x720/000/fff&text=No+Background`, // fallback if no bg
+    ];
+  } catch (err) {
+    console.log('catching error on try catch (Blob upload)');
+    throw new HttpException(
+      err?.message ?? 'something wrong on saving file (Blob)',
+      500,
+    );
+  }
 }
 
 export async function translatePersian(content: string) {
