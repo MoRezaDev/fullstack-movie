@@ -1,99 +1,304 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Fullstack Movie — Backend (NestJS + Prisma)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend سرویس پروژه Fullstack Movie با NestJS 11، Prisma و PostgreSQL. این سرویس APIهای مربوط به احراز هویت (OTP + JWT)، مدیریت محتوا (Movie/Series/Anime + Post)، واچ‌لیست، لایک، جستجو و اسلایدر را فراهم می‌کند. همچنین فایل‌های استاتیک پوستر/پس‌زمینه محتوا را سرو می‌کند.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## تکنولوژی‌ها
+- Node.js 18+
+- NestJS 11 (@nestjs/common, core, jwt, throttler, serve-static, config)
+- Prisma ORM + PostgreSQL
+- Axios برای فراخوانی APIهای OMDb / TMDB / Jikan
+- Together AI برای ترجمه توضیحات محتوا (اختیاری)
+- Cookie-Parser برای احراز هویت مبتنی بر کوکی
+- ESLint + Prettier
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## ساختار پوشه‌ها (backend)
+- src/
+  - main.ts (بوت‌استرپ Nest, CORS, Pipes, Filters)
+  - app.module.ts (ماژول ریشه، ماژول‌ها، Rate limiting)
+  - common/
+    - filters/new-all-exceptions.ts (فیلتر سراسری خطا)
+    - gurds/ (VerifyJwtGurds, RolesGurd, VerifyPremiumUserGurd)
+    - helper/functions.ts (ذخیره پوستر، حذف پوشه‌ها، ترجمه، normalize)
+    - types/ (انواع مشترک)
+  - modules/
+    - database/ (DatabaseService extends PrismaClient)
+    - auth/ (OTP + JWT)
+    - user/
+    - movie/
+    - series/
+    - anime/
+    - post/
+    - like/
+    - watchlist/
+    - content/ (Query/Slider/FindBySlug/Advanced Search)
+  - public/ (فایل‌های استاتیک)
+- prisma/
+  - schema.prisma (پیکربندی Prisma)
+  - models/*.prisma (مدل‌های دیتابیس)
+  - migrations/ (مهاجرت‌ها)
+- generated/prisma (خروجی prisma client)
+- vercel.json (تنظیمات دیپلوی سرورلس)
 
-```bash
-$ npm install
-```
 
-## Compile and run the project
+## راه‌اندازی سریع
+1) پیش‌نیازها
+- Node.js 18+ و npm
+- PostgreSQL در حال اجرا
 
-```bash
-# development
-$ npm run start
+2) نصب وابستگی‌ها
+- داخل پوشه backend اجرا کنید:
 
-# watch mode
-$ npm run start:dev
+  - npm install
 
-# production mode
-$ npm run start:prod
-```
+  اسکریپت postinstall به صورت خودکار prisma generate را اجرا می‌کند.
 
-## Run tests
+3) تنظیم متغیرهای محیطی (.env)
+نمونه پیشنهادی:
 
-```bash
-# unit tests
-$ npm run test
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/DB_NAME?schema=public
+PORT=3001
+# OMDb: کلید خود را از https://www.omdbapi.com دریافت کنید و BASE را به شکل زیر تنظیم کنید
+MOVIE_BASE_URL=https://www.omdbapi.com/?apikey=OMDB_API_KEY&
+# TMDB v4: مقدار فقط توکن باشد (بدون "Bearer ")
+TMDB_API_KEY=TMDB_V4_TOKEN
+# Jikan (MyAnimeList)
+Anime_BASE_URL=https://api.jikan.moe/v4/anime
+# Together AI (اختیاری برای ترجمه)
+TOGETHER_API_KEY=YOUR_TOGETHER_API_KEY
 
-# e2e tests
-$ npm run test:e2e
+4) راه‌اندازی دیتابیس (Prisma)
+- اعمال مهاجرت‌ها در محیط توسعه:
 
-# test coverage
-$ npm run test:cov
-```
+  - npx prisma migrate dev
 
-## Deployment
+- در تولید:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+  - npx prisma migrate deploy
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- مشاهده دیتابیس با Prisma Studio (اختیاری):
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+  - npx prisma studio
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5) اجرای پروژه
+- توسعه:
 
-## Resources
+  - npm run start:dev
 
-Check out a few resources that may come in handy when working with NestJS:
+- تولید:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+  - npm run build
+  - npm run start:prod
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## پیکربندی برنامه
+- CORS: در src/main.ts فعال شده با مبداهای زیر:
+  - http://localhost:3000
+  - http://localhost:5173
+  - https://fullstack-movie-git-main-morezadevs-projects.vercel.app
+  - https://fullstack-movie.vercel.app
+  credentials: true
 
-## Stay in touch
+- Pipes/Filters:
+  - ValidationPipe با transform=true به صورت سراسری
+  - CatchEverythingFilter برای هندل خطاها به فرمت یکنواخت
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Rate Limiting: Throttler به صورت APP_GUARD فعال است. برای /auth/send-otp محدودیت 5 درخواست در دقیقه اعمال شده.
 
-## License
+- Serve Static:
+  - مسیر سرو استاتیک: src/public (پوسترها و پس‌زمینه‌ها در content/{type}/{id}/)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## دیتابیس (Prisma Models)
+- User: mobile (unique), role (USER/...), is_premium, plan_name, expire_date, روابط با Otp, WatchList, Like, Comment, Subscription
+- Otp: code, expire_date, user (1-1)
+- Post: title, slug, description, is_premium, like_count, views, روابط 1-1 با Movie/Series/Anime و 1-N با DownloadLink/Comment/Like
+- Movie: با کلید imdb_id (unique), اطلاعات فیلم، rating_search برای فیلتر
+- Series: با کلید imdb_id (unique)، اطلاعات سریال، total_seasons
+- Anime: با کلید mal_id (unique)، اطلاعات انیمه از Jikan، rating_search
+- WatchList: یک واچ‌لیست برای هر کاربر (userId unique)، posts (N-M)
+- Like: لایک‌های کاربر به پست‌ها (نگاه به نکات مهم در انتها)
+- DownloadLink: لینک‌های دانلود (JSON)، متصل به Post
+- Comment, Subscription: مطابق نام
+
+Prisma Client از مسیر generated/prisma تولید می‌شود و در DatabaseService استفاده شده است.
+
+
+## احراز هویت
+- OTP Login:
+  - POST /auth/send-otp
+    - Body: { mobile: string }
+    - خروجی فعلی شامل کد OTP و expire_date است (برای توسعه). در تولید باید ارسال SMS جایگزین شود و کد در پاسخ برنگردد.
+
+  - POST /auth/check-otp
+    - Body: { mobile: string, code: number }
+    - در صورت موفقیت، کوکی httpOnly با نام token ست می‌شود (secure: true, sameSite: 'none', maxAge: 1h) و همچنین token در پاسخ ارسال می‌شود.
+
+- Session:
+  - GET /auth/session (نیاز به JWT)
+  - Guard: VerifyJwtGurds
+  - ابزار احراز هویت:
+    - ارسال توکن در Cookie با نام token
+    - یا Header: Authorization: Bearer <token>
+
+- JWT:
+  - JwtModule global با secret هاردکد شده در کد (secret key!35u3) و expiry = 10m
+  - توصیه می‌شود این مقدار به ENV منتقل شود.
+
+
+## ماژول‌ها و اندپوینت‌ها
+نکته: DTOها Validation دارند. برخی اندپوینت‌ها برای مدیریت/ادمین هستند (add/find/updateAll/removeAll).
+
+- Auth
+  - POST /auth/send-otp
+  - POST /auth/check-otp
+  - GET /auth/session
+
+- User (Guard: VerifyJwtGurds در سطح کنترلر)
+  - POST /user
+  - GET /user (Roles: EDITOR | ADMIN)
+  - POST /user/sub (افزودن اشتراک، نیاز به { amount, transaction_code })
+  - GET /user/delete-all
+  - GET /user/:id
+  - PATCH /user/:id
+  - DELETE /user/:id
+
+- Post
+  - POST /post
+  - GET /post?page=1 (صفحه‌بندی 8 موردی، شامل محتوای مرتبط)
+  - GET /post/search?query=...
+  - GET /post/type/:type (type: anime|movie|series) — آخرین 4 پست از هر نوع
+  - GET /post/:id
+  - PATCH /post/:id (پاک‌سازی DownloadLinkها و سپس به‌روزرسانی)
+  - DELETE /post/:id
+
+- Content
+  - GET /content?query=... (جستجوی عنوان بین Movie/Series/Anime)
+  - GET /content/slider (آخرین 10 پست به همراه content + type)
+  - POST /content/find-by-slug { slug }
+    - اگر slug تطبیق کامل نداشته باشد redirect به slug درست می‌دهد.
+    - رفتار محتواهای premium در بخش نکات مهم توضیح داده شده.
+  - GET /content/s
+    - Query: type=[anime|movie|series] (اجباری)
+    - Optional: genre, is_dubbed, score, year_from, year_to
+    - خروجی: آرایه پست‌ها با content و type
+
+- Movie
+  - POST /movie
+  - GET /movie
+  - GET /movie/find-add?imdb_id=tt123...
+    - اگر نبود، از OMDb و TMDB دریافت و ذخیره، پوستر/پس‌زمینه ذخیره می‌شود.
+    - توضیحات با Together AI به فارسی ترجمه می‌شوند (در صورت تنظیم TOGETHER_API_KEY).
+  - POST /movie/translate (Body: { description })
+  - POST /movie/update-all (Bulk update)
+  - GET /movie/:id (id = imdb_id)
+  - PATCH /movie/:id
+  - DELETE /movie/:id
+  - DELETE /movie/remove-all
+
+- Series
+  - POST /series
+  - GET /series
+  - GET /series/find-add?imdb_id=tt...
+  - POST /series/update-all
+  - GET /series/:id (id = imdb_id)
+  - PATCH /series/:id
+  - DELETE /series/:id (حذف رکورد + فولدر پوستر)
+
+- Anime
+  - POST /anime
+  - GET /anime
+  - GET /anime/find-add?mal_id=12345
+  - POST /anime/update-all
+  - GET /anime/remove-all
+  - GET /anime/:id (id = mal_id)
+  - PATCH /anime/:id
+  - DELETE /anime/:id (حذف رکورد + فولدر پوستر)
+
+- Watchlist
+  - POST /watchlist (بدنه به سبک Prisma connect)
+  - GET /watchlist (با include user و posts + محتوای مرتبط)
+  - GET /watchlist/:id
+  - PATCH /watchlist/:id
+  - DELETE /watchlist/:id
+
+- Like
+  - POST /like/toggle (بدنه به سبک Prisma)
+    - Body نمونه:
+      {
+        "user": { "connect": { "id": "USER_ID" } },
+        "post": { "connect": { "id": "POST_ID" } }
+      }
+  - GET /like
+
+
+## جریان فایل‌های استاتیک پوستر
+- تابع SavePoster در common/helper/functions.ts:
+  - فایل‌ها را در مسیر src/public/content/{type}/{id}/poster.jpg و background-1280.jpg ذخیره می‌کند.
+  - آدرس بازگشتی به‌صورت hardcoded روی دامنه https://fullstack-movie.onrender.com/content/... است. در صورت تغییر دامنه، این مقدار باید در کد به‌روزرسانی شود.
+
+
+## اسکریپت‌ها
+- build: nest build
+- start: nest start
+- start:dev: nest start --watch
+- start:prod: node dist/main
+- lint: eslint --fix
+- format: prettier --write
+- test, test:watch, test:cov, test:e2e (Jest/ts-jest)
+
+
+## دیپلوی (Vercel)
+- vercel.json طوری تنظیم شده که درخواست‌ها به src/main.ts هدایت شوند و dist/** شامل شود.
+- متغیرهای محیطی ضروری (DATABASE_URL، MOVIE_BASE_URL، TMDB_API_KEY، Anime_BASE_URL، TOGETHER_API_KEY، PORT) را در داشبورد Vercel تنظیم کنید.
+- توجه: سیستم فایل سرورلس پایدار نیست. ذخیره پوستر در دیپلوی سرورلس ممکن است پایدار نباشد. برای تولید از فضای ذخیره‌سازی پایدار (S3/Cloud Storage) یا سرور دائمی استفاده کنید.
+
+
+## نکات مهم و موارد قابل بهبود
+- امنیت JWT:
+  - secret در کد هاردکد شده است. پیشنهاد: استفاده از ENV (JWT_SECRET) و تنظیم JwtModule.register بر اساس ConfigService.
+
+- OTP در توسعه:
+  - سرویس /auth/send-otp کد OTP را در پاسخ برمی‌گرداند (برای توسعه). در تولید باید به سرویس پیامک متصل شود و کد در پاسخ ارسال نشود.
+
+- Premium gating در Content:
+  - در ContentService از @UseGuards(VerifyPremiumUserGurd) روی متد سرویس استفاده شده که در NestJS اثری ندارد (Guard باید روی کنترلر/هندلر باشد). همچنین در ContentController روی مسیر find-by-slug هیچ Guardی اعمال نشده است. بنابراین user معمولاً undefined خواهد بود و شرط محدودسازی دانلود برای پست‌های premium اجرا نمی‌شود.
+  - راهکار: افزودن @UseGuards(VerifyPremiumUserGurd) روی متد کنترلر find-by-slug یا استفاده از Interceptor/Middleware جهت تزریق کاربر.
+
+- مدل Like در Prisma:
+  - همزمان userId و postId به‌صورت @unique تعریف شده‌اند و در عین حال @@id([userId, postId]) نیز وجود دارد. این وضعیت اجازه نمی‌دهد یک کاربر بیش از یک Like برای پست‌های مختلف داشته باشد یا یک پست بیش از یک Like از کاربران مختلف بگیرد.
+  - راهکار: حذف @unique از userId و postId و نگه داشتن کلید مرکب @@id([userId, postId]).
+
+- دامنه ثابت در SavePoster:
+  - URL بازگشتی سخت‌کد شده است. باید نسبت به محیط (DEV/PROD) قابل پیکربندی شود.
+
+- مسیر ServeStatic:
+  - در تولید باید مطمئن شوید مسیر فایل‌های استاتیک مطابق build (dist) تنظیم شده یا از ConfigModule استفاده کنید.
+
+
+## نمونه درخواست‌ها
+- ارسال OTP:
+  curl -X POST http://localhost:3001/auth/send-otp -H "Content-Type: application/json" -d '{"mobile":"09123456789"}'
+
+- ورود با OTP:
+  curl -X POST http://localhost:3001/auth/check-otp -H "Content-Type: application/json" -d '{"mobile":"09123456789","code":12345}' -i
+  توجه: کوکی token در پاسخ ست می‌شود.
+
+- گرفتن سشن:
+  curl http://localhost:3001/auth/session -H "Authorization: Bearer <JWT>"
+
+- افزودن فیلم با IMDB ID:
+  curl "http://localhost:3001/movie/find-add?imdb_id=tt1375666"
+
+- جستجوی محتوای پیشرفته:
+  curl "http://localhost:3001/content/s?type=movie&genre=Sci-Fi&score=7&year_from=2000&year_to=2020"
+
+
+## کدنویسی و کیفیت
+- ESLint و Prettier پیکربندی شده‌اند. از npm run lint و npm run format استفاده کنید.
+- Validation در DTOها اعمال می‌شود و فیلتر سراسری پاسخ خطاها را یکنواخت می‌کند.
+
+
+## مجوز
+UNLICENSED (مطابق package.json)
