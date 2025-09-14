@@ -4,12 +4,8 @@ import { UpdateAnimeDto } from './dto/update-anime.dto';
 import { DatabaseService } from '../database/database.service';
 import Together from 'together-ai';
 import axios from 'axios';
-import {
-  deleteAnimeFolder,
-  SavePoster,
-  translatePersian,
-} from 'src/common/helper/functions';
-import { JikanResponse } from 'src/common/types/globals.type';
+import { deleteAnimeFolder, SavePoster, translatePersian } from '../../common/helper/functions';
+import { JikanResponse } from '../../common/types/globals.type';
 
 @Injectable()
 export class AnimeService {

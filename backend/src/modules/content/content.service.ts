@@ -1,9 +1,7 @@
 import { BadRequestException, Injectable, UseGuards } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import { contains } from 'class-validator';
-import { VerifyPremiumUserGurd } from 'src/common/gurds/verify-premium-user.gurd';
 import { AdvancedSearchQuery } from './dto/advanced-search-query.dto';
-import { Prisma } from 'generated/prisma';
+import { VerifyPremiumUserGurd } from '../../common/gurds/verify-premium-user.gurd';
 
 @Injectable()
 export class ContentService {
@@ -119,7 +117,9 @@ export class ContentService {
       throw new BadRequestException('type is not valid!');
     }
 
-    const where: Record<string, any> = { [type]: { title: {not: undefined} } };
+    const where: Record<string, any> = {
+      [type]: { title: { not: undefined } },
+    };
 
     if (genre) {
       where[type] = {
@@ -144,11 +144,42 @@ export class ContentService {
     }
 
     const result = await this.databaseSerivce.post.findMany({
-      where ,
+      where,
       include: { [type]: true },
     });
 
-
     return result.map((item) => ({ ...item, content: item[type], type }));
+  }
+
+  async getAllPostsWithContent() {
+    const result = await this.databaseSerivce.post.findMany({
+      include: {
+        movie: true,
+        series: true,
+        anime: true,
+      },
+    });
+
+    return result.map((item) => ({
+      ...item,
+      content: item.movie
+        ? item.movie
+        : item.series
+          ? item.series
+          : item.anime
+            ? item.anime
+            : null,
+    }));
+  }
+
+  async getAllPostsByDay() {
+    const posts = await this.databaseSerivce.post.findMany({
+      where: {
+        OR: [
+         
+        ]
+      }
+    })
+
   }
 }

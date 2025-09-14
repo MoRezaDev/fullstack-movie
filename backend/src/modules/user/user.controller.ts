@@ -12,10 +12,10 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { VerifyJwtGurds } from 'src/common/gurds/verify-jwt.gurd';
-import { Roles, RolesGurd } from 'src/common/gurds/roles.gurd';
 import { Request } from 'express';
 import { SubscribeDto } from './dto/create-subscribe.dto';
+import { VerifyJwtGurds } from '../../common/gurds/verify-jwt.gurd';
+import { Roles, RolesGurd } from '../../common/gurds/roles.gurd';
 
 @UseGuards(VerifyJwtGurds)
 @Controller('user')

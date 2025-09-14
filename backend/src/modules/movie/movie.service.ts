@@ -5,7 +5,7 @@ import { DatabaseService } from '../database/database.service';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import Together from 'together-ai';
-import { SavePoster } from 'src/common/helper/functions';
+import { SavePoster } from '../../common/helper/functions';
 
 @Injectable()
 export class MovieService {

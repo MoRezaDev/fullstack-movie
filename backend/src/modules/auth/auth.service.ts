@@ -5,7 +5,7 @@ import { UserService } from '../user/user.service';
 import { randomInt } from 'crypto';
 import { CheckOtpDto } from './dto/check-otp.dto';
 import { JwtService } from '@nestjs/jwt';
-import { decodedUser } from 'src/common/types/globals.type';
+import { decodedUser } from '../../common/types/globals.type';
 
 @Injectable()
 export class AuthService {

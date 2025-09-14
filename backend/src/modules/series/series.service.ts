@@ -4,12 +4,9 @@ import { UpdateSeriesDto } from './dto/update-series.dto';
 import { DatabaseService } from '../database/database.service';
 import Together from 'together-ai';
 import axios from 'axios';
-import {
-  deleteSeriesFolder,
-  SavePoster,
-  translatePersian,
-} from 'src/common/helper/functions';
-import { OmdbSeriesResponse } from 'src/common/types/globals.type';
+import { deleteSeriesFolder, SavePoster, translatePersian } from '../../common/helper/functions';
+import { OmdbSeriesResponse } from '../../common/types/globals.type';
+
 
 @Injectable()
 export class SeriesService {

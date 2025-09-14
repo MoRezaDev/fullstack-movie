@@ -7,7 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { MovieModule } from './modules/movie/movie.module';
-import { PostModule } from './post/post.module';
+import { PostModule } from './modules/post/post.module';
 import { SeriesModule } from './modules/series/series.module';
 import { AnimeModule } from './modules/anime/anime.module';
 import { WatchlistModule } from './modules/watchlist/watchlist.module';

@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { normalizeTitle } from 'src/common/helper/functions';
+import { normalizeTitle } from '../../../common/helper/functions';
 
 export class QueryContent {
   @IsNotEmpty()

@@ -1,5 +1,5 @@
 import { IsArray, IsInt, IsNotEmpty, IsNumber } from 'class-validator';
-import { Prisma } from 'generated/prisma';
+import { Prisma } from '../../../../generated/prisma';
 
 export class CreateSeriesDto implements Prisma.SeriesCreateInput {
   @IsNotEmpty()

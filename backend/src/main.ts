@@ -1,3 +1,4 @@
+require('module-alias/register');
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
@@ -7,9 +8,14 @@ import { CatchEverythingFilter } from './common/filters/new-all-exceptions';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use((cookieParser as any)());
+  app.use(cookieParser && cookieParser());
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:5173','https://fullstack-movie-git-main-morezadevs-projects.vercel.app','https://fullstack-movie.vercel.app'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'https://fullstack-movie-git-main-morezadevs-projects.vercel.app',
+      'https://fullstack-movie.vercel.app',
+    ],
     credentials: true,
   });
 

@@ -1,4 +1,4 @@
-import { Prisma } from 'generated/prisma';
+import { Prisma } from "../../../../generated/prisma";
 
 export class CreateUserDto implements Prisma.UserCreateInput {
   mobile: string;

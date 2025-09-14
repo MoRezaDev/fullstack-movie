@@ -5,7 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { DatabaseService } from 'src/modules/database/database.service';
+import { DatabaseService } from '../../modules/database/database.service';
 
 export const Roles = Reflector.createDecorator<string[]>();
 

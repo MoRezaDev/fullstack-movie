@@ -1,8 +1,0 @@
--- AlterTable
-ALTER TABLE "Anime" ADD COLUMN     "rating_search" DOUBLE PRECISION NOT NULL DEFAULT 0;
-
--- AlterTable
-ALTER TABLE "Movie" ADD COLUMN     "rating_search" DOUBLE PRECISION NOT NULL DEFAULT 0;
-
--- AlterTable
-ALTER TABLE "Series" ADD COLUMN     "rating_search" DOUBLE PRECISION NOT NULL DEFAULT 0;

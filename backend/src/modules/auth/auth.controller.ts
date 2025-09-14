@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
   Post,
   Req,
   Res,
@@ -15,8 +14,7 @@ import { Request, Response } from 'express';
 import { CheckOtpDto } from './dto/check-otp.dto';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { VerifyJwtGurds } from '../../common/gurds/verify-jwt.gurd';
-import { RequestWithUser } from 'src/common/types/globals.type';
-import { Roles } from 'src/common/gurds/roles.gurd';
+import { RequestWithUser } from '../../common/types/globals.type';
 
 @SkipThrottle()
 @Controller('auth')

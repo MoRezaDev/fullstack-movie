@@ -1,12 +1,10 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
   Injectable,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { DatabaseService } from 'src/modules/database/database.service';
+import { DatabaseService } from '../../modules/database/database.service';
 
 @Injectable()
 export class VerifyPremiumUserGurd implements CanActivate {

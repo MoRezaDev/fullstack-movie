@@ -1,4 +1,3 @@
-import { IsNotEmpty, Matches } from 'class-validator';
 
 export class AdvancedSearchQuery {
   type?: string;
