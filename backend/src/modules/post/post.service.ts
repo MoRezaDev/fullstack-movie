@@ -24,6 +24,7 @@ export class PostService {
         movie: true,
         series: true,
         anime: true,
+        download_links: true,
       },
     });
   }
