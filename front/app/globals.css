@@ -105,8 +105,6 @@
   animation: rainbow 6s ease infinite;
 }
 
-
-
 .backdroptest ::after {
   content: "";
   position: absolute;
@@ -117,7 +115,59 @@
   width: 100%;
   height: 100%;
   display: block;
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.2), #000);
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0), #000);
 }
 
+.btn-grad {
+  background-image: linear-gradient(
+    to right,
+    #00c6ff 0%,
+    #0072ff 51%,
+    #00c6ff 100%
+  );
+}
+.btn-grad {
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+}
 
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+@keyframes btnKey {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* no ugly background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.6); /* subtle gray */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.8);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 120, 120, 0.6) transparent;
+}

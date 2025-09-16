@@ -51,9 +51,8 @@ export class ContentController {
     return res.json(post);
   }
 
-  @Get('s')
-
-  async getAdvancedSearchQuery(@Query() queryDto : AdvancedSearchQuery) {
-    return this.contentService.getAdvancedSearchQuery(queryDto);
+  @Get('day')
+  async getAllPostsByDay(@Query('q') q: string) {
+    return this.contentService.getAllPostsByDay(q);
   }
 }

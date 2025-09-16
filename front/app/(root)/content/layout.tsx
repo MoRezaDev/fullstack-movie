@@ -1,6 +1,6 @@
 import AdvancedSearch from "@/components/Home/AdvancedSearch";
 import SideSection from "@/components/Home/Side-Section/SideSection";
-import Slider from "@/components/Home/Slider";
+import Slider from "@/components/Home/slider/Slider";
 import { Suspense } from "react";
 
 export default function ContentLayout({
@@ -20,9 +20,7 @@ export default function ContentLayout({
         <div className="order-2 lg:order-1">
           <SideSection />
         </div>
-        <div className="lg:col-span-2 order-1 lg:order-2">
-          {children}
-        </div>
+        <div className="lg:col-span-2 order-1 lg:order-2">{children}</div>
       </section>
     </div>
   );

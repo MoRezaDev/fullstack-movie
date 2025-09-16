@@ -5,8 +5,7 @@ import { getUserSession } from "@/lib/dal";
 
 export default async function UserProfile() {
   // const session = await getUserSession();
-  const session =  await getUserSession()
-  console.log(session);
+  const session = await getUserSession();
 
   if (!session)
     return (
@@ -15,17 +14,17 @@ export default async function UserProfile() {
           href="/login"
           className="bg-blue-500 py-2 px-4 rounded-md transition cursor-pointer hover:opacity-70"
         >
-          ورود
+          ثبت نام یا ورود
         </Link>
-        <Link
+        {/* <Link
           className="bg-blue-500 py-2 px-4 rounded-md transition cursor-pointer hover:opacity-70"
           href="/signup"
         >
           ثبت نام
-        </Link>
+        </Link> */}
         <Link
           className="bg-amber-400 py-2 px-4 rounded-md transition cursor-pointer hover:opacity-70"
-          href={"/vip"}
+          href={"#"}
         >
           خرید اشتراک
         </Link>

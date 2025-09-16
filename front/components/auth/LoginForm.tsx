@@ -16,7 +16,6 @@ export default function LoginForm() {
     { error: "" }
   );
 
-  console.log(state);
 
   useEffect(() => {
     if (state.error) {
@@ -30,7 +29,6 @@ export default function LoginForm() {
     }
   }, [verifyState]);
 
-  console.log("verifyState", verifyState);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-900 px-4">
@@ -40,7 +38,7 @@ export default function LoginForm() {
           action={phoneAction}
           className="bg-neutral-800 w-full max-w-sm p-6 rounded-xl shadow-lg space-y-4"
         >
-          <h2 className="text-center text-2xl font-semibold text-white">
+          <h2 className="text-center text-xl  text-white">
             ورود / ثبت نام
           </h2>
           <p className="text-center text-sm text-gray-400">

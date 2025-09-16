@@ -172,14 +172,53 @@ export class ContentService {
     }));
   }
 
-  async getAllPostsByDay() {
-    const posts = await this.databaseSerivce.post.findMany({
-      where: {
-        OR: [
-         
-        ]
-      }
-    })
+  async getAllPostsByDay(day: string) {
+    function convertDateToPluralDay(dateStr: string): string {
+      const date = new Date(dateStr);
+      const days = [
+        'sundays',
+        'mondays',
+        'tuesdays',
+        'wednesdays',
+        'thursdays',
+        'fridays',
+        'saturdays',
+      ];
+      return days[date.getDay()];
+    }
 
+    if (!day) throw new BadRequestException('روز را مشخص کنید');
+    const posts = await this.databaseSerivce.post.findMany({
+      include: {
+        anime: true,
+        series: true,
+      },
+    });
+
+    const newPosts = posts.map((post) => {
+      if (post.series) {
+        return {
+          ...post,
+          series: {
+            ...post.series,
+            day_release: convertDateToPluralDay(post.series.released),
+          },
+        };
+      }
+      return post;
+    });
+
+    return newPosts.filter((ps) => {
+      if (ps.anime) {
+        return ps.anime.broadcast
+          .toLocaleLowerCase()
+          .includes(day.toLocaleLowerCase());
+      }
+      if (ps.series) {
+        return (ps.series as any).day_release
+          .toLocaleLowerCase()
+          .includes(day.toLocaleLowerCase());
+      }
+    });
   }
 }

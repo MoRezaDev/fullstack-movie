@@ -19,7 +19,6 @@ export default function SearchBarMobileDevice() {
     setIsOpen(false);
   }
 
-  console.log(isMountedStyle);
 
   return (
     <div className="flex items-center">

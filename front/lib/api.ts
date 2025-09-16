@@ -1,4 +1,4 @@
-import { permanentRedirect, redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export async function getSliderContent() {
   await new Promise((res) => setTimeout(res, 1000));
@@ -87,7 +87,26 @@ export async function getAdvancedSearchQuery(searchQuery: any) {
   );
 
   const data = await response.json();
-  console.log(data);
+
+  if (!response.ok) {
+    return {
+      error: data.message ?? "error on fetch",
+    };
+  }
+
+  return data;
+}
+
+export async function getTodayContent() {
+  const today = new Date()
+    .toLocaleDateString("en-US", { weekday: "long" })
+    .toLowerCase();
+
+  const response = await fetch(
+    `${process.env.BASE_URL}/content/day?q=${today}`
+  );
+
+  const data = await response.json();
 
   if (!response.ok) {
     return {

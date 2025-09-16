@@ -22,3 +22,55 @@ export const subjectsData = [
   { title: "فیلم معمایی", views: 2269 },
   { title: "فیلم هیجانی", views: 4668 },
 ];
+
+export const weekendData = [
+  {
+    en: "saturday",
+    fa: "شنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "sunday",
+    fa: "یکشنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "monday",
+    fa: "دوشنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "tuesday",
+    fa: "سه‌شنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "wednesday",
+    fa: "چهارشنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "thursday",
+    fa: "پنج‌شنبه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+  {
+    en: "friday",
+    fa: "جمعه",
+    link() {
+      return `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/content/day?q=${this.en}`;
+    },
+  },
+];

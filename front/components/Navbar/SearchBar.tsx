@@ -5,7 +5,6 @@ import { BiSearch } from "react-icons/bi";
 import Modal from "../Modal";
 import { useContentSearch } from "@/hooks/useContentSearch";
 import Link from "next/link";
-import { IoCloseOutline } from "react-icons/io5";
 
 export default function SearchBar() {
   const [isOpen, setIsOpen] = useState(false);

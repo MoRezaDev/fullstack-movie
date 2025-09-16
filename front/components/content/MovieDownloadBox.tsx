@@ -7,7 +7,6 @@ export default function MovieDownloadBox({
 }: {
   downloadLinks: any;
 }) {
-  console.log("t", downloadLinks);
 
   return (
     <div className="flex flex-col gap-4 mt-6">

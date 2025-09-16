@@ -26,6 +26,8 @@ export function getTranslatedGenres(genre: string[]) {
     music: "موزیک",
     war: "جنگی",
     western: "وسترن",
+    shounen: "شونن",
+    supernatural: "سوپر-نچرال",
   };
 
   return genre.map((g) => {

@@ -21,7 +21,6 @@ export default function SeriesDownloadBox({
     );
   }
 
-  console.log(downloadLinks);
 
   return (
     <div className="flex flex-col gap-4 mt-6">
