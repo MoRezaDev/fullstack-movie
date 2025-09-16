@@ -1,7 +1,7 @@
 require('module-alias/register');
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import  cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { CatchEverythingFilter } from './common/filters/new-all-exceptions';
 
@@ -15,6 +15,7 @@ async function bootstrap() {
       'http://localhost:5173',
       'https://fullstack-movie-git-main-morezadevs-projects.vercel.app',
       'https://fullstack-movie.vercel.app',
+      'https://fullstack-movie-front.vercel.app',
     ],
     credentials: true,
   });
